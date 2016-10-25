@@ -1,3 +1,4 @@
+package code;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -10,7 +11,7 @@ import javax.swing.JApplet;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
-public class Bong extends JApplet implements Runnable, KeyListener {
+public class CBYC_Bong extends JApplet implements Runnable, KeyListener {
 	private Thread thread = null;
 	private double x, dx, y, dy;
 	private int xSize, ySize;
@@ -47,7 +48,7 @@ public class Bong extends JApplet implements Runnable, KeyListener {
 
 	@Override
 	public void paint(Graphics g) {
-		// �S�̂�w�i�F�œh��Ԃ��B
+		// 全体を背景色で塗りつぶす。
 		offg.clearRect(0, 0, width, height); 
 
 		offg.setColor(Color.BLACK);
@@ -149,18 +150,18 @@ public class Bong extends JApplet implements Runnable, KeyListener {
 
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(() -> {
-			/* �^�C�g���o�[�ɕ\�����镶������w��ł��� */
+			/* タイトルバーに表示する文字列を指定できる */
 			JFrame frame = new JFrame("Bong!");       
-			/* Bong �̓N���X�̖��O�ɂ��킹�� */
-			JApplet applet = new Bong();
-			/* �A�v���b�g�����̃T�C�Y���w�肷�� */
+			/* Bong はクラスの名前にあわせる */
+			JApplet applet = new CBYC_Bong();
+			/* アプレット部分のサイズを指定する */
 			applet.setPreferredSize(new Dimension(481, 400));
 			frame.add(applet);
 			frame.pack();
 			frame.setVisible(true);
 			applet.init();
 			applet.start();
-			/* �~�{�^�����������Ƃ��̓�����w�肷�� */
+			/* ×ボタンを押したときの動作を指定する */
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		});
 	}
