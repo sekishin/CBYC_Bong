@@ -8,24 +8,26 @@ import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 public class Test extends JApplet implements Runnable{
-	
+  Puck pk = new Puck(200, 10 ,10);
 	private Thread drawThread = null;
-	
+
 	@Override
 	public void init() {
 		setSize(getSize());
 	}
-	
+
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
-		g.drawString("TEST", 10, 10);
+		pk.draw(g);
+		//g.drawString("TEST", 10, 10);
 	}
-	
+
 	@Override
 	public void run() {
 		Thread currentThread = Thread.currentThread();
 		while (currentThread == drawThread) {
+		  pk.move();
 			repaint();
 			try {
 				Thread.sleep(50);
@@ -33,21 +35,21 @@ public class Test extends JApplet implements Runnable{
 			}
 		}
 	}
-	
+
 	public void start() {
 		if (drawThread == null) {
 			drawThread = new Thread(this);
 			drawThread.start();
 		}
 	}
-	
+
 	public void stop() {
 		drawThread = null;
 	}
-	
+
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(() -> {
-			JFrame frame = new JFrame("Test");       
+			JFrame frame = new JFrame("Test");
 			/* Bong はクラスの名前にあわせる */
 			JApplet applet = new Test();
 			/* アプレット部分のサイズを指定する */
