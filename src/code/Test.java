@@ -10,16 +10,26 @@ import javax.swing.SwingUtilities;
 public class Test extends JApplet implements Runnable{
 	
 	private Thread drawThread = null;
+	private RedRacket rr;
+	private GreenRacket gr;
 	
 	@Override
 	public void init() {
 		setSize(getSize());
+		rr = new RedRacket(20, 20);
+		gr = new GreenRacket(70, 20);
+		setFocusable(true);
+		addKeyListener(rr);
+		addKeyListener(gr);
+
 	}
 	
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
 		g.drawString("TEST", 10, 10);
+		rr.draw(g);
+		gr.draw(g);
 	}
 	
 	@Override

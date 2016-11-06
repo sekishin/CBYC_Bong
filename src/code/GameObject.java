@@ -4,12 +4,10 @@ import java.awt.Graphics;
 
 public abstract class GameObject {
 	
-	private final int SIZE;
-	private double x, y;
+	protected int x, y;
 	
 	// コンストラクタ
-	public GameObject(int s, double x, double y) {
-		this.SIZE = s;
+	public GameObject(int x, int y) {
 		this.x = x;
 		this.y = y;
 	}
