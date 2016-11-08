@@ -14,5 +14,4 @@ public abstract class GameObject {
 	
 	// 描画
 	abstract public void draw(Graphics g);
-
 }
