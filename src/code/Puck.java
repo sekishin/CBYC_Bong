@@ -15,19 +15,14 @@ public class Puck extends GameObject {
 	// コンストラクタ
 	public Puck(int x, int y) {
 		super(x, y);
-		int left = x;
-		int top = y;
-		int right = x + this.SIZE;
-		int bottom = y + this.SIZE;
-		
-		rect = new Rectangle(left, top, right, bottom);	
 	}
+	
 
 	//-- パックの描画
 	@Override
 	public void draw(Graphics g) {
-		g.setColor(color);  // 描画するときの色
-		g.fillOval((int)x, (int)y, this.SIZE, this.SIZE);  // パックの描画
+		g.setColor(this.color);  // 描画するときの色
+		g.fillOval(this.x, this.y, this.SIZE, this.SIZE);  // パックの描画
 	}
 	
 	@Override
@@ -37,23 +32,27 @@ public class Puck extends GameObject {
 
 	// パックの移動
 	public void move() {
-		x += dx;
-		y += dy;
+		this.x += this.dx;
+		this.y += this.dy;
 	}
 	
 	public boolean isHit(GameObject go) {
-		if ( this.rect.intersects(go.rect) ) { return true; }
+		rect = new Rectangle(x, y, SIZE, SIZE);
+		return rect.intersects(go.rect);
+	}
+	
+	public boolean isOut(GameObject go) {
 		return false;
 	}
 
 	// x軸方向の反射
 	public void reflectX() {
-		dx *= -1;
+		this.dx *= -1;
 	}
 
 	// y軸方向の反射
 	public void reflectY() {
-		dy *= -1;
+		this.dy *= -1;
 	}
 
 	// 打った人のバーの色に変わる
