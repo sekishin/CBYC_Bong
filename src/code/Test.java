@@ -10,18 +10,22 @@ import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 public class Test extends JApplet implements Runnable, KeyListener{
-	
-	private Thread drawThread = null;
-	private RedRacket rr;
-	private GreenRacket gr;
+
 	private static final int WIDTH = 481;
 	private static final int HEIGHT = 400;
+
+	private Thread drawThread = null;
+
+	private RedRacket rr;
+	private GreenRacket gr;
+	private Puck p;
 
 	@Override
 	public void init() {
 		setSize(WIDTH, HEIGHT);
 		rr = new RedRacket(20, 20);
 		gr = new GreenRacket(70, 20);
+		p = new Puck(40, 40);
 		setFocusable(true);
 		addKeyListener(this);
 	}
@@ -31,17 +35,19 @@ public class Test extends JApplet implements Runnable, KeyListener{
 		super.paint(g);
 		rr.draw(g);
 		gr.draw(g);
+		p.draw(g);
 	}
 
 	@Override
 	public void run() {
 		Thread currentThread = Thread.currentThread();
 		while (currentThread == drawThread) {
-			repaint();
+			p.move();
 			try {
-				Thread.sleep(50);
+				Thread.sleep(100);
 			} catch (InterruptedException e) {
 			}
+			repaint();
 		}
 	}
 	
@@ -80,11 +86,12 @@ public class Test extends JApplet implements Runnable, KeyListener{
 
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(() -> {
-			JFrame frame = new JFrame("Test");       
+			JFrame frame = new JFrame("Test");     
 			JApplet applet = new Test();
 			applet.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 			frame.add(applet);
 			frame.pack();
+			frame.setLocationRelativeTo(null);
 			frame.setVisible(true);
 			applet.init();
 			applet.start();

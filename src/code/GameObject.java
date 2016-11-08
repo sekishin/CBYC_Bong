@@ -1,10 +1,20 @@
 package code;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 
 public abstract class GameObject {
 	
 	protected int x, y;
+	protected Rectangle rect;
+	
+	enum Type {
+		Racket,
+		Wall,
+		Field,
+		Puck,
+		Block
+	}
 
 	// コンストラクタ
 	public GameObject(int x, int y) {
@@ -14,4 +24,7 @@ public abstract class GameObject {
 
 	// 描画
 	abstract public void draw(Graphics g);
+	
+	// オブジェクトの種類
+	abstract public Type getType();
 }
