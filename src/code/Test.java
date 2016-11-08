@@ -2,34 +2,33 @@ package code;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.JApplet;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
-public class Test extends JApplet implements Runnable{
+public class Test extends JApplet implements Runnable, KeyListener{
 	
 	private Thread drawThread = null;
-	private RedRacket rr;
-	private GreenRacket gr;
 	
 	@Override
 	public void init() {
-		setSize(getSize());
-		rr = new RedRacket(20, 20);
+		setSize(600, 600);
+/*		rr = new RedRacket(20, 20);
 		gr = new GreenRacket(70, 20);
 		setFocusable(true);
 		addKeyListener(rr);
 		addKeyListener(gr);
-
+*/
 	}
 	
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
 		g.drawString("TEST", 10, 10);
-		rr.draw(g);
-		gr.draw(g);
+		
 	}
 	
 	@Override
@@ -43,6 +42,25 @@ public class Test extends JApplet implements Runnable{
 			}
 		}
 	}
+	
+	public void keyPressed(KeyEvent e) {
+		int key = e.getKeyCode();
+		switch (key) {
+		case 'I':  
+		case 'M':  
+		case 'J':
+		case 'K':
+			
+		case 'W':  
+		case 'Z':
+		case 'A':
+		case 'S':
+		}
+	}
+
+	public void keyReleased(KeyEvent e) {}
+	public void keyTyped(KeyEvent e) {}
+
 	
 	public void start() {
 		if (drawThread == null) {

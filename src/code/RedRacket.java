@@ -2,10 +2,10 @@ package code;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
-public class RedRacket extends GameObject implements KeyListener {
+//=== プレイヤ赤の操作ラケット
+
+public class RedRacket extends GameObject {
 	
 	private static final Color COLOR = Color.RED;
 	private static final int WIDTH = 10;
@@ -20,16 +20,8 @@ public class RedRacket extends GameObject implements KeyListener {
 		g.setColor(COLOR);
 		g.fillRect(this.x, this.y, WIDTH, HEIGHT);
 	}
-	
-	public void keyPressed(KeyEvent e) {
-		int key = e.getKeyCode();
-		switch (key) {
-		case 'W':  this.y -= 10; break;
-		case 'Z':  this.y += 10; break;
-		}
+
+	public void move(int dis) {
+		
 	}
-
-	public void keyReleased(KeyEvent e) {}
-	public void keyTyped(KeyEvent e) {}
-
 }
