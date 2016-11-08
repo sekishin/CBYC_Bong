@@ -73,16 +73,16 @@ public class Test extends JApplet implements Runnable, KeyListener{
 	@Override
 	public void keyTyped(KeyEvent e) {}
 
-	public void start() {
-		if (drawThread == null) {
-			drawThread = new Thread(this);
-			drawThread.start();
-		}
-	}
+    public void start() {
+        if (drawThread == null) {
+            drawThread = new Thread(this);
+            drawThread.start();
+        }
+    }
 
-	public void stop() {
-		drawThread = null;
-	}
+    public void stop() {
+        drawThread = null;
+    }
 
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(() -> {
