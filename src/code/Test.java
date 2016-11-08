@@ -8,7 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 public class Test extends JApplet implements Runnable{
-  Puck pk = new Puck(200, 10 ,10);
+  Puck pk = new Puck(200, 100 ,100);
 	private Thread drawThread = null;
 
 	@Override
