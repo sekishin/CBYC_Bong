@@ -16,7 +16,7 @@ public class Test extends JApplet implements Runnable, KeyListener{
 	private GreenRacket gr;
 	private static final int WIDTH = 481;
 	private static final int HEIGHT = 400;
-	
+
 	@Override
 	public void init() {
 		setSize(WIDTH, HEIGHT);
@@ -25,15 +25,14 @@ public class Test extends JApplet implements Runnable, KeyListener{
 		setFocusable(true);
 		addKeyListener(this);
 	}
-	
+
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
 		rr.draw(g);
 		gr.draw(g);
-		
 	}
-	
+
 	@Override
 	public void run() {
 		Thread currentThread = Thread.currentThread();
@@ -74,11 +73,11 @@ public class Test extends JApplet implements Runnable, KeyListener{
 			drawThread.start();
 		}
 	}
-	
+
 	public void stop() {
 		drawThread = null;
 	}
-	
+
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(() -> {
 			JFrame frame = new JFrame("Test");       
