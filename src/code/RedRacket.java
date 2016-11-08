@@ -22,6 +22,11 @@ public class RedRacket extends GameObject {
 	}
 
 	public void move(int dis) {
-		
+		switch (dis) {
+		case 'W': this.y -= 10; break;
+		case 'Z': this.y += 10; break; 
+		case 'A': this.x -= 5; break;
+		case 'S': this.x += 5; break;
+		}
 	}
 }

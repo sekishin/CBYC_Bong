@@ -22,7 +22,12 @@ public class GreenRacket extends GameObject {
 	}
 	
 	public void move(int dis) {
-		
+		switch(dis) {
+		case 'I': this.y -= 10; break;
+		case 'M': this.y += 10; break;
+		case 'J': this.x -= 5; break;
+		case 'K': this.x += 5; break;
+		}
 	}
 	
 }

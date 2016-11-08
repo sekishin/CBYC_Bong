@@ -12,22 +12,25 @@ import javax.swing.SwingUtilities;
 public class Test extends JApplet implements Runnable, KeyListener{
 	
 	private Thread drawThread = null;
+	private RedRacket rr;
+	private GreenRacket gr;
+	private static final int WIDTH = 481;
+	private static final int HEIGHT = 400;
 	
 	@Override
 	public void init() {
-		setSize(600, 600);
-/*		rr = new RedRacket(20, 20);
+		setSize(WIDTH, HEIGHT);
+		rr = new RedRacket(20, 20);
 		gr = new GreenRacket(70, 20);
 		setFocusable(true);
-		addKeyListener(rr);
-		addKeyListener(gr);
-*/
+		addKeyListener(this);
 	}
 	
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
-		g.drawString("TEST", 10, 10);
+		rr.draw(g);
+		gr.draw(g);
 		
 	}
 	
@@ -43,25 +46,28 @@ public class Test extends JApplet implements Runnable, KeyListener{
 		}
 	}
 	
+	@Override
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
 		switch (key) {
-		case 'I':  
-		case 'M':  
-		case 'J':
-		case 'K':
+		case 'I': gr.move('I'); break;
+		case 'M': gr.move('M'); break;
+		case 'J': gr.move('J'); break;
+		case 'K': gr.move('K'); break;
 			
-		case 'W':  
-		case 'Z':
-		case 'A':
-		case 'S':
+		case 'W': rr.move('W'); break;
+		case 'Z': rr.move('Z'); break;
+		case 'A': rr.move('A'); break;
+		case 'S': rr.move('S'); break;
 		}
 	}
 
+	@Override
 	public void keyReleased(KeyEvent e) {}
+	
+	@Override
 	public void keyTyped(KeyEvent e) {}
 
-	
 	public void start() {
 		if (drawThread == null) {
 			drawThread = new Thread(this);
@@ -76,16 +82,13 @@ public class Test extends JApplet implements Runnable, KeyListener{
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(() -> {
 			JFrame frame = new JFrame("Test");       
-			/* Bong はクラスの名前にあわせる */
 			JApplet applet = new Test();
-			/* アプレット部分のサイズを指定する */
-			applet.setPreferredSize(new Dimension(481, 400));
+			applet.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 			frame.add(applet);
 			frame.pack();
 			frame.setVisible(true);
 			applet.init();
 			applet.start();
-			/* ×ボタンを押したときの動作を指定する */
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		});
 	}
