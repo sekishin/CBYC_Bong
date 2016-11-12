@@ -1,24 +1,29 @@
 package code;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.geom.AffineTransform;
 import java.awt.image.ImageObserver;
-import javax.swing.*;
+
+import javax.swing.ImageIcon;
 
 
 public class Field extends GameObject implements ImageObserver{
 	
 	private static Color color = Color.BLUE;
 	private Image image;
-	private final int WIDTH, HEIGHT;
-	private int width, height;
-	private static String path = "img/homo3.jpg";
+	private int iWidth, iHeight;
+	private static String path = "../img/homo3.jpg";
 	
 	public Field (int x, int y, int w, int h) {
-		super(x, y);
-		this.WIDTH = w;
-		this.HEIGHT = h;
+		super(x, y, w, h);
 		loadImage(path);
+	}
+	
+	public Type getType() {
+		return Type.Field;
 	}
 	
 	public void draw (Graphics g) {
@@ -30,15 +35,15 @@ public class Field extends GameObject implements ImageObserver{
 		ImageIcon icon = new ImageIcon(getClass().getResource(path));
 		image = icon.getImage();
 		
-		width = image.getWidth(this);
-		height = image.getHeight(this);
+		iWidth = image.getWidth(this);
+		iHeight = image.getHeight(this);
 	}
 
 	public void paint (Graphics g) {
 		
 		Graphics2D g2 = (Graphics2D) g;
-		double sx = (double)WIDTH/width;
-		double sy = (double)HEIGHT/height;
+		double sx = (double) this.width / this.iWidth;
+		double sy = (double) this.height / this.iHeight;
 
 		System.out.printf("%f %f\n", sx, sy);
 		//g2.setColor(color);      // 画像とRectが一致しないので、今消してます

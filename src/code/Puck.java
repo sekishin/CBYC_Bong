@@ -6,15 +6,18 @@ import java.awt.Rectangle;
 
 public class Puck extends GameObject {
 	
-	private int angle = 69;  // 初期位地からの角度
-	private double dx = 10 * Math.cos(Math.toRadians(angle));  // 加速度(x軸方向)
-	private double dy = 10 * Math.sin(Math.toRadians(angle));  // 加速度(y軸方向)
+//	private int angle = 69;  // 初期位地からの角度
+//	private double dx = 10 * Math.cos(Math.toRadians(angle));  // 加速度(x軸方向)
+//	private double dy = 10 * Math.sin(Math.toRadians(angle));  // 加速度(y軸方向)
+	private int dx;
+	private int dy;
 	private Color color = Color.BLACK;  // パックの色
-	private final int SIZE = 10; 
 	
 	// コンストラクタ
-	public Puck(int x, int y) {
-		super(x, y);
+	public Puck(int x, int y, int w, int h, int dx, int dy) {
+		super(x, y, w, h);
+		this.dx = dx;
+		this.dy = dy;
 	}
 	
 
@@ -22,7 +25,7 @@ public class Puck extends GameObject {
 	@Override
 	public void draw(Graphics g) {
 		g.setColor(this.color);  // 描画するときの色
-		g.fillOval(this.x, this.y, this.SIZE, this.SIZE);  // パックの描画
+		g.fillOval(this.x, this.y, this.width, this.height);  // パックの描画
 	}
 	
 	@Override
@@ -37,7 +40,7 @@ public class Puck extends GameObject {
 	}
 	
 	public boolean isHit(GameObject go) {
-		rect = new Rectangle(x, y, SIZE, SIZE);
+		rect = new Rectangle(this.x, this.y, this.width, this.height);
 		return rect.intersects(go.rect);
 	}
 	

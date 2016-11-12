@@ -9,15 +9,13 @@ import java.awt.Rectangle;
 public class RedRacket extends GameObject {
 	
 	private static final Color COLOR = Color.RED;
-	private final int WIDTH = 10;
-	private final int HEIGHT = 50;
 	
-	public RedRacket(int x, int y) {
-		super(x, y);		
+	public RedRacket(int x, int y, int w, int h) {
+		super(x, y, w, h);		
 		int left = x;
 		int top = y;
-		int right = x + this.WIDTH;
-		int bottom = y + this.HEIGHT;
+		int right = x + this.width;
+		int bottom = y + this.height;
 		
 		rect = new Rectangle(left, top, right, bottom);
 
@@ -26,7 +24,7 @@ public class RedRacket extends GameObject {
 	@Override
 	public void draw(Graphics g) {
 		g.setColor(COLOR);
-		g.fillRect(this.x, this.y, WIDTH, HEIGHT);
+		g.fill3DRect(this.x, this.y, this.width, this.height, true);
 	}
 	
 	@Override

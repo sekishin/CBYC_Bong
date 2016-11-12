@@ -6,6 +6,7 @@ import java.awt.Rectangle;
 public abstract class GameObject {
 	
 	protected int x, y;
+	protected int width, height;
 	public Rectangle rect;
 	
 	enum Type {
@@ -17,9 +18,11 @@ public abstract class GameObject {
 	}
 
 	// コンストラクタ
-	public GameObject(int x, int y) {
+	public GameObject(int x, int y, int w, int h) {
 		this.x = x;
 		this.y = y;
+		this.width = w;
+		this.height = h;
 	}
 
 	// 描画
