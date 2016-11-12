@@ -104,6 +104,8 @@ public class Test extends JApplet implements Runnable, KeyListener{
 			if (p1.isHit(b) || p2.isHit(b)) { lb.remove(i); }
 		}
 		
+		if (lb.size() == 0) { f.showImage(); }
+		
 	}
 
 	@Override

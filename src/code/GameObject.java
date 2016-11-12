@@ -30,4 +30,10 @@ public abstract class GameObject {
 	
 	// オブジェクトの種類
 	abstract public Type getType();
+	
+	// 矩形情報の取得
+	public Rectangle getRect() {
+		this.rect = new Rectangle(x, y, width, height);
+		return rect;
+	}
 }

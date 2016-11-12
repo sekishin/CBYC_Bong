@@ -28,7 +28,7 @@ public class GreenRacket extends Racket {
 	@Override
 	public boolean isHit(GameObject go) {
 		this.rect = new Rectangle(this.x, this.y, this.width, this.height);
-		return this.rect.intersects(go.rect);
+		return this.rect.intersects(go.getRect());
 	}
 
 	@Override
