@@ -78,20 +78,17 @@ public class Test extends JApplet implements Runnable, KeyListener{
 		setFocusable(true);
 		addKeyListener(this);
 	}
-	
-	public void update(Graphics g) {
-		paint(g);
-	}
 
+	@Override
 	public void paint(Graphics g) {
 		buffer.setColor(getBackground());
 		buffer.fillRect(0, 0, WIDTH, HEIGHT);
-		
+
+		f.draw(buffer);
 		rr.draw(buffer);
 		gr.draw(buffer);
 		p1.draw(buffer);
 		p2.draw(buffer);
-		f.draw(buffer);
 		wLeft.draw(buffer);
 		wTop.draw(buffer);
 		wRight.draw(buffer);
@@ -147,6 +144,7 @@ public class Test extends JApplet implements Runnable, KeyListener{
 	@Override
 	public void keyTyped(KeyEvent e) {}
 
+	@Override
     public void start() {
         if (drawThread == null) {
             drawThread = new Thread(this);
@@ -154,6 +152,7 @@ public class Test extends JApplet implements Runnable, KeyListener{
         }
     }
 
+	@Override
     public void stop() {
         drawThread = null;
     }
