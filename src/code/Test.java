@@ -3,6 +3,7 @@ package code;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
@@ -18,6 +19,8 @@ public class Test extends JApplet implements Runnable, KeyListener{
 	private static final int HEIGHT = 600;
 	private final int P1_STARTX = 200;
 	private final int P1_STARTY = 200;
+	private final int P2_STARTX = 400;
+	private final int P2_STARTY = 200;
 	private final int RACKET_WIDTH = 20;
 	private final int RACKET_HEIGHT = 50;
 	private final int PUCK_SIZE = 10;
@@ -29,6 +32,8 @@ public class Test extends JApplet implements Runnable, KeyListener{
 	private final int FIELD_HEIGHT = 300;
 
 	private Thread drawThread = null;
+	private Image back;
+	private Graphics buffer;
 
 	private RedRacket rr;
 	private GreenRacket gr;
@@ -45,16 +50,22 @@ public class Test extends JApplet implements Runnable, KeyListener{
 	@Override
 	public void init() {
 		setSize(WIDTH, HEIGHT);
+		
+		back = createImage(WIDTH, HEIGHT);
+		buffer = back.getGraphics();
+		
 		rr = new RedRacket(20, 20, RACKET_WIDTH, RACKET_HEIGHT);
 		gr = new GreenRacket(70, 20, RACKET_WIDTH, RACKET_HEIGHT);
+		
 		p1 = new Puck(P1_STARTX, P1_STARTY, PUCK_SIZE, PUCK_SIZE, 1, 1);
+		p2 = new Puck(P2_STARTX, P2_STARTY, PUCK_SIZE, PUCK_SIZE, -1, -1);
 		
 		wLeft = new Wall(50, 70, 20, 300, Color.BLUE);
 		wTop = new Wall(50, 50, 630, 20, Color.BLACK);
 		wRight = new Wall(660, 70, 20, 300, Color.BLUE);
 		wBottom = new Wall(50, 370, 630, 20, Color.BLACK);
 		
-		//f = new Field(FIELD_X, FIELD_Y, FIELD_WIDTH, FIELD_HEIGHT);
+		f = new Field(FIELD_X, FIELD_Y, FIELD_WIDTH, FIELD_HEIGHT);
 		
 		lb = new ArrayList<Block>();
 		for (int i = 0; i < 4; i++) {
@@ -67,20 +78,28 @@ public class Test extends JApplet implements Runnable, KeyListener{
 		setFocusable(true);
 		addKeyListener(this);
 	}
+	
+	public void update(Graphics g) {
+		paint(g);
+	}
 
-	@Override
 	public void paint(Graphics g) {
-		super.paint(g);
-		rr.draw(g);
-		gr.draw(g);
-		p1.draw(g);
-		wLeft.draw(g);
-		wTop.draw(g);
-		wRight.draw(g);
-		wBottom.draw(g);
+		buffer.setColor(getBackground());
+		buffer.fillRect(0, 0, WIDTH, HEIGHT);
+		
+		rr.draw(buffer);
+		gr.draw(buffer);
+		p1.draw(buffer);
+		p2.draw(buffer);
+		f.draw(buffer);
+		wLeft.draw(buffer);
+		wTop.draw(buffer);
+		wRight.draw(buffer);
+		wBottom.draw(buffer);
 		for (int i = 0; i < lb.size(); i++) {
-			lb.get(i).draw(g);
+			lb.get(i).draw(buffer);
 		}
+		g.drawImage(back, 0, 0, this);
 	}
 
 	@Override
@@ -92,6 +111,12 @@ public class Test extends JApplet implements Runnable, KeyListener{
 			if ( p1.isHit(wRight) ) { p1.reflectX(); }
 			if ( p1.isHit(wTop) ) { p1.reflectY(); }
 			if ( p1.isHit(wBottom) ) { p1.reflectY(); }
+			p2.move();
+			if ( p2.isHit(wLeft) ) { p2.reflectX(); }
+			if ( p2.isHit(wRight) ) { p2.reflectX(); }
+			if ( p2.isHit(wTop) ) { p2.reflectY(); }
+			if ( p2.isHit(wBottom) ) { p2.reflectY(); }
+
 			try {
 				Thread.sleep(10);
 			} catch (InterruptedException e) {
