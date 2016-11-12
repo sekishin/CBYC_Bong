@@ -31,6 +31,7 @@ public class GreenRacket extends Racket {
 		return this.rect.intersects(go.rect);
 	}
 
+	@Override
 	public void move(int dis) {
 		switch (dis) {
 		case 'I': this.y -= 10; break;
@@ -39,5 +40,4 @@ public class GreenRacket extends Racket {
 		case 'K': this.x += 5; break;
 		}
 	}
-	
 }

@@ -38,8 +38,8 @@ public class Puck extends GameObject {
 	}
 	
 	public boolean isHit(GameObject go) {
-		rect = new Rectangle(this.x, this.y, this.width, this.height);
-		return rect.intersects(go.rect);
+		this.rect = new Rectangle(this.x, this.y, this.width, this.height);
+		return this.rect.intersects(go.rect);
 	}
 	
 	public boolean isOut(GameObject go) {

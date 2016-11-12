@@ -15,5 +15,7 @@ public abstract class Racket extends GameObject {
 	abstract public Type getType();
 	
 	abstract public boolean isHit(GameObject go);
+	
+	abstract public void move(int dis);
 
 }

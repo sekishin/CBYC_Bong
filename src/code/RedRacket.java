@@ -31,6 +31,7 @@ public class RedRacket extends Racket {
 		return this.rect.intersects(go.rect);
 	}
 
+	@Override
 	public void move(int dis) {
 		switch (dis) {
 		case 'W': this.y -= 10; break;

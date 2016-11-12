@@ -145,22 +145,23 @@ public class Test extends JApplet implements Runnable, KeyListener{
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
 		switch (key) {
-		case 'W': rr.move('W'); if (! canMove(rr)) {rr.move('Z');} break;
-		case 'Z': rr.move('Z'); if (! canMove(rr)) {rr.move('W');} break;
-		case 'A': rr.move('A'); if (! canMove(rr)) {rr.move('S');} break;
-		case 'S': rr.move('S'); if (! canMove(rr)) {rr.move('A');} break;
-		case 'I': gr.move('I'); if (! canMove(gr)) {gr.move('M');} break;
-		case 'M': gr.move('M'); if (! canMove(gr)) {gr.move('I');} break;
-		case 'J': gr.move('J'); if (! canMove(gr)) {gr.move('K');} break;
-		case 'K': gr.move('K'); if (! canMove(gr)) {gr.move('J');} break;
+		case 'W': rr.move('W'); if (! canMove(rr, gr)) {rr.move('Z');} break;
+		case 'Z': rr.move('Z'); if (! canMove(rr, gr)) {rr.move('W');} break;
+		case 'A': rr.move('A'); if (! canMove(rr, gr)) {rr.move('S');} break;
+		case 'S': rr.move('S'); if (! canMove(rr, gr)) {rr.move('A');} break;
+		case 'I': gr.move('I'); if (! canMove(gr, rr)) {gr.move('M');} break;
+		case 'M': gr.move('M'); if (! canMove(gr, rr)) {gr.move('I');} break;
+		case 'J': gr.move('J'); if (! canMove(gr, rr)) {gr.move('K');} break;
+		case 'K': gr.move('K'); if (! canMove(gr, rr)) {gr.move('J');} break;
 		}
 	}
 	
-	public boolean canMove(Racket r) {
+	public boolean canMove(Racket r, Racket enemy) {
 		if (r.isHit(wLeft)) return false;
 		if (r.isHit(wTop)) return false;
 		if (r.isHit(wRight)) return false;
 		if (r.isHit(wBottom)) return false;
+		if (r.isHit(enemy)) return false;
 		for (int i = 0; i < lb.size(); i++) {
 			if (r.isHit(lb.get(i))) return false;
 		}
