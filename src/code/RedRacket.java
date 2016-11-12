@@ -6,19 +6,12 @@ import java.awt.Rectangle;
 
 //=== プレイヤ赤の操作ラケット
 
-public class RedRacket extends GameObject {
+public class RedRacket extends Racket {
 	
 	private static final Color COLOR = Color.RED;
 	
 	public RedRacket(int x, int y, int w, int h) {
 		super(x, y, w, h);		
-		int left = x;
-		int top = y;
-		int right = x + this.width;
-		int bottom = y + this.height;
-		
-		rect = new Rectangle(left, top, right, bottom);
-
 	}
 
 	@Override
@@ -31,11 +24,17 @@ public class RedRacket extends GameObject {
 	public Type getType() {
 		return Type.Racket;
 	}
+	
+	@Override
+	public boolean isHit(GameObject go) {
+		this.rect = new Rectangle(this.x, this.y, this.width, this.height);
+		return this.rect.intersects(go.rect);
+	}
 
 	public void move(int dis) {
 		switch (dis) {
 		case 'W': this.y -= 10; break;
-		case 'Z': this.y += 10; break; 
+		case 'Z': this.y += 10; break;
 		case 'A': this.x -= 5; break;
 		case 'S': this.x += 5; break;
 		}

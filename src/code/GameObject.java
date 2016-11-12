@@ -7,7 +7,7 @@ public abstract class GameObject {
 	
 	protected int x, y;
 	protected int width, height;
-	public Rectangle rect;
+	protected Rectangle rect;
 	
 	enum Type {
 		Racket,

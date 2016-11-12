@@ -18,14 +18,7 @@ public class Field extends GameObject implements ImageObserver{
 	public Field (int x, int y, int w, int h) {
 		super(x, y, w, h);
 		loadImage(path);
-		
-		int left = x;
-		int top = y;
-		int right = x + this.width;
-		int bottom = y + this.height;
-		
-		rect = new Rectangle(left, top, right, bottom);
-
+		this.rect = new Rectangle(this.x, this.y, this.width, this.height);
 	}
 	
 	@Override

@@ -6,19 +6,12 @@ import java.awt.Rectangle;
 
 //=== プレイヤ緑の操作ラケット
 
-public class GreenRacket extends GameObject {
+public class GreenRacket extends Racket {
 
 	private static final Color COLOR = Color.GREEN;
 	
 	public GreenRacket(int x, int y, int w, int h) {
-		super(x, y, w, h);
-		int left = x;
-		int top = y;
-		int right = x + this.width;
-		int bottom = y + this.height;
-		
-		rect = new Rectangle(left, top, right, bottom);
-		
+		super(x, y, w, h);		
 	}
 
 	@Override
@@ -32,8 +25,14 @@ public class GreenRacket extends GameObject {
 		return Type.Racket;
 	}
 	
+	@Override
+	public boolean isHit(GameObject go) {
+		this.rect = new Rectangle(this.x, this.y, this.width, this.height);
+		return this.rect.intersects(go.rect);
+	}
+
 	public void move(int dis) {
-		switch(dis) {
+		switch (dis) {
 		case 'I': this.y -= 10; break;
 		case 'M': this.y += 10; break;
 		case 'J': this.x -= 5; break;

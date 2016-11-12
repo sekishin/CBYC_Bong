@@ -19,8 +19,12 @@ public class Test extends JApplet implements Runnable, KeyListener{
 	private static final int HEIGHT = 600;
 	private final int P1_STARTX = 200;
 	private final int P1_STARTY = 200;
-	private final int P2_STARTX = 400;
+	private final int P2_STARTX = 500;
 	private final int P2_STARTY = 200;
+	private final int RED_RACKET_STARTX = 100;
+	private final int RED_RACKET_STARTY = 300;
+	private final int GREEN_RACKET_STARTX = 500;
+	private final int GREEN_RACKET_STRATY = 300;
 	private final int RACKET_WIDTH = 20;
 	private final int RACKET_HEIGHT = 50;
 	private final int PUCK_SIZE = 10;
@@ -54,15 +58,22 @@ public class Test extends JApplet implements Runnable, KeyListener{
 		back = createImage(WIDTH, HEIGHT);
 		buffer = back.getGraphics();
 		
-		rr = new RedRacket(20, 20, RACKET_WIDTH, RACKET_HEIGHT);
-		gr = new GreenRacket(70, 20, RACKET_WIDTH, RACKET_HEIGHT);
+		createObject();
 		
-		p1 = new Puck(P1_STARTX, P1_STARTY, PUCK_SIZE, PUCK_SIZE, 1, 1);
-		p2 = new Puck(P2_STARTX, P2_STARTY, PUCK_SIZE, PUCK_SIZE, -1, -1);
+		setFocusable(true);
+		addKeyListener(this);
+	}
+	
+	public void createObject() {
+		rr = new RedRacket(RED_RACKET_STARTX, RED_RACKET_STARTY, RACKET_WIDTH, RACKET_HEIGHT);
+		gr = new GreenRacket(GREEN_RACKET_STARTX, GREEN_RACKET_STRATY, RACKET_WIDTH, RACKET_HEIGHT);
 		
-		wLeft = new Wall(50, 70, 20, 300, Color.BLUE);
+		p1 = new Puck(P1_STARTX, P1_STARTY, PUCK_SIZE, PUCK_SIZE, 5, 5);
+		p2 = new Puck(P2_STARTX, P2_STARTY, PUCK_SIZE, PUCK_SIZE, -5, -5);
+		
+		wLeft = new Wall(50, 70, 20, 300, Color.DARK_GRAY);
 		wTop = new Wall(50, 50, 630, 20, Color.BLACK);
-		wRight = new Wall(660, 70, 20, 300, Color.BLUE);
+		wRight = new Wall(660, 70, 20, 300, Color.DARK_GRAY);
 		wBottom = new Wall(50, 370, 630, 20, Color.BLACK);
 		
 		f = new Field(FIELD_X, FIELD_Y, FIELD_WIDTH, FIELD_HEIGHT);
@@ -74,9 +85,25 @@ public class Test extends JApplet implements Runnable, KeyListener{
 				lb.add(b);
 			}
 		}
-
-		setFocusable(true);
-		addKeyListener(this);
+	}
+	
+	public void update() {
+		p1.move();
+		if ( p1.isHit(wLeft) ) { p1.reflectX(); }
+		if ( p1.isHit(wRight) ) { p1.reflectX(); }
+		if ( p1.isHit(wTop) ) { p1.reflectY(); }
+		if ( p1.isHit(wBottom) ) { p1.reflectY(); }
+		p2.move();
+		if ( p2.isHit(wLeft) ) { p2.reflectX(); }
+		if ( p2.isHit(wRight) ) { p2.reflectX(); }
+		if ( p2.isHit(wTop) ) { p2.reflectY(); }
+		if ( p2.isHit(wBottom) ) { p2.reflectY(); }
+		
+		for (int i = 0; i < lb.size(); i++) {
+			Block b = lb.get(i);
+			if (p1.isHit(b) || p2.isHit(b)) { lb.remove(i); }
+		}
+		
 	}
 
 	@Override
@@ -96,6 +123,7 @@ public class Test extends JApplet implements Runnable, KeyListener{
 		for (int i = 0; i < lb.size(); i++) {
 			lb.get(i).draw(buffer);
 		}
+		
 		g.drawImage(back, 0, 0, this);
 	}
 
@@ -103,19 +131,10 @@ public class Test extends JApplet implements Runnable, KeyListener{
 	public void run() {
 		Thread currentThread = Thread.currentThread();
 		while (currentThread == drawThread) {
-			p1.move();
-			if ( p1.isHit(wLeft) ) { p1.reflectX(); }
-			if ( p1.isHit(wRight) ) { p1.reflectX(); }
-			if ( p1.isHit(wTop) ) { p1.reflectY(); }
-			if ( p1.isHit(wBottom) ) { p1.reflectY(); }
-			p2.move();
-			if ( p2.isHit(wLeft) ) { p2.reflectX(); }
-			if ( p2.isHit(wRight) ) { p2.reflectX(); }
-			if ( p2.isHit(wTop) ) { p2.reflectY(); }
-			if ( p2.isHit(wBottom) ) { p2.reflectY(); }
-
+			update();
+			
 			try {
-				Thread.sleep(10);
+				Thread.sleep(30);
 			} catch (InterruptedException e) {
 			}
 			repaint();
@@ -126,16 +145,26 @@ public class Test extends JApplet implements Runnable, KeyListener{
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
 		switch (key) {
-		case 'I': gr.move('I'); break;
-		case 'M': gr.move('M'); break;
-		case 'J': gr.move('J'); break;
-		case 'K': gr.move('K'); break;
-			
-		case 'W': rr.move('W'); break;
-		case 'Z': rr.move('Z'); break;
-		case 'A': rr.move('A'); break;
-		case 'S': rr.move('S'); break;
+		case 'W': rr.move('W'); if (! canMove(rr)) {rr.move('Z');} break;
+		case 'Z': rr.move('Z'); if (! canMove(rr)) {rr.move('W');} break;
+		case 'A': rr.move('A'); if (! canMove(rr)) {rr.move('S');} break;
+		case 'S': rr.move('S'); if (! canMove(rr)) {rr.move('A');} break;
+		case 'I': gr.move('I'); if (! canMove(gr)) {gr.move('M');} break;
+		case 'M': gr.move('M'); if (! canMove(gr)) {gr.move('I');} break;
+		case 'J': gr.move('J'); if (! canMove(gr)) {gr.move('K');} break;
+		case 'K': gr.move('K'); if (! canMove(gr)) {gr.move('J');} break;
 		}
+	}
+	
+	public boolean canMove(Racket r) {
+		if (r.isHit(wLeft)) return false;
+		if (r.isHit(wTop)) return false;
+		if (r.isHit(wRight)) return false;
+		if (r.isHit(wBottom)) return false;
+		for (int i = 0; i < lb.size(); i++) {
+			if (r.isHit(lb.get(i))) return false;
+		}
+		return true;
 	}
 
 	@Override

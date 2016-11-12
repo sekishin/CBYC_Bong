@@ -9,9 +9,8 @@ public class Puck extends GameObject {
 //	private int angle = 69;  // 初期位地からの角度
 //	private double dx = 10 * Math.cos(Math.toRadians(angle));  // 加速度(x軸方向)
 //	private double dy = 10 * Math.sin(Math.toRadians(angle));  // 加速度(y軸方向)
-	private int dx;
-	private int dy;
-	private Color color = Color.BLACK;  // パックの色
+	private int dx, dy;
+	private Color color = Color.BLUE;  // パックの色
 	
 	// コンストラクタ
 	public Puck(int x, int y, int w, int h, int dx, int dy) {
@@ -20,7 +19,6 @@ public class Puck extends GameObject {
 		this.dy = dy;
 	}
 	
-
 	//-- パックの描画
 	@Override
 	public void draw(Graphics g) {
