@@ -38,8 +38,13 @@ public class Puck extends GameObject {
 	}
 	
 	public boolean isHit(GameObject go) {
-		this.rect = new Rectangle(this.x, this.y, this.width, this.height);
-		return this.rect.intersects(go.getRect());
+		Rectangle o = go.getRect();
+		if (this.x + this.width < o.x) return false;
+		if (this.y + this.height < o.y) return false;
+		if (this.x > o.x + o.width) return false;
+		if (this.y > o.y + o.height) return false;
+		return true;
+		
 	}
 	
 	public boolean isOut(GameObject go) {
@@ -49,11 +54,25 @@ public class Puck extends GameObject {
 	// x軸方向の反射
 	public void reflectX() {
 		this.dx *= -1;
+		if (this.dx > 0) this.x += this.width;
+		else this.x -= this.width;
 	}
 
 	// y軸方向の反射
 	public void reflectY() {
-		this.dy *= -1;
+		this.dy = -this.dy;
+		if (this.dy > 0) this.y += this.height;
+		else this.y -= this.height;
+	}
+	
+	public void reflect(GameObject go) {
+		int px = (this.dx < 0) ? this.x : this.x + this.width;
+		int py = (this.dy < 0) ? this.y : this.y + this.height;
+		int ox = (this.dx > 0) ? go.x : go.x + go.width;
+		int oy = (this.dy > 0) ? go.y : go.y + go.height;
+		
+		if (Math.abs(px-ox) <= this.width) this.reflectX();
+		if (Math.abs(py-oy) <= this.height) this.reflectY();
 	}
 
 	// 打った人のバーの色に変わる

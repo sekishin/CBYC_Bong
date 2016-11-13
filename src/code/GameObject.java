@@ -33,7 +33,7 @@ public abstract class GameObject {
 	
 	// 矩形情報の取得
 	public Rectangle getRect() {
-		this.rect = new Rectangle(x, y, width, height);
+		this.rect = new Rectangle(this.x, this.y, this.width, this.height);
 		return rect;
 	}
 }
