@@ -56,6 +56,7 @@ public class Test extends JApplet implements Runnable, KeyListener{
 	private Wall wBottom;
 	private Field f;
 	private List<Block> lb;
+	private MyBgm mBgm;
 	
 
 	@Override
@@ -94,8 +95,9 @@ public class Test extends JApplet implements Runnable, KeyListener{
 		}
 	}
 	
-	public void update() {
+	public void update() {    //壁の判定 
 		p1.move();
+		this.mBgm = new MyBgm(this);
 		if ( p1.isHit(wLeft) ) { p1.reflectX(); }
 		if ( p1.isHit(wRight) ) { p1.reflectX(); }
 		if ( p1.isHit(wTop) ) { p1.reflectY(); }
