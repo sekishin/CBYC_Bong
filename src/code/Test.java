@@ -15,31 +15,37 @@ import javax.swing.SwingUtilities;
 
 public class Test extends JApplet implements Runnable, KeyListener{
 
-	private static final int WIDTH = 800;
-	private static final int HEIGHT = 600;
-	
-	private final int P1_STARTX = 200;
-	private final int P1_STARTY = 200;
-	private final int P2_STARTX = 500;
-	private final int P2_STARTY = 200;
-	private final int RED_RACKET_STARTX = 100;
-	private final int RED_RACKET_STARTY = 300;
-	private final int GREEN_RACKET_STARTX = 500;
-	private final int GREEN_RACKET_STRATY = 300;
+	private static final int WIDTH = 1050;
+	private static final int HEIGHT = 800;
+
+	private final int P1_STARTX = 350;
+	private final int P1_STARTY = 300;
+	private final int P2_STARTX = 650;
+	private final int P2_STARTY = 300;
+	private final int RED_RACKET_STARTX = 250;
+	private final int RED_RACKET_STARTY = 400;
+	private final int GREEN_RACKET_STARTX = 650;
+	private final int GREEN_RACKET_STRATY = 400;
 	private final int RACKET_WIDTH = 20;
 	private final int RACKET_HEIGHT = 50;
 	private final int PUCK_SIZE = 10;
 	private final int BLOCK_WIDTH = 20;
 	private final int BLOCK_HEIGHT = 30;
-	private final int WALL_X = 50;
-	private final int WALL_Y = 50;
+	private final int WALL_X = 200;
+	private final int WALL_Y = 150;
 	private final int WALL_THICK = 20;
 	private final int WALL_LENGTH_HORIZONTALLY = 630;
-	private final int WALL_LENGTH_VERTICALLY = 300;;
-	private final int FIELD_X = 70;
-	private final int FIELD_Y = 70;
+	private final int WALL_LENGTH_VERTICALLY = 300;
+	private final int FIELD_X = 220;
+	private final int FIELD_Y = 170;
 	private final int FIELD_WIDTH = 590;
 	private final int FIELD_HEIGHT = 300;
+	private final int PLAYER_x = 50;
+	private final int PLAYER_Y = 50;
+	private final int PLAYER_WIDTH = 100;
+	private final int PLAYER_HEIGHT = 100;
+	private final String PLAYER_IMAGE_1 = "../image/homo1.jpg";
+	private final String PLAYER_IMAGE_2 = "../image/homo2.jpg";
 
 	private Thread drawThread = null;
 	private Image back;
@@ -55,35 +61,40 @@ public class Test extends JApplet implements Runnable, KeyListener{
 	private Wall wBottom;
 	private Field f;
 	private List<Block> lb;
-	
+	private Player pl1;
+	private Player pl2;
+
 
 	@Override
 	public void init() {
 		setSize(WIDTH, HEIGHT);
-		
+
 		back = createImage(WIDTH, HEIGHT);
 		buffer = back.getGraphics();
-		
+
 		createObject();
-		
+
 		setFocusable(true);
 		addKeyListener(this);
 	}
-	
+
 	public void createObject() {
 		rr = new RedRacket(RED_RACKET_STARTX, RED_RACKET_STARTY, RACKET_WIDTH, RACKET_HEIGHT);
 		gr = new GreenRacket(GREEN_RACKET_STARTX, GREEN_RACKET_STRATY, RACKET_WIDTH, RACKET_HEIGHT);
-		
+
 		p1 = new Puck(P1_STARTX, P1_STARTY, PUCK_SIZE, PUCK_SIZE, 5, 5);
 		p2 = new Puck(P2_STARTX, P2_STARTY, PUCK_SIZE, PUCK_SIZE, -5, -5);
-		
+
+		pl1 = new Player(PLAYER_x, PLAYER_Y, PLAYER_WIDTH, PLAYER_HEIGHT, PLAYER_IMAGE_1);
+		pl2 = new Player(PLAYER_x + WALL_X + WALL_LENGTH_HORIZONTALLY, PLAYER_Y, PLAYER_WIDTH, PLAYER_HEIGHT, PLAYER_IMAGE_2);
+
 		wLeft = new Wall(WALL_X, WALL_Y + WALL_THICK, WALL_THICK, WALL_LENGTH_VERTICALLY, Color.DARK_GRAY);
 		wTop = new Wall(WALL_X, WALL_Y, WALL_LENGTH_HORIZONTALLY, WALL_THICK, Color.BLACK);
 		wRight = new Wall(WALL_X + WALL_LENGTH_HORIZONTALLY - WALL_THICK, WALL_Y + WALL_THICK, WALL_THICK, WALL_LENGTH_VERTICALLY, Color.DARK_GRAY);
 		wBottom = new Wall(WALL_X, WALL_Y + WALL_LENGTH_VERTICALLY + WALL_THICK, WALL_LENGTH_HORIZONTALLY, WALL_THICK, Color.BLACK);
-		
+
 		f = new Field(FIELD_X, FIELD_Y, FIELD_WIDTH, FIELD_HEIGHT);
-		
+
 		lb = new ArrayList<Block>();
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < FIELD_HEIGHT / BLOCK_HEIGHT; j++) {
@@ -92,7 +103,7 @@ public class Test extends JApplet implements Runnable, KeyListener{
 			}
 		}
 	}
-	
+
 	public void update() {
 		p1.move();
 		if ( p1.isHit(wLeft) ) { p1.reflectX(); }
@@ -104,12 +115,12 @@ public class Test extends JApplet implements Runnable, KeyListener{
 		if ( p2.isHit(wRight) ) { p2.reflectX(); }
 		if ( p2.isHit(wTop) ) { p2.reflectY(); }
 		if ( p2.isHit(wBottom) ) { p2.reflectY(); }
-		
+
 		for (int i = 0; i < lb.size(); i++) {
 			Block b = lb.get(i);
 			if (p1.isHit(b) || p2.isHit(b)) { lb.remove(i); }
 		}
-		
+
 		if (lb.size() == 0) { f.showImage(); }
 	}
 
@@ -123,6 +134,8 @@ public class Test extends JApplet implements Runnable, KeyListener{
 		gr.draw(buffer);
 		p1.draw(buffer);
 		p2.draw(buffer);
+		pl1.draw(buffer);
+		pl2.draw(buffer);
 		wLeft.draw(buffer);
 		wTop.draw(buffer);
 		wRight.draw(buffer);
@@ -138,7 +151,7 @@ public class Test extends JApplet implements Runnable, KeyListener{
 		Thread currentThread = Thread.currentThread();
 		while (currentThread == drawThread) {
 			update();
-			
+
 			try {
 				Thread.sleep(30);
 			} catch (InterruptedException e) {
@@ -146,7 +159,7 @@ public class Test extends JApplet implements Runnable, KeyListener{
 			repaint();
 		}
 	}
-	
+
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
@@ -161,7 +174,7 @@ public class Test extends JApplet implements Runnable, KeyListener{
 		case 'K': gr.move('K'); if (! canMove(gr, rr)) {gr.move('J');} break;
 		}
 	}
-	
+
 	public boolean canMove(Racket r, Racket enemy) {
 		if (r.isHit(wLeft)) return false;
 		if (r.isHit(wTop)) return false;
@@ -176,7 +189,7 @@ public class Test extends JApplet implements Runnable, KeyListener{
 
 	@Override
 	public void keyReleased(KeyEvent e) {}
-	
+
 	@Override
 	public void keyTyped(KeyEvent e) {}
 
@@ -195,7 +208,7 @@ public class Test extends JApplet implements Runnable, KeyListener{
 
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(() -> {
-			JFrame frame = new JFrame("Test");     
+			JFrame frame = new JFrame("Test");
 			JApplet applet = new Test();
 			applet.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 			frame.add(applet);
