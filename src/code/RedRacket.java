@@ -30,14 +30,4 @@ public class RedRacket extends Racket {
 		this.rect = new Rectangle(this.x, this.y, this.width, this.height);
 		return this.rect.intersects(go.getRect());
 	}
-
-	@Override
-	public void move(int dis) {
-		switch (dis) {
-		case 'W': this.y -= 10; break;
-		case 'Z': this.y += 10; break;
-		case 'A': this.x -= 5; break;
-		case 'S': this.x += 5; break;
-		}
-	}
 }

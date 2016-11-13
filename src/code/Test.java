@@ -13,6 +13,8 @@ import javax.swing.JApplet;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
+import code.Racket.Direction;
+
 public class Test extends JApplet implements Runnable, KeyListener{
 
 	private static final int WIDTH = 800;
@@ -44,6 +46,15 @@ public class Test extends JApplet implements Runnable, KeyListener{
 	private Thread drawThread = null;
 	private Image back;
 	private Graphics buffer;
+	
+	private boolean redRight = false;
+	private boolean redUp = false;
+	private boolean redDown = false;
+	private boolean redLeft = false;
+	private boolean greenRight = false;
+	private boolean greenUp = false;
+	private boolean greenDown = false;
+	private boolean greenLeft = false;
 
 	private RedRacket rr;
 	private GreenRacket gr;
@@ -77,14 +88,20 @@ public class Test extends JApplet implements Runnable, KeyListener{
 		p1 = new Puck(P1_STARTX, P1_STARTY, PUCK_SIZE, PUCK_SIZE, 5, 5);
 		p2 = new Puck(P2_STARTX, P2_STARTY, PUCK_SIZE, PUCK_SIZE, -5, -5);
 		
-		wLeft = new Wall(WALL_X, WALL_Y + WALL_THICK, WALL_THICK, WALL_LENGTH_VERTICALLY, Color.DARK_GRAY);
+		wLeft = new Wall(WALL_X, WALL_Y + WALL_THICK, WALL_THICK, WALL_LENGTH_VERTICALLY, Color.GREEN);
 		wTop = new Wall(WALL_X, WALL_Y, WALL_LENGTH_HORIZONTALLY, WALL_THICK, Color.BLACK);
-		wRight = new Wall(WALL_X + WALL_LENGTH_HORIZONTALLY - WALL_THICK, WALL_Y + WALL_THICK, WALL_THICK, WALL_LENGTH_VERTICALLY, Color.DARK_GRAY);
+		wRight = new Wall(WALL_X + WALL_LENGTH_HORIZONTALLY - WALL_THICK, WALL_Y + WALL_THICK, WALL_THICK, WALL_LENGTH_VERTICALLY, Color.RED);
 		wBottom = new Wall(WALL_X, WALL_Y + WALL_LENGTH_VERTICALLY + WALL_THICK, WALL_LENGTH_HORIZONTALLY, WALL_THICK, Color.BLACK);
 		
 		f = new Field(FIELD_X, FIELD_Y, FIELD_WIDTH, FIELD_HEIGHT);
 		
 		lb = new ArrayList<Block>();
+		for (int i = 0; i < FIELD_HEIGHT/ BLOCK_HEIGHT; i++) {
+			Block b = new Block(FIELD_X, FIELD_Y + BLOCK_HEIGHT * i, BLOCK_WIDTH, BLOCK_HEIGHT);
+			lb.add(b);
+			b = new Block(FIELD_X + FIELD_WIDTH - BLOCK_WIDTH, FIELD_Y + BLOCK_HEIGHT * i, BLOCK_WIDTH, BLOCK_HEIGHT);
+			lb.add(b);
+		}
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < FIELD_HEIGHT / BLOCK_HEIGHT; j++) {
 				Block b = new Block(FIELD_X + FIELD_WIDTH / 2 + BLOCK_WIDTH * (i-2), FIELD_Y + j * BLOCK_HEIGHT, BLOCK_WIDTH, BLOCK_HEIGHT);
@@ -94,6 +111,7 @@ public class Test extends JApplet implements Runnable, KeyListener{
 	}
 	
 	public void update() {
+		racketMove();
 		p1.move();
 		if ( p1.isHit(wLeft) ) { p1.reflectX(); }
 		if ( p1.isHit(wRight) ) { p1.reflectX(); }
@@ -112,6 +130,31 @@ public class Test extends JApplet implements Runnable, KeyListener{
 		
 		if (lb.size() == 0) { f.showImage(); }
 	}
+	
+	public boolean canMove(Racket r, Racket enemy) {
+		if (r.isHit(wLeft)) return false;
+		if (r.isHit(wTop)) return false;
+		if (r.isHit(wRight)) return false;
+		if (r.isHit(wBottom)) return false;
+		if (r.isHit(enemy)) return false;
+		for (int i = 0; i < lb.size(); i++) {
+			if (r.isHit(lb.get(i))) return false;
+		}
+		return true;
+	}
+	
+	public void racketMove() {
+		if (redUp) rr.move(Direction.UP); if (! canMove(rr, gr)) {rr.move(Direction.DOWN);}
+		if (redDown) rr.move(Direction.DOWN); if (! canMove(rr, gr)) {rr.move(Direction.UP);}
+		if (redRight) rr.move(Direction.RIGHT); if (! canMove(rr, gr)) {rr.move(Direction.LEFT);}
+		if (redLeft) rr.move(Direction.LEFT); if (! canMove(rr, gr)) {rr.move(Direction.RIGHT);}
+		
+		if (greenUp) gr.move(Direction.UP); if(! canMove(gr, rr)) { gr.move(Direction.DOWN);}
+		if (greenDown) gr.move(Direction.DOWN); if(! canMove(gr, rr)) { gr.move(Direction.UP);}
+		if (greenRight) gr.move(Direction.RIGHT); if(! canMove(gr, rr)) { gr.move(Direction.LEFT);}
+		if (greenLeft) gr.move(Direction.LEFT); if(! canMove(gr, rr)) { gr.move(Direction.RIGHT);}
+	}
+
 
 	@Override
 	public void paint(Graphics g) {
@@ -140,7 +183,7 @@ public class Test extends JApplet implements Runnable, KeyListener{
 			update();
 			
 			try {
-				Thread.sleep(30);
+				Thread.sleep(40);
 			} catch (InterruptedException e) {
 			}
 			repaint();
@@ -151,31 +194,31 @@ public class Test extends JApplet implements Runnable, KeyListener{
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
 		switch (key) {
-		case 'W': rr.move('W'); if (! canMove(rr, gr)) {rr.move('Z');} break;
-		case 'Z': rr.move('Z'); if (! canMove(rr, gr)) {rr.move('W');} break;
-		case 'A': rr.move('A'); if (! canMove(rr, gr)) {rr.move('S');} break;
-		case 'S': rr.move('S'); if (! canMove(rr, gr)) {rr.move('A');} break;
-		case 'I': gr.move('I'); if (! canMove(gr, rr)) {gr.move('M');} break;
-		case 'M': gr.move('M'); if (! canMove(gr, rr)) {gr.move('I');} break;
-		case 'J': gr.move('J'); if (! canMove(gr, rr)) {gr.move('K');} break;
-		case 'K': gr.move('K'); if (! canMove(gr, rr)) {gr.move('J');} break;
+		case 'W': redUp = true; break;
+		case 'Z': redDown = true; break;
+		case 'A': redLeft = true; break;
+		case 'S': redRight = true; break;
+		case 'I': greenUp = true; break;
+		case 'M': greenDown = true; break;
+		case 'J': greenLeft = true; break;
+		case 'K': greenRight = true; break;
 		}
 	}
 	
-	public boolean canMove(Racket r, Racket enemy) {
-		if (r.isHit(wLeft)) return false;
-		if (r.isHit(wTop)) return false;
-		if (r.isHit(wRight)) return false;
-		if (r.isHit(wBottom)) return false;
-		if (r.isHit(enemy)) return false;
-		for (int i = 0; i < lb.size(); i++) {
-			if (r.isHit(lb.get(i))) return false;
-		}
-		return true;
-	}
-
 	@Override
-	public void keyReleased(KeyEvent e) {}
+	public void keyReleased(KeyEvent e) {
+		int key = e.getKeyCode();
+		switch (key) {
+		case 'W': redUp = false; break;
+		case 'Z': redDown = false; break;
+		case 'A': redLeft = false; break;
+		case 'S': redRight = false; break;
+		case 'I': greenUp = false; break;
+		case 'M': greenDown = false; break;
+		case 'J': greenLeft = false; break;
+		case 'K': greenRight = false; break;
+		}
+	}
 	
 	@Override
 	public void keyTyped(KeyEvent e) {}
