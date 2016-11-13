@@ -10,17 +10,19 @@ import javax.swing.SwingUtilities;
 public class Test extends JApplet implements Runnable{
 	
 	private Thread drawThread = null;
-	Block block = new Block(10, 10);
+	Block block = new Block(10, 10);  // ブロックの大きさ
+	Field field = new Field(100, 100, 200, 200);  // 盤面サイズ
 	
 	@Override
 	public void init() {
 		setSize(getSize());
 	}
-
+	
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
-		block.draw(g);
+		//block.draw(g);   // ブロックの描画
+		field.draw(g);   // フィールドの描画
 	}
 	
 	

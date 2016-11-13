@@ -14,17 +14,6 @@ public class Block extends GameObject {
 		super(x, y);
 	}
 	
-	public void init() {
-		int k;
-		int i = 0;
-		
-		for ( k = 0; k < NUM; k++ ) {
-			if ( k % 10 == 0 ) {
-				
-			}
-		}
-	}
-	
 	public void draw(Graphics g) {
 		create(g);
 	}
