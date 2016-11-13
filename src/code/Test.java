@@ -17,6 +17,7 @@ public class Test extends JApplet implements Runnable, KeyListener{
 
 	private static final int WIDTH = 800;
 	private static final int HEIGHT = 600;
+	
 	private final int P1_STARTX = 200;
 	private final int P1_STARTY = 200;
 	private final int P2_STARTX = 500;
@@ -30,6 +31,11 @@ public class Test extends JApplet implements Runnable, KeyListener{
 	private final int PUCK_SIZE = 10;
 	private final int BLOCK_WIDTH = 20;
 	private final int BLOCK_HEIGHT = 30;
+	private final int WALL_X = 50;
+	private final int WALL_Y = 50;
+	private final int WALL_THICK = 20;
+	private final int WALL_LENGTH_HORIZONTALLY = 630;
+	private final int WALL_LENGTH_VERTICALLY = 300;;
 	private final int FIELD_X = 70;
 	private final int FIELD_Y = 70;
 	private final int FIELD_WIDTH = 590;
@@ -71,10 +77,10 @@ public class Test extends JApplet implements Runnable, KeyListener{
 		p1 = new Puck(P1_STARTX, P1_STARTY, PUCK_SIZE, PUCK_SIZE, 5, 5);
 		p2 = new Puck(P2_STARTX, P2_STARTY, PUCK_SIZE, PUCK_SIZE, -5, -5);
 		
-		wLeft = new Wall(50, 70, 20, 300, Color.DARK_GRAY);
-		wTop = new Wall(50, 50, 630, 20, Color.BLACK);
-		wRight = new Wall(660, 70, 20, 300, Color.DARK_GRAY);
-		wBottom = new Wall(50, 370, 630, 20, Color.BLACK);
+		wLeft = new Wall(WALL_X, WALL_Y + WALL_THICK, WALL_THICK, WALL_LENGTH_VERTICALLY, Color.DARK_GRAY);
+		wTop = new Wall(WALL_X, WALL_Y, WALL_LENGTH_HORIZONTALLY, WALL_THICK, Color.BLACK);
+		wRight = new Wall(WALL_X + WALL_LENGTH_HORIZONTALLY - WALL_THICK, WALL_Y + WALL_THICK, WALL_THICK, WALL_LENGTH_VERTICALLY, Color.DARK_GRAY);
+		wBottom = new Wall(WALL_X, WALL_Y + WALL_LENGTH_VERTICALLY + WALL_THICK, WALL_LENGTH_HORIZONTALLY, WALL_THICK, Color.BLACK);
 		
 		f = new Field(FIELD_X, FIELD_Y, FIELD_WIDTH, FIELD_HEIGHT);
 		
@@ -105,7 +111,6 @@ public class Test extends JApplet implements Runnable, KeyListener{
 		}
 		
 		if (lb.size() == 0) { f.showImage(); }
-		
 	}
 
 	@Override
@@ -125,7 +130,6 @@ public class Test extends JApplet implements Runnable, KeyListener{
 		for (int i = 0; i < lb.size(); i++) {
 			lb.get(i).draw(buffer);
 		}
-		
 		g.drawImage(back, 0, 0, this);
 	}
 
