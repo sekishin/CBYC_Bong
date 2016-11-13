@@ -1,8 +1,12 @@
 package code;
 
+import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 
-public abstract class Racket extends GameObject {
+public class Racket extends GameObject {
+	
+	protected Color color;
 
 	static enum Direction {
 		UP,
@@ -11,17 +15,26 @@ public abstract class Racket extends GameObject {
 		LEFT
 	}
 	
-	public Racket(int x, int y, int w, int h) {
+	public Racket(int x, int y, int w, int h, Color c) {
 		super(x, y, w, h);
+		this.color = c;
 	}
 
 	@Override
-	abstract public void draw(Graphics g);
+	public void draw(Graphics g) {
+		g.setColor(color);
+		g.fill3DRect(this.x, this.y, this.width, this.height, true);
+	}
 
 	@Override
-	abstract public Type getType();
+	public Type getType() {
+		return Type.Racket;
+	}
 	
-	abstract public boolean isHit(GameObject go);
+	public boolean isHit(GameObject go) {
+		this.rect = new Rectangle(this.x, this.y, this.width, this.height);
+		return this.rect.intersects(go.getRect());
+	}
 	
 	public void move(Direction dis) {
 		switch (dis) {
@@ -30,6 +43,10 @@ public abstract class Racket extends GameObject {
 		case RIGHT : this.x += 5; break;
 		case LEFT : this.x -= 5; break;
 		}
+	}
+	
+	public Color getColor() {
+		return this.color;
 	}
 
 }

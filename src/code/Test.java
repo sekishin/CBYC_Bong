@@ -37,7 +37,7 @@ public class Test extends JApplet implements Runnable, KeyListener{
 	private final int WALL_Y = 50;
 	private final int WALL_THICK = 20;
 	private final int WALL_LENGTH_HORIZONTALLY = 630;
-	private final int WALL_LENGTH_VERTICALLY = 300;;
+	private final int WALL_LENGTH_VERTICALLY = 300;
 	private final int FIELD_X = 70;
 	private final int FIELD_Y = 70;
 	private final int FIELD_WIDTH = 590;
@@ -56,8 +56,8 @@ public class Test extends JApplet implements Runnable, KeyListener{
 	private boolean greenDown = false;
 	private boolean greenLeft = false;
 
-	private RedRacket rr;
-	private GreenRacket gr;
+	private Racket rr;
+	private Racket gr;
 	private Puck p1;
 	private Puck p2;
 	private Wall wRight;
@@ -82,8 +82,8 @@ public class Test extends JApplet implements Runnable, KeyListener{
 	}
 	
 	public void createObject() {
-		rr = new RedRacket(RED_RACKET_STARTX, RED_RACKET_STARTY, RACKET_WIDTH, RACKET_HEIGHT);
-		gr = new GreenRacket(GREEN_RACKET_STARTX, GREEN_RACKET_STRATY, RACKET_WIDTH, RACKET_HEIGHT);
+		rr = new Racket(RED_RACKET_STARTX, RED_RACKET_STARTY, RACKET_WIDTH, RACKET_HEIGHT, Color.RED);
+		gr = new Racket(GREEN_RACKET_STARTX, GREEN_RACKET_STRATY, RACKET_WIDTH, RACKET_HEIGHT, Color.GREEN);
 		
 		p1 = new Puck(P1_STARTX, P1_STARTY, PUCK_SIZE, PUCK_SIZE, 5, 5);
 		p2 = new Puck(P2_STARTX, P2_STARTY, PUCK_SIZE, PUCK_SIZE, -5, -5);
@@ -113,22 +113,25 @@ public class Test extends JApplet implements Runnable, KeyListener{
 	public void update() {
 		racketMove();
 		p1.move();
-		if ( p1.isHit(wLeft) ) { p1.reflectX(); }
-		if ( p1.isHit(wRight) ) { p1.reflectX(); }
-		if ( p1.isHit(wTop) ) { p1.reflectY(); }
-		if ( p1.isHit(wBottom) ) { p1.reflectY(); }
+		puckreflect(p1);
 		p2.move();
-		if ( p2.isHit(wLeft) ) { p2.reflectX(); }
-		if ( p2.isHit(wRight) ) { p2.reflectX(); }
-		if ( p2.isHit(wTop) ) { p2.reflectY(); }
-		if ( p2.isHit(wBottom) ) { p2.reflectY(); }
-		
-		for (int i = 0; i < lb.size(); i++) {
-			Block b = lb.get(i);
-			if (p1.isHit(b) || p2.isHit(b)) { lb.remove(i); }
-		}
+		puckreflect(p2);
 		
 		if (lb.size() == 0) { f.showImage(); }
+	}
+	
+	public void puckreflect(Puck p) {
+		if (p.isHit(wLeft)) { p.reflect(wLeft);}
+		if (p.isHit(wRight)) { p.reflect(wRight);}
+		if (p.isHit(wTop)) { p.reflect(wTop);}
+		if (p.isHit(wBottom)) { p.reflect(wBottom);}
+		for (int i = 0; i < lb.size(); i++) {
+			Block b = lb.get(i);
+			if (p.isHit(b)) { p.reflect(b); lb.remove(i); }
+		}
+		if (p.isHit(rr)) { p.reflect(rr); p.changeColor(rr.getColor());}
+		if (p.isHit(gr)) { p.reflect(gr); p.changeColor(gr.getColor());}
+		
 	}
 	
 	public boolean canMove(Racket r, Racket enemy) {
@@ -155,7 +158,6 @@ public class Test extends JApplet implements Runnable, KeyListener{
 		if (greenLeft) gr.move(Direction.LEFT); if(! canMove(gr, rr)) { gr.move(Direction.RIGHT);}
 	}
 
-
 	@Override
 	public void paint(Graphics g) {
 		buffer.setColor(getBackground());
@@ -164,12 +166,12 @@ public class Test extends JApplet implements Runnable, KeyListener{
 		f.draw(buffer);
 		rr.draw(buffer);
 		gr.draw(buffer);
-		p1.draw(buffer);
-		p2.draw(buffer);
 		wLeft.draw(buffer);
 		wTop.draw(buffer);
 		wRight.draw(buffer);
 		wBottom.draw(buffer);
+		p1.draw(buffer);
+		p2.draw(buffer);
 		for (int i = 0; i < lb.size(); i++) {
 			lb.get(i).draw(buffer);
 		}
