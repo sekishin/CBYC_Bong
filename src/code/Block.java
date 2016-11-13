@@ -1,30 +1,30 @@
 package code;
 
-import java.awt.Graphics;
 import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Rectangle;
 
 public class Block extends GameObject {
-	int block[] = new int[30];
-	int weight[] = new int[30];
-	int height[] = new int[30]; 
-	static Color color = Color.PINK;
-	static int NUM = 30;
+	private Color color = Color.GRAY;
 	
-	public Block(int x, int y) {
-		super(x, y);
+	
+	public Block(int x, int y, int w, int h) {
+		super(x, y, w, h);		
+		rect = new Rectangle(this.x, this.y, this.width, this.height);
+
+	}
+	
+	public Type getType() {
+		return Type.Block;
 	}
 	
 	public void draw(Graphics g) {
-		create(g);
+		g.setColor(color);
+		g.fill3DRect(x, y, width, height, true);
 	}
 	
-	public void create(Graphics g) {
-		int i; // カウント
-		for ( i = 0; i < NUM; i++ ) {
-			g.setColor(color);
-			g.fillRect(weight[i], height[i], weight[i]+x, height[i]+y);
-		}
+	public void changeColor() {
+		this.color = Color.RED;
+	}
 		
-	}
-	
 }
