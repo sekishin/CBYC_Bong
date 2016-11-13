@@ -46,6 +46,8 @@ public class Test extends JApplet implements Runnable, KeyListener{
 	private final int PLAYER_HEIGHT = 100;
 	private final String PLAYER_IMAGE_1 = "../image/homo1.jpg";
 	private final String PLAYER_IMAGE_2 = "../image/homo2.jpg";
+	private final Color P1_COLOR = Color.red;
+	private final Color P2_COLOR = Color.green;
 
 	private Thread drawThread = null;
 	private Image back;
@@ -85,8 +87,8 @@ public class Test extends JApplet implements Runnable, KeyListener{
 		p1 = new Puck(P1_STARTX, P1_STARTY, PUCK_SIZE, PUCK_SIZE, 5, 5);
 		p2 = new Puck(P2_STARTX, P2_STARTY, PUCK_SIZE, PUCK_SIZE, -5, -5);
 
-		pl1 = new Player(PLAYER_x, PLAYER_Y, PLAYER_WIDTH, PLAYER_HEIGHT, PLAYER_IMAGE_1);
-		pl2 = new Player(PLAYER_x + WALL_X + WALL_LENGTH_HORIZONTALLY, PLAYER_Y, PLAYER_WIDTH, PLAYER_HEIGHT, PLAYER_IMAGE_2);
+		pl1 = new Player(PLAYER_x, PLAYER_Y, PLAYER_WIDTH, PLAYER_HEIGHT, DeadlyGauge.gauge_max, P1_COLOR, PLAYER_IMAGE_1);
+		pl2 = new Player(PLAYER_x + WALL_X + WALL_LENGTH_HORIZONTALLY, PLAYER_Y, PLAYER_WIDTH, PLAYER_HEIGHT, DeadlyGauge.gauge_max, P2_COLOR, PLAYER_IMAGE_2);
 
 		wLeft = new Wall(WALL_X, WALL_Y + WALL_THICK, WALL_THICK, WALL_LENGTH_VERTICALLY, Color.DARK_GRAY);
 		wTop = new Wall(WALL_X, WALL_Y, WALL_LENGTH_HORIZONTALLY, WALL_THICK, Color.BLACK);
@@ -106,13 +108,13 @@ public class Test extends JApplet implements Runnable, KeyListener{
 
 	public void update() {
 		p1.move();
-		if ( p1.isHit(wLeft) ) { p1.reflectX(); }
-		if ( p1.isHit(wRight) ) { p1.reflectX(); }
+		if ( p1.isHit(wLeft) ) { p1.reflectX(); pl1.current_gauge = DeadlyGauge.gaugeUp(pl1.current_gauge); }
+		if ( p1.isHit(wRight) ) { p1.reflectX(); pl1.current_gauge = DeadlyGauge.gaugeUp(pl1.current_gauge); }
 		if ( p1.isHit(wTop) ) { p1.reflectY(); }
 		if ( p1.isHit(wBottom) ) { p1.reflectY(); }
 		p2.move();
-		if ( p2.isHit(wLeft) ) { p2.reflectX(); }
-		if ( p2.isHit(wRight) ) { p2.reflectX(); }
+		if ( p2.isHit(wLeft) ) { p2.reflectX(); pl2.current_gauge = DeadlyGauge.gaugeUp(pl2.current_gauge); }
+		if ( p2.isHit(wRight) ) { p2.reflectX(); pl2.current_gauge = DeadlyGauge.gaugeUp(pl2.current_gauge); }
 		if ( p2.isHit(wTop) ) { p2.reflectY(); }
 		if ( p2.isHit(wBottom) ) { p2.reflectY(); }
 
