@@ -75,7 +75,6 @@ public class Test extends JApplet implements Runnable, KeyListener{
 	private Player pl1;
 	private Player pl2;
 
-
 	@Override
 	public void init() {
 		setSize(WIDTH, HEIGHT);
@@ -126,7 +125,6 @@ public class Test extends JApplet implements Runnable, KeyListener{
 		puckreflect(p1);
 		p2.move();
 		puckreflect(p2);
-		
 		if (lb.size() == 0) { f.showImage(); }
 	}
 	
@@ -138,6 +136,7 @@ public class Test extends JApplet implements Runnable, KeyListener{
 		for (int i = 0; i < lb.size(); i++) {
 			Block b = lb.get(i);
 			if (p.isHit(b)) { p.reflect(b); lb.remove(i); }
+
 		}
 		if (p.isHit(rr)) { p.reflect(rr); p.changeColor(rr.getColor()); pl1.gaugeUp(); }
 		if (p.isHit(gr)) { p.reflect(gr); p.changeColor(gr.getColor()); pl2.gaugeUp(); }
