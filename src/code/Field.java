@@ -12,7 +12,7 @@ import javax.swing.ImageIcon;
 
 public class Field extends GameObject implements ImageObserver{
 	
-	private static Color color = Color.WHITE;
+	private static Color color = Color.BLUE;
 	private Image image;
 	private String path = "../image/homo1.jpg";
 	private boolean flag = false; 

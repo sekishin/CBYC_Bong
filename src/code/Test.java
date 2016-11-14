@@ -30,7 +30,7 @@ public class Test extends JApplet implements Runnable, KeyListener{
 	private final int GREEN_RACKET_STRATY = 300;
 	private final int RACKET_WIDTH = 20;
 	private final int RACKET_HEIGHT = 50;
-	private final int PUCK_SIZE = 10;
+	private final int PUCK_SIZE = 20;
 	private final int BLOCK_WIDTH = 20;
 	private final int BLOCK_HEIGHT = 30;
 	private final int WALL_X = 50;
