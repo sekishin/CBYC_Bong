@@ -55,7 +55,6 @@ public class DeadlyGauge implements ImageObserver {
 
 	@Override
 	public boolean imageUpdate(Image img, int infoflags, int x, int y, int width, int height) {
-		// TODO 自動生成されたメソッド・スタブ
 		return false;
 	}
 }
