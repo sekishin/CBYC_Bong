@@ -74,6 +74,7 @@ public class Test extends JApplet implements Runnable, KeyListener{
 	private List<Block> lb;
 	private Player pl1;
 	private Player pl2;
+	private GameSound bgm;
 
 	@Override
 	public void init() {
@@ -83,6 +84,11 @@ public class Test extends JApplet implements Runnable, KeyListener{
 		buffer = back.getGraphics();
 
 		createObject();
+		
+		pl1 = new Player(PLAYER_X, P1_COLOR, PLAYER_IMAGE_1);
+		pl2 = new Player(PLAYER_X + WALL_X + WALL_LENGTH_HORIZONTALLY, P2_COLOR, PLAYER_IMAGE_2);
+
+		bgm = new GameSound("../music/bacteria.wav");
 
 		setFocusable(true);
 		addKeyListener(this);
@@ -93,9 +99,6 @@ public class Test extends JApplet implements Runnable, KeyListener{
 		gr = new Racket(GREEN_RACKET_STARTX, GREEN_RACKET_STRATY, RACKET_WIDTH, RACKET_HEIGHT, Color.GREEN);
 		p1 = new Puck(P1_STARTX, P1_STARTY, PUCK_SIZE, PUCK_SIZE, 5, 5);
 		p2 = new Puck(P2_STARTX, P2_STARTY, PUCK_SIZE, PUCK_SIZE, -5, -5);
-
-		pl1 = new Player(PLAYER_X, P1_COLOR, PLAYER_IMAGE_1);
-		pl2 = new Player(PLAYER_X + WALL_X + WALL_LENGTH_HORIZONTALLY, P2_COLOR, PLAYER_IMAGE_2);
 
 		wLeft = new Wall(WALL_X, WALL_Y + WALL_THICK, WALL_THICK, WALL_LENGTH_VERTICALLY, Color.GREEN);
 		wTop = new Wall(WALL_X, WALL_Y, WALL_LENGTH_HORIZONTALLY, WALL_THICK, Color.BLACK);
@@ -243,15 +246,17 @@ public class Test extends JApplet implements Runnable, KeyListener{
         if (drawThread == null) {
             drawThread = new Thread(this);
             drawThread.start();
+            bgm.start();
         }
     }
 
 	@Override
     public void stop() {
         drawThread = null;
+        bgm.stop();
     }
 
-	public static void main(String[] args) {
+	public static void main(String[] arbgm) {
 		SwingUtilities.invokeLater(() -> {
 			JFrame frame = new JFrame("Test");
 			JApplet applet = new Test();
