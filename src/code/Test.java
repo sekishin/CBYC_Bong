@@ -44,6 +44,7 @@ public class Test extends JApplet implements Runnable, KeyListener{
 	private final int FIELD_HEIGHT = 300;
 
 	private Thread drawThread = null;
+
 	private Image back;
 	private Graphics buffer;
 	
@@ -66,6 +67,7 @@ public class Test extends JApplet implements Runnable, KeyListener{
 	private Wall wBottom;
 	private Field f;
 	private List<Block> lb;
+	private MyBgm mBgm;
 	
 
 	@Override
@@ -157,9 +159,10 @@ public class Test extends JApplet implements Runnable, KeyListener{
 		if (greenRight) gr.move(Direction.RIGHT); if(! canMove(gr, rr)) { gr.move(Direction.LEFT);}
 		if (greenLeft) gr.move(Direction.LEFT); if(! canMove(gr, rr)) { gr.move(Direction.RIGHT);}
 	}
-
+	
 	@Override
 	public void paint(Graphics g) {
+
 		buffer.setColor(getBackground());
 		buffer.fillRect(0, 0, WIDTH, HEIGHT);
 
@@ -176,6 +179,7 @@ public class Test extends JApplet implements Runnable, KeyListener{
 			lb.get(i).draw(buffer);
 		}
 		g.drawImage(back, 0, 0, this);
+
 	}
 
 	@Override
