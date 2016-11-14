@@ -18,7 +18,7 @@ import code.Racket.Direction;
 public class Test extends JApplet implements Runnable, KeyListener{
 
 	private static final int WIDTH = 1050;
-	private static final int HEIGHT = 800;
+	private static final int HEIGHT = 600;
 
 	private final int P1_STARTX = 350;
 	private final int P1_STARTY = 300;
@@ -42,10 +42,7 @@ public class Test extends JApplet implements Runnable, KeyListener{
 	private final int FIELD_Y = 170;
 	private final int FIELD_WIDTH = 590;
 	private final int FIELD_HEIGHT = 300;
-	private final int PLAYER_x = 50;
-	private final int PLAYER_Y = 50;
-	private final int PLAYER_WIDTH = 100;
-	private final int PLAYER_HEIGHT = 100;
+	private final int PLAYER_X = 50;
 	private final String PLAYER_IMAGE_1 = "../image/homo1.jpg";
 	private final String PLAYER_IMAGE_2 = "../image/homo2.jpg";
 	private final Color P1_COLOR = Color.red;
@@ -98,8 +95,8 @@ public class Test extends JApplet implements Runnable, KeyListener{
 		p1 = new Puck(P1_STARTX, P1_STARTY, PUCK_SIZE, PUCK_SIZE, 5, 5);
 		p2 = new Puck(P2_STARTX, P2_STARTY, PUCK_SIZE, PUCK_SIZE, -5, -5);
 
-		pl1 = new Player(PLAYER_x, PLAYER_Y, PLAYER_WIDTH, PLAYER_HEIGHT, DeadlyGauge.gauge_max, P1_COLOR, PLAYER_IMAGE_1);
-		pl2 = new Player(PLAYER_x + WALL_X + WALL_LENGTH_HORIZONTALLY, PLAYER_Y, PLAYER_WIDTH, PLAYER_HEIGHT, DeadlyGauge.gauge_max, P2_COLOR, PLAYER_IMAGE_2);
+		pl1 = new Player(PLAYER_X, P1_COLOR, PLAYER_IMAGE_1);
+		pl2 = new Player(PLAYER_X + WALL_X + WALL_LENGTH_HORIZONTALLY, P2_COLOR, PLAYER_IMAGE_2);
 
 		wLeft = new Wall(WALL_X, WALL_Y + WALL_THICK, WALL_THICK, WALL_LENGTH_VERTICALLY, Color.GREEN);
 		wTop = new Wall(WALL_X, WALL_Y, WALL_LENGTH_HORIZONTALLY, WALL_THICK, Color.BLACK);
@@ -142,8 +139,8 @@ public class Test extends JApplet implements Runnable, KeyListener{
 			Block b = lb.get(i);
 			if (p.isHit(b)) { p.reflect(b); lb.remove(i); }
 		}
-		if (p.isHit(rr)) { p.reflect(rr); p.changeColor(rr.getColor()); }
-		if (p.isHit(gr)) { p.reflect(gr); p.changeColor(gr.getColor());}
+		if (p.isHit(rr)) { p.reflect(rr); p.changeColor(rr.getColor()); pl1.gaugeUp(); }
+		if (p.isHit(gr)) { p.reflect(gr); p.changeColor(gr.getColor()); pl2.gaugeUp(); }
 		
 	}
 

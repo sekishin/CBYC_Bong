@@ -9,46 +9,65 @@ import javax.swing.ImageIcon;
 
 
 public abstract class Character implements ImageObserver {
-    protected int x, y;  // 画像の座標
-    protected int width, height;  // 画像の縦横のサイズ
-    protected String path;
-    protected static String deadly_image_path = "../image/homo4.jpg";
-    protected Image deadly_image = loadImage(deadly_image_path);
+	
+	private static final int PLAYER_IMAGE_WIDTH = 100;
+	private static final int PLAYER_IMAGE_HEIGHT = 100;
+	private static final int Y = 50;
+	private static final int FRAME_WIDTH = 5;
+	
+	
+    protected int x;
+    protected String playerImagePath;
     protected Image player_image;
-    protected int current_gauge = 0;
-    public int gauge_max;
     protected Color color;
-
-
-
-    // コンストラクタ
-    public Character(int x, int y, int w, int h, int m, Color c, String p) {
+    protected DeadlyGauge dg;
+    
+    /*
+     * コンストラクタ
+     */
+    public Character(int x, Color c, String p) {
         this.x = x;
-        this.y = y;
-        this.width = w;
-        this.height = h;
-        this.gauge_max = m;
         this.color = c;
-        this.path = p;
+        this.playerImagePath = p;
         player_image = loadImage(p);
+        dg = new DeadlyGauge(x, c);
     }
 
-    // 描画
+    /*
+     * 描画
+     */
     public void draw(Graphics g) {
-        g.drawImage(player_image, this.x, this.y, this.width, this.height, this);
-        g.setColor(color);
-        g.fill3DRect(this.x, this.y + 450 - current_gauge, this.width,  current_gauge, true); // 必殺ゲージの描画
-        if ( current_gauge == gauge_max ) {
-            g.drawImage(deadly_image, this.x, this.y + 500, this.width, this.height, this);
-        }
+    	 g.setColor(color);
+         g.fill3DRect(this.x-FRAME_WIDTH, Y-FRAME_WIDTH, PLAYER_IMAGE_WIDTH+2*FRAME_WIDTH, PLAYER_IMAGE_HEIGHT+2*FRAME_WIDTH, true);
+        g.drawImage(player_image, this.x, Y, PLAYER_IMAGE_WIDTH, PLAYER_IMAGE_HEIGHT, this);
+        dg.draw(g);;
+        
     }
 
-    // 画像の取得
+    /*
+     * 画像の取得
+     * @取得した画像
+     */
     public Image loadImage (String path) {
         ImageIcon icon = new ImageIcon(getClass().getResource(path));
         return icon.getImage();
     }
-
+    
+    /*
+     * ゲージを増加
+     */
+    public void gaugeUp() {
+    	this.dg.gaugeUp();
+    }
+    
+    /*
+     * ゲージをリセット
+     */
+    public void gaugeReset() {
+    	this.dg.gaugeReset();
+    }
+    
+    @Override
     public boolean imageUpdate(Image img, int infoflags, int x, int y, int width, int height) {
         return false;
     }
