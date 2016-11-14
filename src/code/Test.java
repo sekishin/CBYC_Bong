@@ -67,7 +67,6 @@ public class Test extends JApplet implements Runnable, KeyListener{
 	private Wall wBottom;
 	private Field f;
 	private List<Block> lb;
-	private MyBgm mBgm;
 	
 
 	@Override
