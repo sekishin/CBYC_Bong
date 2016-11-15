@@ -34,6 +34,14 @@ public class Puck extends GameObject {
 	//-- パックの描画
 	@Override
 	public void draw(Graphics g) {
+		if (this.powerful) {
+			g.setColor(Color.RED);
+			g.fillOval(this.x-6, this.y-6, this.width+12, this.height+12);
+			g.setColor(Color.ORANGE);
+			g.fillOval(this.x-4, this.y-4, this.width+8, this.height+8);
+			g.setColor(Color.YELLOW);
+			g.fillOval(this.x-2, this.y-2, this.width+4, this.height+4);
+		}
 		g.setColor(this.color);  // 描画するときの色
 		if (this.visible) {
 			g.fillOval(this.x, this.y, this.width, this.height);  // パックの描画
