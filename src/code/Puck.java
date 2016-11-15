@@ -149,5 +149,6 @@ public class Puck extends GameObject {
 	 */
 	public void powerUp() {
 		this.powerful = true;
+		this.powerfulTime = 0;
 	}
 }

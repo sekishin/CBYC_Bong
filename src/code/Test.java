@@ -18,7 +18,7 @@ import code.Racket.Direction;
 public class Test extends JApplet implements Runnable, KeyListener{
 
 	private static final int WIDTH = 1050;
-	private static final int HEIGHT = 600;
+	private static final int HEIGHT = 650;
 
 	private final int P1_STARTX = 350;
 	private final int P1_STARTY = 300;
