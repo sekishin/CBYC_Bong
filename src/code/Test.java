@@ -67,7 +67,7 @@ public class Test extends JApplet implements Runnable, KeyListener{
 	private Wall wBottom;
 	private Field f;
 	private List<Block> lb;
-	private MyBgm mBgm;
+	private MyBGM mBgm;
 	
 
 	@Override
@@ -114,6 +114,7 @@ public class Test extends JApplet implements Runnable, KeyListener{
 	
 	public void update() {
 		racketMove();
+		mBgm = new MyBGM();
 		p1.move();
 		puckreflect(p1);
 		p2.move();
