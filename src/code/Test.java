@@ -24,9 +24,9 @@ public class Test extends JApplet implements Runnable, KeyListener{
 	private final int P1_STARTY = 300;
 	private final int P2_STARTX = 650;
 	private final int P2_STARTY = 300;
-	private final int RED_RACKET_STARTX = 250;
+	private final int RED_RACKET_STARTX = 260;
 	private final int RED_RACKET_STARTY = 400;
-	private final int GREEN_RACKET_STARTX = 650;
+	private final int GREEN_RACKET_STARTX = 660;
 	private final int GREEN_RACKET_STRATY = 400;
 	private final int RACKET_WIDTH = 20;
 	private final int RACKET_HEIGHT = 50;
@@ -132,6 +132,8 @@ public class Test extends JApplet implements Runnable, KeyListener{
 	}
 	
 	public void puckreflect(Puck p) {
+		if (p.isHit(rr)) { p.reflect(rr); p.changeColor(rr.getColor()); pl1.gaugeUp(); }
+		if (p.isHit(gr)) { p.reflect(gr); p.changeColor(gr.getColor()); pl2.gaugeUp(); }
 		if (p.isHit(gg)) { p.reflect(gg);}
 		if (p.isHit(rg)) { p.reflect(rg);}
 		if (p.isHit(wt)) { p.reflect(wt);}
@@ -140,10 +142,7 @@ public class Test extends JApplet implements Runnable, KeyListener{
 			Block b = lb.get(i);
 			if (p.isHit(b)) { p.reflect(b); lb.remove(i); }
 
-		}
-		if (p.isHit(rr)) { p.reflect(rr); p.changeColor(rr.getColor()); pl1.gaugeUp(); }
-		if (p.isHit(gr)) { p.reflect(gr); p.changeColor(gr.getColor()); pl2.gaugeUp(); }
-		
+		}		
 	}
 
 	public boolean canMove(Racket r, Racket enemy) {
@@ -152,6 +151,8 @@ public class Test extends JApplet implements Runnable, KeyListener{
 		if (r.isHit(rg)) return false;
 		if (r.isHit(wb)) return false;
 		if (r.isHit(enemy)) return false;
+		if (r.isHit(p1)) return false;
+		if (r.isHit(p2)) return false;
 		for (int i = 0; i < lb.size(); i++) {
 			if (r.isHit(lb.get(i))) return false;
 		}
@@ -159,15 +160,15 @@ public class Test extends JApplet implements Runnable, KeyListener{
 	}
 	
 	public void racketMove() {
-		if (redUp) rr.move(Direction.UP); if (! canMove(rr, gr)) {rr.move(Direction.DOWN);}
-		if (redDown) rr.move(Direction.DOWN); if (! canMove(rr, gr)) {rr.move(Direction.UP);}
-		if (redRight) rr.move(Direction.RIGHT); if (! canMove(rr, gr)) {rr.move(Direction.LEFT);}
-		if (redLeft) rr.move(Direction.LEFT); if (! canMove(rr, gr)) {rr.move(Direction.RIGHT);}
+		if (redUp) rr.move(Direction.UP); if (! canMove(rr, gr) || rr.isOut(f)) {rr.move(Direction.DOWN);}
+		if (redDown) rr.move(Direction.DOWN); if (! canMove(rr, gr) || rr.isOut(f)) {rr.move(Direction.UP);}
+		if (redRight) rr.move(Direction.RIGHT); if (! canMove(rr, gr) || rr.isOut(f)) {rr.move(Direction.LEFT);}
+		if (redLeft) rr.move(Direction.LEFT); if (! canMove(rr, gr) || rr.isOut(f)) {rr.move(Direction.RIGHT);}
 		
-		if (greenUp) gr.move(Direction.UP); if(! canMove(gr, rr)) { gr.move(Direction.DOWN);}
-		if (greenDown) gr.move(Direction.DOWN); if(! canMove(gr, rr)) { gr.move(Direction.UP);}
-		if (greenRight) gr.move(Direction.RIGHT); if(! canMove(gr, rr)) { gr.move(Direction.LEFT);}
-		if (greenLeft) gr.move(Direction.LEFT); if(! canMove(gr, rr)) { gr.move(Direction.RIGHT);}
+		if (greenUp) gr.move(Direction.UP); if(! canMove(gr, rr) || gr.isOut(f)) { gr.move(Direction.DOWN);}
+		if (greenDown) gr.move(Direction.DOWN); if(! canMove(gr, rr) || gr.isOut(f)) { gr.move(Direction.UP);}
+		if (greenRight) gr.move(Direction.RIGHT); if(! canMove(gr, rr) || gr.isOut(f)) { gr.move(Direction.LEFT);}
+		if (greenLeft) gr.move(Direction.LEFT); if(! canMove(gr, rr) || gr.isOut(f)) { gr.move(Direction.RIGHT);}
 	}
 	
 	@Override

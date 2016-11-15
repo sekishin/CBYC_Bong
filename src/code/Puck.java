@@ -9,10 +9,11 @@ public class Puck extends GameObject {
 	private static final int MAX_POWERFUL_TIME = 250;
 	private int dx, dy;
 	private Color color = Color.WHITE;  // パックの色
-	private GameSound boin;
-	private GameSound beam;
-	private GameSound racket;
-	private GameSound goal;
+	private static GameSound boin = new GameSound("../music/car.wav");
+	private static GameSound crash = new GameSound("../music/crash.wav");
+	private static GameSound powerfulCrash = new GameSound("../music/powerfulCrash.wav");
+	private static GameSound racket = new GameSound("../music/racket.wav");
+	private static GameSound goal = new GameSound("../music/bom.wav");
 	private boolean visible = true;
 	private Color invisibleColor = Color.WHITE;
 	private int invisibleTime;
@@ -24,11 +25,6 @@ public class Puck extends GameObject {
 		super(x, y, w, h);
 		this.dx = dx;
 		this.dy = dy;
-		boin = new GameSound("../music/car.wav");
-		beam = new GameSound("../music/beam.wav");
-		racket = new GameSound("../music/racket.wav");
-		goal = new GameSound("../music/bom.wav");
-
 	}
 	
 	//-- パックの描画
@@ -86,16 +82,16 @@ public class Puck extends GameObject {
 	// x軸方向の反射
 	public void reflectX() {
 		this.dx *= -1;
-		if (this.dx > 0) this.x += this.width;
+/*		if (this.dx > 0) this.x += this.width;
 		else this.x -= this.width;
-	}
+*/	}
 
 	// y軸方向の反射
 	public void reflectY() {
 		this.dy = -this.dy;
-		if (this.dy > 0) this.y += this.height;
+/*		if (this.dy > 0) this.y += this.height;
 		else this.y -= this.height;
-	}
+*/	}
 	
 	public void reflect(GameObject go) {
 		int px = (this.dx < 0) ? this.x : this.x + this.width;
@@ -108,10 +104,12 @@ public class Puck extends GameObject {
 			racket.play();
 			break;
 		case Block:
-			beam.play();
+			if (this.powerful) powerfulCrash.play();
+			else crash.play();
 			break;
 		case Goal:
-			goal.play();
+			//goal.play();
+			boin.play();
 			break;
 		default:
 			boin.play();

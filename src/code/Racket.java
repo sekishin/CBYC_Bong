@@ -31,9 +31,17 @@ public class Racket extends GameObject {
 		return Type.Racket;
 	}
 	
+	public boolean isOut(GameObject go) {
+		return ! go.getRect().contains(this.getRect());
+	}
+	
 	public boolean isHit(GameObject go) {
-		this.rect = new Rectangle(this.x, this.y, this.width, this.height);
-		return this.rect.intersects(go.getRect());
+		Rectangle o = go.getRect();
+		if (this.x + this.width <= o.x) return false;
+		if (this.y + this.height <= o.y) return false;
+		if (this.x >= o.x + o.width) return false;
+		if (this.y >= o.y + o.height) return false;
+		return true;
 	}
 	
 	public void move(Direction dis) {
