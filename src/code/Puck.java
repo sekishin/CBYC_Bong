@@ -108,8 +108,8 @@ public class Puck extends GameObject {
 			else crash.play();
 			break;
 		case Goal:
-			//goal.play();
-			boin.play();
+			goal.play();
+			//boin.play();
 			break;
 		default:
 			boin.play();
