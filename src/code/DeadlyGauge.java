@@ -27,6 +27,14 @@ public class DeadlyGauge implements ImageObserver {
 		this.color = c;
 		this.currentGauge = 0;
 	}
+	
+	/*
+	 * ゲージが最大か
+	 * @ return boolean
+	 */
+	public boolean isMax() {
+		return (this.currentGauge >= MAX_DEADLY_GAUGE) ? true : false;
+	}
 
 	/*
 	 * 必殺ゲージの増加
@@ -40,6 +48,14 @@ public class DeadlyGauge implements ImageObserver {
      */
     public void gaugeReset() {
         this.currentGauge = 0;
+    }
+    
+    /*
+     * ゲージの現在値を取得
+     * @ return ゲージの現在値
+     */
+    public int getGaugeCount() {
+    	return this.currentGauge;
     }
     
     /*

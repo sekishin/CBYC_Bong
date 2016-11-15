@@ -216,10 +216,15 @@ public class Test extends JApplet implements Runnable, KeyListener{
 		case 'Z': redDown = true; break;
 		case 'A': redLeft = true; break;
 		case 'S': redRight = true; break;
+		case 'R': pl1.invisible(p1, p2); break;
+		case 'F': pl1.powerPuck(p1, p2); break;
+		
 		case 'I': greenUp = true; break;
 		case 'M': greenDown = true; break;
 		case 'J': greenLeft = true; break;
 		case 'K': greenRight = true; break;
+		case 'Y': pl2.invisible(p1, p2); break;
+		case 'G': pl2.powerPuck(p1, p2); break;
 		}
 	}
 	
@@ -231,6 +236,7 @@ public class Test extends JApplet implements Runnable, KeyListener{
 		case 'Z': redDown = false; break;
 		case 'A': redLeft = false; break;
 		case 'S': redRight = false; break;
+		
 		case 'I': greenUp = false; break;
 		case 'M': greenDown = false; break;
 		case 'J': greenLeft = false; break;

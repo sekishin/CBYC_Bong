@@ -54,6 +54,13 @@ public abstract class Character implements ImageObserver {
     }
     
     /*
+     * ゲージがたまっているか確認
+     * @ return boolean
+     */
+    public boolean isGaugeMax() {
+    	return this.dg.isMax();
+    }
+    /*
      * ゲージを増加
      */
     public void gaugeUp() {
