@@ -14,7 +14,8 @@ public abstract class GameObject {
 		Wall,
 		Field,
 		Puck,
-		Block
+		Block,
+		Goal
 	}
 
 	// コンストラクタ

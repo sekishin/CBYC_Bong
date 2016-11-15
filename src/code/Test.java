@@ -30,7 +30,7 @@ public class Test extends JApplet implements Runnable, KeyListener{
 	private final int GREEN_RACKET_STRATY = 400;
 	private final int RACKET_WIDTH = 20;
 	private final int RACKET_HEIGHT = 50;
-	private final int PUCK_SIZE = 20;
+	private final int PUCK_SIZE = 15;
 	private final int BLOCK_WIDTH = 20;
 	private final int BLOCK_HEIGHT = 30;
 	private final int WALL_X = 200;
@@ -66,10 +66,10 @@ public class Test extends JApplet implements Runnable, KeyListener{
 	private Racket gr;
 	private Puck p1;
 	private Puck p2;
-	private Wall wRight;
-	private Wall wTop;
-	private Wall wLeft;
-	private Wall wBottom;
+	private Goal rg;
+	private Goal gg;
+	private Wall wt;
+	private Wall wb;
 	private Field f;
 	private List<Block> lb;
 	private Player pl1;
@@ -88,7 +88,7 @@ public class Test extends JApplet implements Runnable, KeyListener{
 		pl1 = new Player(PLAYER_X, P1_COLOR, PLAYER_IMAGE_1);
 		pl2 = new Player(PLAYER_X + WALL_X + WALL_LENGTH_HORIZONTALLY, P2_COLOR, PLAYER_IMAGE_2);
 
-		bgm = new GameSound("../music/bacteria.wav");
+		bgm = new GameSound("../music/zangyousenshi.wav");
 
 		setFocusable(true);
 		addKeyListener(this);
@@ -100,10 +100,10 @@ public class Test extends JApplet implements Runnable, KeyListener{
 		p1 = new Puck(P1_STARTX, P1_STARTY, PUCK_SIZE, PUCK_SIZE, 5, 5);
 		p2 = new Puck(P2_STARTX, P2_STARTY, PUCK_SIZE, PUCK_SIZE, -5, -5);
 
-		wLeft = new Wall(WALL_X, WALL_Y + WALL_THICK, WALL_THICK, WALL_LENGTH_VERTICALLY, Color.GREEN);
-		wTop = new Wall(WALL_X, WALL_Y, WALL_LENGTH_HORIZONTALLY, WALL_THICK, Color.BLACK);
-		wRight = new Wall(WALL_X + WALL_LENGTH_HORIZONTALLY - WALL_THICK, WALL_Y + WALL_THICK, WALL_THICK, WALL_LENGTH_VERTICALLY, Color.RED);
-		wBottom = new Wall(WALL_X, WALL_Y + WALL_LENGTH_VERTICALLY + WALL_THICK, WALL_LENGTH_HORIZONTALLY, WALL_THICK, Color.BLACK);
+		gg = new Goal(WALL_X, WALL_Y + WALL_THICK, WALL_THICK, WALL_LENGTH_VERTICALLY, Color.GREEN);
+		rg = new Goal(WALL_X + WALL_LENGTH_HORIZONTALLY - WALL_THICK, WALL_Y + WALL_THICK, WALL_THICK, WALL_LENGTH_VERTICALLY, Color.RED);
+		wt = new Wall(WALL_X, WALL_Y, WALL_LENGTH_HORIZONTALLY, WALL_THICK, Color.BLACK);
+		wb = new Wall(WALL_X, WALL_Y + WALL_LENGTH_VERTICALLY + WALL_THICK, WALL_LENGTH_HORIZONTALLY, WALL_THICK, Color.BLACK);
 
 		f = new Field(FIELD_X, FIELD_Y, FIELD_WIDTH, FIELD_HEIGHT);
 
@@ -132,10 +132,10 @@ public class Test extends JApplet implements Runnable, KeyListener{
 	}
 	
 	public void puckreflect(Puck p) {
-		if (p.isHit(wLeft)) { p.reflect(wLeft);}
-		if (p.isHit(wRight)) { p.reflect(wRight);}
-		if (p.isHit(wTop)) { p.reflect(wTop);}
-		if (p.isHit(wBottom)) { p.reflect(wBottom);}
+		if (p.isHit(gg)) { p.reflect(gg);}
+		if (p.isHit(rg)) { p.reflect(rg);}
+		if (p.isHit(wt)) { p.reflect(wt);}
+		if (p.isHit(wb)) { p.reflect(wb);}
 		for (int i = 0; i < lb.size(); i++) {
 			Block b = lb.get(i);
 			if (p.isHit(b)) { p.reflect(b); lb.remove(i); }
@@ -147,10 +147,10 @@ public class Test extends JApplet implements Runnable, KeyListener{
 	}
 
 	public boolean canMove(Racket r, Racket enemy) {
-		if (r.isHit(wLeft)) return false;
-		if (r.isHit(wTop)) return false;
-		if (r.isHit(wRight)) return false;
-		if (r.isHit(wBottom)) return false;
+		if (r.isHit(gg)) return false;
+		if (r.isHit(wt)) return false;
+		if (r.isHit(rg)) return false;
+		if (r.isHit(wb)) return false;
 		if (r.isHit(enemy)) return false;
 		for (int i = 0; i < lb.size(); i++) {
 			if (r.isHit(lb.get(i))) return false;
@@ -179,10 +179,10 @@ public class Test extends JApplet implements Runnable, KeyListener{
 		f.draw(buffer);
 		rr.draw(buffer);
 		gr.draw(buffer);
-		wLeft.draw(buffer);
-		wTop.draw(buffer);
-		wRight.draw(buffer);
-		wBottom.draw(buffer);
+		gg.draw(buffer);
+		wt.draw(buffer);
+		rg.draw(buffer);
+		wb.draw(buffer);
 		p1.draw(buffer);
 		p2.draw(buffer);
 		pl1.draw(buffer);
