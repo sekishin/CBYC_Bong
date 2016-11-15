@@ -19,6 +19,8 @@ public class Test extends JApplet implements Runnable, KeyListener{
 
 	private static final int WIDTH = 1050;
 	private static final int HEIGHT = 600;
+	private static final int OP_WIDTH = 400; // WIDTH-OP_WIDTH
+	private static final int OP_HEIGHT = 100; // HEOGHT-OP_HEIGHT
 
 	private final int P1_STARTX = 350;
 	private final int P1_STARTY = 300;
@@ -75,6 +77,7 @@ public class Test extends JApplet implements Runnable, KeyListener{
 	private Player pl1;
 	private Player pl2;
 	private GameSound bgm;
+	private Operation ope;
 
 
 	@Override
@@ -107,6 +110,8 @@ public class Test extends JApplet implements Runnable, KeyListener{
 		wb = new Wall(WALL_X, WALL_Y + WALL_LENGTH_VERTICALLY + WALL_THICK, WALL_LENGTH_HORIZONTALLY, WALL_THICK, Color.BLACK);
 
 		f = new Field(FIELD_X, FIELD_Y, FIELD_WIDTH, FIELD_HEIGHT);
+		
+		ope = new Operation(WIDTH-OP_WIDTH, HEIGHT-OP_HEIGHT, 0, 0);   // 大きさの決定
 
 		lb = new ArrayList<Block>();
 		for (int i = 0; i < FIELD_HEIGHT/ BLOCK_HEIGHT; i++) {
@@ -125,7 +130,6 @@ public class Test extends JApplet implements Runnable, KeyListener{
 
 	public void update() {
 		racketMove();
-		mBgm = new MyBGM();
 		p1.move();
 		puckreflect(p1);
 		p2.move();
@@ -190,6 +194,7 @@ public class Test extends JApplet implements Runnable, KeyListener{
 		p2.draw(buffer);
 		pl1.draw(buffer);
 		pl2.draw(buffer);
+		ope.draw(buffer);   // 説明文表示
 		for (int i = 0; i < lb.size(); i++) {
 			lb.get(i).draw(buffer);
 		}
