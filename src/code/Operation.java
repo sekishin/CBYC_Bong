@@ -1,4 +1,4 @@
-package code;
+package src.code;
 
 public class Operation extends GameObject {
 	

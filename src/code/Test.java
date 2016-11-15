@@ -1,4 +1,4 @@
-package code;
+package src.code;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -13,7 +13,7 @@ import javax.swing.JApplet;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
-import code.Racket.Direction;
+import src.code.Racket.Direction;
 
 public class Test extends JApplet implements Runnable, KeyListener{
 
