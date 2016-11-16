@@ -19,6 +19,8 @@ public class Test extends JApplet implements Runnable, KeyListener{
 
 	private static final int WIDTH = 1050;
 	private static final int HEIGHT = 650;
+	private static final int OP_WIDTH = 400; // WIDTH-OP_WIDTH
+	private static final int OP_HEIGHT = 100; // HEOGHT-OP_HEIGHT
 
 	private final int P1_STARTX = 350;
 	private final int P1_STARTY = 300;
@@ -76,6 +78,7 @@ public class Test extends JApplet implements Runnable, KeyListener{
 	private Player pl2;
 	private GameSound bgm;
 	private StartScreen ss;
+	private Operation ope;
 
 	boolean gameFlag = false;
 
@@ -89,6 +92,7 @@ public class Test extends JApplet implements Runnable, KeyListener{
 
 		pl1 = new Player(PLAYER_X, P1_COLOR, PLAYER_IMAGE_1);
         pl2 = new Player(PLAYER_X + WALL_X + WALL_LENGTH_HORIZONTALLY, P2_COLOR, PLAYER_IMAGE_2);
+        ope = new Operation(WIDTH-OP_WIDTH, HEIGHT-OP_HEIGHT, 0, 0);   // 大きさの決定
 
 	    bgm = new GameSound("../music/zangyousenshi.wav");
 
@@ -193,6 +197,7 @@ public class Test extends JApplet implements Runnable, KeyListener{
 		    p2.draw(buffer);
 		    pl1.draw(buffer);
 		    pl2.draw(buffer);
+		    ope.draw(buffer);
 		    for (int i = 0; i < lb.size(); i++) {
 			    lb.get(i).draw(buffer);
 		    }
@@ -201,7 +206,6 @@ public class Test extends JApplet implements Runnable, KeyListener{
             ss.start(buffer);
             g.drawImage(back, 0, 0, this);
         }
-
 	}
 
 	@Override
