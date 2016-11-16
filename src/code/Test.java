@@ -42,7 +42,7 @@ public class Test extends JApplet implements Runnable , KeyListener{
 
         ope = new Operation(WIDTH-OP_WIDTH, HEIGHT-OP_HEIGHT, 0, 0);   // 大きさの決定
         ss = new StartScreen(WIDTH, HEIGHT);
-	    bgm = new GameSound("../music/zangyousenshi.wav");
+	    bgm = new GameSound("../music/yaranaika.wav");
 
 	    setFocusable(true);
 		addKeyListener(this);
@@ -117,7 +117,7 @@ public class Test extends JApplet implements Runnable , KeyListener{
 			frame.setLocationRelativeTo(null);
 			frame.setVisible(true);
 			applet.init();
-			applet.start();
+			//applet.start();
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		});
 	}
@@ -136,6 +136,7 @@ public class Test extends JApplet implements Runnable , KeyListener{
 		case 'S': om.getRacket(Color.RED).flagUp(Direction.RIGHT); break;
 		case 'R': PlayerManager.getRedPlayer().invisible(om.getPuck1(), om.getPuck2()); break;
 		case 'F': PlayerManager.getRedPlayer().powerPuck(om.getPuck1(), om.getPuck2()); break;
+		case 'C': PlayerManager.getRedPlayer().bigRacket(om.getRacket(Color.RED)); break;
 
 		case 'I': om.getRacket(Color.GREEN).flagUp(Direction.UP); break;
 		case 'M': om.getRacket(Color.GREEN).flagUp(Direction.DOWN); break;
@@ -143,6 +144,7 @@ public class Test extends JApplet implements Runnable , KeyListener{
 		case 'K': om.getRacket(Color.GREEN).flagUp(Direction.RIGHT); break;
 		case 'Y': PlayerManager.getGreenPlayer().invisible(om.getPuck1(), om.getPuck2()); break;
 		case 'G': PlayerManager.getGreenPlayer().powerPuck(om.getPuck1(), om.getPuck2()); break;
+		case 'B': PlayerManager.getGreenPlayer().bigRacket(om.getRacket(Color.GREEN)); break;
 
 		case KeyEvent.VK_SPACE: if (! gameFlag ) { gameFlag = true; ss.START_BGM.stop(); start(); } break;
 		case KeyEvent.VK_ESCAPE: System.exit(0); break;
@@ -163,10 +165,7 @@ public class Test extends JApplet implements Runnable , KeyListener{
 		case 'M': om.getRacket(Color.GREEN).flagDown(Direction.DOWN); break;
 		case 'J': om.getRacket(Color.GREEN).flagDown(Direction.LEFT); break;
 		case 'K': om.getRacket(Color.GREEN).flagDown(Direction.RIGHT); break;
-/*
-		case KeyEvent.VK_SPACE: if (! gameFlag ) { gameFlag = true; ss.START_BGM.stop(); bgm.start(); } break;
-		case KeyEvent.VK_ESCAPE: System.exit(0); break;
-*/		}
+		}
 
 	}
 

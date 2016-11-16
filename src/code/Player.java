@@ -28,4 +28,13 @@ public class Player extends Character {
     	p2.powerUp();
     	gaugeReset();
     }
+    
+    /*
+     * 必殺技3 ラケットの巨大化
+     */
+    public void bigRacket(Racket r) {
+    	if (! isGaugeMax()) return;
+    	r.bigRacket();
+    	gaugeReset();
+    }
 }

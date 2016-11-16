@@ -28,7 +28,6 @@ public class PlayerManager extends Manager {
 		rp.draw(g);
 		gp.draw(g);
 	    g.fillRect(SCORE_BAR_X, SCORE_BAR_Y, SCORE_BAR_WIDTH, SCORE_BAR_HEIGHT);
-
 	}
 	
 	/*

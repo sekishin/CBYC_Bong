@@ -31,6 +31,7 @@ public class Field extends GameObject implements ImageObserver{
 	}
 	
 	public void showImage() {
+		if (this.flag) return;
 		this.flag = true;
 	}
 	

@@ -2,13 +2,13 @@ package code;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Rectangle;
 
 public class Racket extends GameObject {
 	
 	private static final int MAX_BIG_TIME = 250;
 	private static final int MAX_RACKET_HEIGHT = 150;
 	private static final int MIN_RACKET_HEIGHT =50;
+	private static final int CHANGE_HEIGHT = 1;
 	private Color color;
 	private boolean isBig = false;
 	private int bigTime;
@@ -53,13 +53,14 @@ public class Racket extends GameObject {
 	 * @ return 当たっているか
 	 */
 	public boolean isHit(GameObject go) {
-		Rectangle o = go.getRect();
+		return getRect().intersects(go.getRect());
+/*		Rectangle o = go.getRect();
 		if (this.x + this.width <= o.x) return false;
 		if (this.y + this.height <= o.y) return false;
 		if (this.x >= o.x + o.width) return false;
 		if (this.y >= o.y + o.height) return false;
 		return true;
-	}
+*/	}
 	
 	/*
 	 * 情報の更新
@@ -69,6 +70,7 @@ public class Racket extends GameObject {
 			this.bigTime++;
 			if (this.bigTime >= MAX_BIG_TIME) this.isBig = false;
 		}
+		changeHeight();
 		if (up)  {
 			this.y -= 10;
 			if ( ! ObjectManager.racketExist(this, ObjectManager.getEnemyRacket(this.color)) || isOut(ObjectManager.getField())) back(Direction.UP);
@@ -138,24 +140,44 @@ public class Racket extends GameObject {
 		this.bigTime = 0;
 	}
 	
+	public void changeHeight() {
+		if (this.isBig) {
+			beBig(CHANGE_HEIGHT, CHANGE_HEIGHT);
+			if (! ObjectManager.racketExist(this, ObjectManager.getEnemyRacket(this.color)) || isOut(ObjectManager.getField())) {
+				beSmall(CHANGE_HEIGHT, CHANGE_HEIGHT);
+				beBig(CHANGE_HEIGHT*2, 0);
+				if (! ObjectManager.racketExist(this, ObjectManager.getEnemyRacket(this.color)) || isOut(ObjectManager.getField())) {
+					beSmall(CHANGE_HEIGHT*2, 0);
+					beBig(0, CHANGE_HEIGHT*2);
+					if (! ObjectManager.racketExist(this, ObjectManager.getEnemyRacket(this.color)) || isOut(ObjectManager.getField())) {
+						beSmall(0, CHANGE_HEIGHT*2);
+					}
+
+				}
+			}
+		} else {
+			if (this.height > MIN_RACKET_HEIGHT) {
+				beSmall(CHANGE_HEIGHT, CHANGE_HEIGHT);
+			}
+		}
+	}
+	
 	/*
 	 * 大きくする
 	 */
-	public boolean beBig(int dy, int dh) {
+	private void beBig(int dy, int dh) {
+		if (this.height >= MAX_RACKET_HEIGHT) return;
 		this.height += dh;
-		this.y += dy;
-		if (this.height >= MAX_RACKET_HEIGHT) return false;
-		return true;
+		this.y -= dy;
 	}
 	
 	/*
 	 * 小さくする
 	 */
-	public boolean beSmall(int dy, int dh) {
+	private void beSmall(int dy, int dh) {
+		if (this.height <= MIN_RACKET_HEIGHT) return;
 		this.height -= dh;
-		this.y -= dy;
-		if (this.height <= MIN_RACKET_HEIGHT) return false;
-		return true;
+		this.y += dy;
 	}
 	
 	
