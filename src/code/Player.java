@@ -24,7 +24,8 @@ public class Player extends Character {
      */
     public void powerPuck(Puck p1, Puck p2) {
     	if (! isGaugeMax()) return;
-    	if (p1.getColor() == this.color) p1.powerUp(); gaugeReset();
-    	if (p2.getColor() == this.color) p2.powerUp(); gaugeReset();
+    	p1.powerUp();
+    	p2.powerUp();
+    	gaugeReset();
     }
 }
