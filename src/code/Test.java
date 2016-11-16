@@ -240,7 +240,7 @@ public class Test extends JApplet implements Runnable, KeyListener{
 		case 'Y': pl2.invisible(p1, p2); break;
 		case 'G': pl2.powerPuck(p1, p2); break;
 
-		case KeyEvent.VK_SPACE: gameFlag = true; ss.START_BGM.stop(); bgm.start(); break;
+		case KeyEvent.VK_SPACE: if (! gameFlag ) { gameFlag = true; /*ss.START_BGM.stop();*/ /*bgm.start();*/ } break;
 		case KeyEvent.VK_ESCAPE: System.exit(0); break;
 		}
 	}
