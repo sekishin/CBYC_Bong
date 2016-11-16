@@ -7,7 +7,7 @@ import java.util.List;
 
 public class ObjectManager extends Manager {
 
-	
+
 	private static Racket rr;
 	private static Racket gr;
 	private static Puck p1;
@@ -22,7 +22,7 @@ public class ObjectManager extends Manager {
 	public ObjectManager() {
 		createObject();
 	}
-		
+
 	/*
 	 * オブジェクトを生成
 	 */
@@ -51,7 +51,7 @@ public class ObjectManager extends Manager {
 		}
 
 	}
-	
+
 	/*
 	 * 	オブジェクトの情報を更新
 	 */
@@ -78,14 +78,14 @@ public class ObjectManager extends Manager {
 		    lb.get(i).draw(g);
 	    }
 	}
-	
+
 	/*
 	 * オブジェクトの情報の初期化
 	 */
 	public void initObject() {
 		createObject();
 	}
-	
+
 	/*
 	 * ラケットの情報の更新
 	 */
@@ -93,7 +93,7 @@ public class ObjectManager extends Manager {
 		rr.move();
 		gr.move();
 	}
-	
+
 	/*
 	 * ラケットの移動
 	 * @ return 現在位置に存在できるか
@@ -111,7 +111,7 @@ public class ObjectManager extends Manager {
 		}
 		return true;
 	}
-	
+
 	/*
 	 * パックの情報の更新
 	 */
@@ -120,24 +120,64 @@ public class ObjectManager extends Manager {
 		p2.move();
 		puckReflect();
 	}
-	
+
 	/*
 	 * パックの反射
 	 */
 	private void puckReflect() {
-		if (p1.isHit(rr)) { p1.reflect(rr); p1.changeColor(rr.getColor()); PlayerManager.getRedPlayer().gaugeUp(); }
-		if (p1.isHit(gr)) { p1.reflect(gr); p1.changeColor(gr.getColor()); PlayerManager.getGreenPlayer().gaugeUp(); }
-		if (p1.isHit(gg)) { p1.reflect(gg); PlayerManager.getGreenPlayer().upScore(1); }
-		if (p1.isHit(rg)) { p1.reflect(rg); PlayerManager.getRedPlayer().upScore(1);}
-		if (p1.isHit(wt)) { p1.reflect(wt);}
-		if (p1.isHit(wb)) { p1.reflect(wb);}
-		
-		if (p2.isHit(rr)) { p2.reflect(rr); p2.changeColor(rr.getColor()); PlayerManager.getRedPlayer().gaugeUp(); }
-		if (p2.isHit(gr)) { p2.reflect(gr); p2.changeColor(gr.getColor()); PlayerManager.getGreenPlayer().gaugeUp(); }
-		if (p2.isHit(gg)) { p2.reflect(gg); PlayerManager.getGreenPlayer().upScore(1); }
-		if (p2.isHit(rg)) { p2.reflect(rg); PlayerManager.getRedPlayer().upScore(1); }
-		if (p2.isHit(wt)) { p2.reflect(wt);}
-		if (p2.isHit(wb)) { p2.reflect(wb);}
+		if (p1.isHit(rr)) { p1.reflect(rr); p1.changeColor(rr.getColor()); Test.speedUp(); PlayerManager.getRedPlayer().gaugeUp(); }
+		if (p1.isHit(gr)) { p1.reflect(gr); p1.changeColor(gr.getColor()); Test.speedUp(); PlayerManager.getGreenPlayer().gaugeUp(); }
+		if (p1.isHit(gg)) {
+		    if ( p1.getColor() == gg.getColor() ) {
+		        p1.reflect(gg);
+		        PlayerManager.getGreenPlayer().upScore(1);
+		        createObject();
+		        Test.speedReset();
+		    } else {
+		        p1.reflect(gg);
+		        Test.speedUp();
+		    }
+		}
+		if (p1.isHit(rg)) {
+            if ( p1.getColor() == rg.getColor() ) {
+                p1.reflect(rg);
+                PlayerManager.getGreenPlayer().upScore(1);
+                createObject();
+                Test.speedReset();
+            } else {
+                p1.reflect(rg);
+                Test.speedUp();
+            }
+        }
+		if (p1.isHit(wt)) { p1.reflect(wt); Test.speedUp(); }
+		if (p1.isHit(wb)) { p1.reflect(wb); Test.speedUp(); }
+
+		if (p2.isHit(rr)) { p2.reflect(rr); p2.changeColor(rr.getColor()); Test.speedUp(); PlayerManager.getRedPlayer().gaugeUp(); }
+		if (p2.isHit(gr)) { p2.reflect(gr); p2.changeColor(gr.getColor()); Test.speedUp(); PlayerManager.getGreenPlayer().gaugeUp(); }
+		if (p2.isHit(gg)) {
+            if ( p2.getColor() == gg.getColor() ) {
+                p2.reflect(gg);
+                PlayerManager.getGreenPlayer().upScore(1);
+                createObject();
+                Test.speedReset();
+            } else {
+                p2.reflect(gg);
+                Test.speedUp();
+            }
+        }
+        if (p2.isHit(rg)) {
+            if ( p2.getColor() == rg.getColor() ) {
+                p2.reflect(rg);
+                PlayerManager.getGreenPlayer().upScore(1);
+                createObject();
+                Test.speedReset();
+            } else {
+                p2.reflect(rg);
+                Test.speedUp();
+            }
+        }
+		if (p2.isHit(wt)) { p2.reflect(wt); Test.speedUp(); }
+		if (p2.isHit(wb)) { p2.reflect(wb); Test.speedUp(); }
 
 		for (int i = 0; i < lb.size(); i++) {
 			Block b = lb.get(i);
@@ -148,7 +188,7 @@ public class ObjectManager extends Manager {
 		}
 
 	}
-	
+
 	/*
 	 * 指定した色のラケットの情報の取得
 	 * @ return Racket
@@ -156,7 +196,7 @@ public class ObjectManager extends Manager {
 	public Racket getRacket(Color c) {
 		return (c == Color.RED) ? rr : gr;
 	}
-	
+
 	/*
 	 * 指定した色の敵のラケットの情報の取得
 	 * @ return Racket
@@ -164,7 +204,7 @@ public class ObjectManager extends Manager {
 	public static Racket getEnemyRacket(Color c) {
 		return (c == Color.GREEN) ? rr : gr;
 	}
-			
+
 	/*
 	 * パック1の情報の取得
 	 * @ return puck1
@@ -172,7 +212,7 @@ public class ObjectManager extends Manager {
 	public Puck getPuck1() {
 		return p1;
 	}
-	
+
 	/*
 	 * パック2の情報の取得
 	 * @ return puck1
@@ -180,12 +220,12 @@ public class ObjectManager extends Manager {
 	public Puck getPuck2() {
 		return p2;
 	}
-	
+
 	/*
 	 * フィールド情報の取得
 	 */
 	public static Field getField() {
 		return f;
 	}
-	
+
 }

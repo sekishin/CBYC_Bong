@@ -96,6 +96,12 @@ public abstract class Character implements ImageObserver {
         this.score += point;
     }
 
+    /*
+     * リセット
+     */
+    public void resetScore() {
+        this.score = 0;
+    }
     @Override
     public boolean imageUpdate(Image img, int infoflags, int x, int y, int width, int height) {
         return false;
