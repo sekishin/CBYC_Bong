@@ -88,7 +88,7 @@ public class Test extends JApplet implements Runnable, KeyListener{
 		pl1 = new Player(PLAYER_X, P1_COLOR, PLAYER_IMAGE_1);
 		pl2 = new Player(PLAYER_X + WALL_X + WALL_LENGTH_HORIZONTALLY, P2_COLOR, PLAYER_IMAGE_2);
 
-		bgm = new GameSound("../music/zangyousenshi.wav");
+		bgm = new GameSound("../music/yaranaika.wav");
 
 		setFocusable(true);
 		addKeyListener(this);
