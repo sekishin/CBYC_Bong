@@ -49,6 +49,12 @@ public class Test extends JApplet implements Runnable, KeyListener{
 	private final String PLAYER_IMAGE_2 = "../image/homo2.jpg";
 	private final Color P1_COLOR = Color.red;
 	private final Color P2_COLOR = Color.green;
+	private final int SCORE_PL1 = 250;
+	private final int SCORE_PL2 = -200;
+	private final int SCORE_BAR_X = 465;
+	private final int SCORE_BAR_Y = 60;
+	private final int SCORE_BAR_WIDTH = 100;
+	private final int SCORE_BAR_HEIGHT = 10;
 
 	private Thread drawThread = null;
 
@@ -90,8 +96,8 @@ public class Test extends JApplet implements Runnable, KeyListener{
 		buffer = back.getGraphics();
 		createObject();
 
-		pl1 = new Player(PLAYER_X, P1_COLOR, PLAYER_IMAGE_1);
-        pl2 = new Player(PLAYER_X + WALL_X + WALL_LENGTH_HORIZONTALLY, P2_COLOR, PLAYER_IMAGE_2);
+		pl1 = new Player(PLAYER_X, P1_COLOR, PLAYER_IMAGE_1, SCORE_PL1);
+        pl2 = new Player(PLAYER_X + WALL_X + WALL_LENGTH_HORIZONTALLY, P2_COLOR, PLAYER_IMAGE_2, SCORE_PL2);
         ope = new Operation(WIDTH-OP_WIDTH, HEIGHT-OP_HEIGHT, 0, 0);   // 大きさの決定
 
 	    bgm = new GameSound("../music/zangyousenshi.wav");
@@ -142,8 +148,8 @@ public class Test extends JApplet implements Runnable, KeyListener{
 	public void puckreflect(Puck p) {
 		if (p.isHit(rr)) { p.reflect(rr); p.changeColor(rr.getColor()); pl1.gaugeUp(); }
 		if (p.isHit(gr)) { p.reflect(gr); p.changeColor(gr.getColor()); pl2.gaugeUp(); }
-		if (p.isHit(gg)) { p.reflect(gg);}
-		if (p.isHit(rg)) { p.reflect(rg);}
+		if (p.isHit(gg)) { p.reflect(gg); pl2.upScore(1); }
+		if (p.isHit(rg)) { p.reflect(rg); pl1.upScore(1);}
 		if (p.isHit(wt)) { p.reflect(wt);}
 		if (p.isHit(wb)) { p.reflect(wb);}
 		for (int i = 0; i < lb.size(); i++) {
@@ -202,6 +208,7 @@ public class Test extends JApplet implements Runnable, KeyListener{
 			    lb.get(i).draw(buffer);
 		    }
 		    g.drawImage(back, 0, 0, this);
+		    g.fillRect(SCORE_BAR_X, SCORE_BAR_Y, SCORE_BAR_WIDTH, SCORE_BAR_HEIGHT);
         } else {
             ss.start(buffer);
             g.drawImage(back, 0, 0, this);
