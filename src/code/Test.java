@@ -52,7 +52,7 @@ public class Test extends JApplet implements Runnable, KeyListener{
 
 	private Image back;
 	private Graphics buffer;
-	
+
 	private boolean redRight = false;
 	private boolean redUp = false;
 	private boolean redDown = false;
@@ -75,6 +75,9 @@ public class Test extends JApplet implements Runnable, KeyListener{
 	private Player pl1;
 	private Player pl2;
 	private GameSound bgm;
+	private StartScreen ss;
+
+	boolean gameFlag = false;
 
 	@Override
 	public void init() {
@@ -82,16 +85,16 @@ public class Test extends JApplet implements Runnable, KeyListener{
 
 		back = createImage(WIDTH, HEIGHT);
 		buffer = back.getGraphics();
-
 		createObject();
-		
+
 		pl1 = new Player(PLAYER_X, P1_COLOR, PLAYER_IMAGE_1);
-		pl2 = new Player(PLAYER_X + WALL_X + WALL_LENGTH_HORIZONTALLY, P2_COLOR, PLAYER_IMAGE_2);
+        pl2 = new Player(PLAYER_X + WALL_X + WALL_LENGTH_HORIZONTALLY, P2_COLOR, PLAYER_IMAGE_2);
 
-		bgm = new GameSound("../music/yaranaika.wav");
+	    bgm = new GameSound("../music/zangyousenshi.wav");
 
-		setFocusable(true);
+	    setFocusable(true);
 		addKeyListener(this);
+
 	}
 
 	public void createObject() {
@@ -106,6 +109,7 @@ public class Test extends JApplet implements Runnable, KeyListener{
 		wb = new Wall(WALL_X, WALL_Y + WALL_LENGTH_VERTICALLY + WALL_THICK, WALL_LENGTH_HORIZONTALLY, WALL_THICK, Color.BLACK);
 
 		f = new Field(FIELD_X, FIELD_Y, FIELD_WIDTH, FIELD_HEIGHT);
+        ss = new StartScreen(WIDTH, HEIGHT);
 
 		lb = new ArrayList<Block>();
 		for (int i = 0; i < FIELD_HEIGHT/ BLOCK_HEIGHT; i++) {
@@ -130,7 +134,7 @@ public class Test extends JApplet implements Runnable, KeyListener{
 		puckreflect(p2);
 		if (lb.size() == 0) { f.showImage(); }
 	}
-	
+
 	public void puckreflect(Puck p) {
 		if (p.isHit(rr)) { p.reflect(rr); p.changeColor(rr.getColor()); pl1.gaugeUp(); }
 		if (p.isHit(gr)) { p.reflect(gr); p.changeColor(gr.getColor()); pl2.gaugeUp(); }
@@ -142,7 +146,7 @@ public class Test extends JApplet implements Runnable, KeyListener{
 			Block b = lb.get(i);
 			if (p.isHit(b)) { p.reflect(b); lb.remove(i); }
 
-		}		
+		}
 	}
 
 	public boolean canMove(Racket r, Racket enemy) {
@@ -158,40 +162,45 @@ public class Test extends JApplet implements Runnable, KeyListener{
 		}
 		return true;
 	}
-	
+
 	public void racketMove() {
 		if (redUp) rr.move(Direction.UP); if (! canMove(rr, gr) || rr.isOut(f)) {rr.move(Direction.DOWN);}
 		if (redDown) rr.move(Direction.DOWN); if (! canMove(rr, gr) || rr.isOut(f)) {rr.move(Direction.UP);}
 		if (redRight) rr.move(Direction.RIGHT); if (! canMove(rr, gr) || rr.isOut(f)) {rr.move(Direction.LEFT);}
 		if (redLeft) rr.move(Direction.LEFT); if (! canMove(rr, gr) || rr.isOut(f)) {rr.move(Direction.RIGHT);}
-		
+
 		if (greenUp) gr.move(Direction.UP); if(! canMove(gr, rr) || gr.isOut(f)) { gr.move(Direction.DOWN);}
 		if (greenDown) gr.move(Direction.DOWN); if(! canMove(gr, rr) || gr.isOut(f)) { gr.move(Direction.UP);}
 		if (greenRight) gr.move(Direction.RIGHT); if(! canMove(gr, rr) || gr.isOut(f)) { gr.move(Direction.LEFT);}
 		if (greenLeft) gr.move(Direction.LEFT); if(! canMove(gr, rr) || gr.isOut(f)) { gr.move(Direction.RIGHT);}
 	}
-	
+
 	@Override
 	public void paint(Graphics g) {
 
 		buffer.setColor(getBackground());
 		buffer.fillRect(0, 0, WIDTH, HEIGHT);
 
-		f.draw(buffer);
-		rr.draw(buffer);
-		gr.draw(buffer);
-		gg.draw(buffer);
-		wt.draw(buffer);
-		rg.draw(buffer);
-		wb.draw(buffer);
-		p1.draw(buffer);
-		p2.draw(buffer);
-		pl1.draw(buffer);
-		pl2.draw(buffer);
-		for (int i = 0; i < lb.size(); i++) {
-			lb.get(i).draw(buffer);
-		}
-		g.drawImage(back, 0, 0, this);
+        if ( gameFlag ) {
+		    f.draw(buffer);
+		    rr.draw(buffer);
+		    gr.draw(buffer);
+		    gg.draw(buffer);
+		    wt.draw(buffer);
+		    rg.draw(buffer);
+		    wb.draw(buffer);
+		    p1.draw(buffer);
+		    p2.draw(buffer);
+		    pl1.draw(buffer);
+		    pl2.draw(buffer);
+		    for (int i = 0; i < lb.size(); i++) {
+			    lb.get(i).draw(buffer);
+		    }
+		    g.drawImage(back, 0, 0, this);
+        } else {
+            ss.start(buffer);
+            g.drawImage(back, 0, 0, this);
+        }
 
 	}
 
@@ -199,16 +208,20 @@ public class Test extends JApplet implements Runnable, KeyListener{
 	public void run() {
 		Thread currentThread = Thread.currentThread();
 		while (currentThread == drawThread) {
-			update();
-			
+			if ( gameFlag ) {
+		        update();
+			}
+
 			try {
 				Thread.sleep(40);
 			} catch (InterruptedException e) {
 			}
-			repaint();
+			if ( gameFlag ) {
+			    repaint();
+			}
 		}
 	}
-	
+
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
@@ -219,16 +232,19 @@ public class Test extends JApplet implements Runnable, KeyListener{
 		case 'S': redRight = true; break;
 		case 'R': pl1.invisible(p1, p2); break;
 		case 'F': pl1.powerPuck(p1, p2); break;
-		
+
 		case 'I': greenUp = true; break;
 		case 'M': greenDown = true; break;
 		case 'J': greenLeft = true; break;
 		case 'K': greenRight = true; break;
 		case 'Y': pl2.invisible(p1, p2); break;
 		case 'G': pl2.powerPuck(p1, p2); break;
+
+		case KeyEvent.VK_SPACE: gameFlag = true; ss.START_BGM.stop(); bgm.start(); break;
+		case KeyEvent.VK_ESCAPE: System.exit(0); break;
 		}
 	}
-	
+
 	@Override
 	public void keyReleased(KeyEvent e) {
 		int key = e.getKeyCode();
@@ -237,14 +253,16 @@ public class Test extends JApplet implements Runnable, KeyListener{
 		case 'Z': redDown = false; break;
 		case 'A': redLeft = false; break;
 		case 'S': redRight = false; break;
-		
+
 		case 'I': greenUp = false; break;
 		case 'M': greenDown = false; break;
 		case 'J': greenLeft = false; break;
 		case 'K': greenRight = false; break;
 		}
 	}
-	
+
+
+
 	@Override
 	public void keyTyped(KeyEvent e) {}
 
@@ -253,7 +271,7 @@ public class Test extends JApplet implements Runnable, KeyListener{
         if (drawThread == null) {
             drawThread = new Thread(this);
             drawThread.start();
-            bgm.start();
+            //bgm.start();
         }
     }
 
