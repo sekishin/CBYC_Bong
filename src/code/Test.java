@@ -22,6 +22,22 @@ public class Test extends JApplet implements Runnable , KeyListener{
 	public static final int FINISH_SCORE = 100;
 	public static final int SCORE_BLOCK = 1;
 	public static final int SCORE_GOAL = 20;
+	
+	public static final int RED_UP = 'W';
+	public static final int RED_LEFT = 'A';
+	public static final int RED_RIGHT = 'S';
+	public static final int RED_DOWN = 'Z';
+	public static final int RED_INVISIBLE_PUCK = 'R';
+	public static final int RED_POWER_PUCK = 'F';
+	public static final int RED_BIG_RACKET = 'C';
+
+	public static final int GREEN_UP = 'I';
+	public static final int GREEN_LEFT = 'J';
+	public static final int GREEN_RIGHT = 'K';
+	public static final int GREEN_DOWN = 'M';
+	public static final int GREEN_INVISIBLE_PUCK = 'Y';
+	public static final int GREEN_POWER_PUCK = 'G';
+	public static final int GREEN_BIG_RACKET = 'B';
 
 
 	private Thread drawThread = null;
@@ -173,21 +189,21 @@ public class Test extends JApplet implements Runnable , KeyListener{
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
 		switch (key) {
-		case 'W': om.getRacket(Color.RED).flagUp(Direction.UP); break;
-		case 'Z': om.getRacket(Color.RED).flagUp(Direction.DOWN); break;
-		case 'A': om.getRacket(Color.RED).flagUp(Direction.LEFT); break;
-		case 'S': om.getRacket(Color.RED).flagUp(Direction.RIGHT); break;
-		case 'R': PlayerManager.getRedPlayer().invisible(om.getPuck1(), om.getPuck2()); break;
-		case 'F': PlayerManager.getRedPlayer().powerPuck(om.getPuck1(), om.getPuck2()); break;
-		case 'C': PlayerManager.getRedPlayer().bigRacket(om.getRacket(Color.RED)); break;
+		case RED_UP: om.getRacket(Color.RED).flagUp(Direction.UP); break;
+		case RED_DOWN: om.getRacket(Color.RED).flagUp(Direction.DOWN); break;
+		case RED_LEFT: om.getRacket(Color.RED).flagUp(Direction.LEFT); break;
+		case RED_RIGHT: om.getRacket(Color.RED).flagUp(Direction.RIGHT); break;
+		case RED_INVISIBLE_PUCK: PlayerManager.getRedPlayer().invisible(om.getPuck1(), om.getPuck2()); break;
+		case RED_POWER_PUCK: PlayerManager.getRedPlayer().powerPuck(om.getPuck1(), om.getPuck2()); break;
+		case RED_BIG_RACKET: PlayerManager.getRedPlayer().bigRacket(om.getRacket(Color.RED)); break;
 
-		case 'I': om.getRacket(Color.GREEN).flagUp(Direction.UP); break;
-		case 'M': om.getRacket(Color.GREEN).flagUp(Direction.DOWN); break;
-		case 'J': om.getRacket(Color.GREEN).flagUp(Direction.LEFT); break;
-		case 'K': om.getRacket(Color.GREEN).flagUp(Direction.RIGHT); break;
-		case 'Y': PlayerManager.getGreenPlayer().invisible(om.getPuck1(), om.getPuck2()); break;
-		case 'G': PlayerManager.getGreenPlayer().powerPuck(om.getPuck1(), om.getPuck2()); break;
-		case 'B': PlayerManager.getGreenPlayer().bigRacket(om.getRacket(Color.GREEN)); break;
+		case GREEN_UP: om.getRacket(Color.GREEN).flagUp(Direction.UP); break;
+		case GREEN_DOWN: om.getRacket(Color.GREEN).flagUp(Direction.DOWN); break;
+		case GREEN_LEFT: om.getRacket(Color.GREEN).flagUp(Direction.LEFT); break;
+		case GREEN_RIGHT: om.getRacket(Color.GREEN).flagUp(Direction.RIGHT); break;
+		case GREEN_INVISIBLE_PUCK: PlayerManager.getGreenPlayer().invisible(om.getPuck1(), om.getPuck2()); break;
+		case GREEN_POWER_PUCK: PlayerManager.getGreenPlayer().powerPuck(om.getPuck1(), om.getPuck2()); break;
+		case GREEN_BIG_RACKET: PlayerManager.getGreenPlayer().bigRacket(om.getRacket(Color.GREEN)); break;
 
 		case KeyEvent.VK_SPACE: if (! gameFlag ) { gameFlag = true; ss.START_BGM.stop(); start(); } break;
 		case KeyEvent.VK_ESCAPE: System.exit(0); break;
@@ -209,15 +225,15 @@ public class Test extends JApplet implements Runnable , KeyListener{
 	public void keyReleased(KeyEvent e) {
 		int key = e.getKeyCode();
 		switch (key) {
-		case 'W': om.getRacket(Color.RED).flagDown(Direction.UP); break;
-		case 'Z': om.getRacket(Color.RED).flagDown(Direction.DOWN); break;
-		case 'A': om.getRacket(Color.RED).flagDown(Direction.LEFT); break;
-		case 'S': om.getRacket(Color.RED).flagDown(Direction.RIGHT); break;
+		case RED_UP: om.getRacket(Color.RED).flagDown(Direction.UP); break;
+		case RED_DOWN: om.getRacket(Color.RED).flagDown(Direction.DOWN); break;
+		case RED_LEFT: om.getRacket(Color.RED).flagDown(Direction.LEFT); break;
+		case RED_RIGHT: om.getRacket(Color.RED).flagDown(Direction.RIGHT); break;
 
-		case 'I': om.getRacket(Color.GREEN).flagDown(Direction.UP); break;
-		case 'M': om.getRacket(Color.GREEN).flagDown(Direction.DOWN); break;
-		case 'J': om.getRacket(Color.GREEN).flagDown(Direction.LEFT); break;
-		case 'K': om.getRacket(Color.GREEN).flagDown(Direction.RIGHT); break;
+		case GREEN_UP: om.getRacket(Color.GREEN).flagDown(Direction.UP); break;
+		case GREEN_DOWN: om.getRacket(Color.GREEN).flagDown(Direction.DOWN); break;
+		case GREEN_LEFT: om.getRacket(Color.GREEN).flagDown(Direction.LEFT); break;
+		case GREEN_RIGHT: om.getRacket(Color.GREEN).flagDown(Direction.RIGHT); break;
 		}
 
 	}

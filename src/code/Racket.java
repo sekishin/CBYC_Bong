@@ -128,6 +128,20 @@ public class Racket extends GameObject {
 		case LEFT : this.left = false; break;
 		}
 	}
+	
+	/*
+	 * flagの情報を取得
+	 * @ retrurn flag
+	 */
+	public boolean getFlag(Direction dir) {
+		switch (dir) {
+		case UP : return this.up;
+		case DOWN : return this.down;
+		case RIGHT : return this.right;
+		case LEFT : return this.left;
+		}
+		return false;
+	}
 
 	/*
 	 * 色を取得

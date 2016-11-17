@@ -9,7 +9,7 @@ public class Player extends Character {
     public Player(int x, Color c, String p, String dp, int d) {
         super(x, c, p, dp, d);
     }
-
+    
     /*
      * 必殺技1 ボールの不可視化
      */
