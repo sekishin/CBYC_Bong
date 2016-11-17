@@ -15,8 +15,9 @@ public class Player extends Character {
      */
     public void invisible(Puck p1, Puck p2) {
     	if (! isGaugeMax()) return;
-    	if (p1.getColor() == this.color) p1.invisible(this.color); gaugeReset();
-    	if (p2.getColor() == this.color) p2.invisible(this.color); gaugeReset();
+    	if (p1.getColor() == this.color) p1.invisible(this.color);
+    	if (p2.getColor() == this.color) p2.invisible(this.color);
+    	gaugeReset();
     }
 
     /*

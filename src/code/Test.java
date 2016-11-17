@@ -19,7 +19,9 @@ public class Test extends JApplet implements Runnable , KeyListener{
 	private static final int HEIGHT = 650;
 	private static final int OP_WIDTH = 400; // WIDTH-OP_WIDTH
 	private static final int OP_HEIGHT = 100; // HEOGHT-OP_HEIGHT
-	private static final int FINISH_SCORE = 5;
+	public static final int FINISH_SCORE = 100;
+	public static final int SCORE_BLOCK = 1;
+	public static final int SCORE_GOAL = 20;
 
 
 	private Thread drawThread = null;
@@ -97,12 +99,10 @@ public class Test extends JApplet implements Runnable , KeyListener{
 		while (currentThread == drawThread) {
 			if ( gameFlag ) {
 		        update();
-			}
-			try {
-				Thread.sleep(drawInterval);
-			} catch (InterruptedException e) {
-			}
-			if ( gameFlag ) {
+		        try {
+					Thread.sleep(drawInterval);
+				} catch (InterruptedException e) {
+				}
 			    repaint();
 			    isFinish();
 			}
@@ -119,13 +119,13 @@ public class Test extends JApplet implements Runnable , KeyListener{
     }
 
 	public void isFinish() {
-        if ( PlayerManager.getRedPlayer().getScore() == FINISH_SCORE ) {
+        if ( PlayerManager.getRedPlayer().getScore() >= FINISH_SCORE ) {
             PlayerManager.getRedPlayer().resetScore();
             stop();
             winFlag = true;
             redWin = true;
             repaint();
-        } else if ( PlayerManager.getGreenPlayer().getScore() == FINISH_SCORE ) {
+        } else if ( PlayerManager.getGreenPlayer().getScore() >= FINISH_SCORE ) {
             PlayerManager.getGreenPlayer().resetScore();
             stop();
             winFlag = true;

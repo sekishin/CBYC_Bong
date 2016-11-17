@@ -130,7 +130,7 @@ public class ObjectManager extends Manager {
 		if (p1.isHit(gg)) {
 		    if ( p1.getColor() == gg.getColor() ) {
 		        p1.reflect(gg);
-		        PlayerManager.getGreenPlayer().upScore(1);
+		        PlayerManager.getGreenPlayer().upScore(20);
 		        initObject();
 		        Test.speedReset();
 		    } else {
@@ -141,7 +141,7 @@ public class ObjectManager extends Manager {
 		if (p1.isHit(rg)) {
             if ( p1.getColor() == rg.getColor() ) {
                 p1.reflect(rg);
-                PlayerManager.getRedPlayer().upScore(1);
+                PlayerManager.getRedPlayer().upScore(20);
                 initObject();
                 Test.speedReset();
             } else {
@@ -157,7 +157,7 @@ public class ObjectManager extends Manager {
 		if (p2.isHit(gg)) {
             if ( p2.getColor() == gg.getColor() ) {
                 p2.reflect(gg);
-                PlayerManager.getGreenPlayer().upScore(1);
+                PlayerManager.getGreenPlayer().upScore(20);
                 createObject();
                 Test.speedReset();
             } else {
@@ -168,7 +168,7 @@ public class ObjectManager extends Manager {
         if (p2.isHit(rg)) {
             if ( p2.getColor() == rg.getColor() ) {
                 p2.reflect(rg);
-                PlayerManager.getRedPlayer().upScore(1);
+                PlayerManager.getRedPlayer().upScore(20);
                 createObject();
                 Test.speedReset();
             } else {
@@ -182,8 +182,30 @@ public class ObjectManager extends Manager {
 		for (int i = 0; i < lb.size(); i++) {
 			Block b = lb.get(i);
 			boolean flag = false;
-			if (p1.isHit(b)) { p1.reflect(b); flag = true; }
-			if (p2.isHit(b)) { p2.reflect(b); flag = true; }
+			if (p1.isHit(b)) { 
+				p1.reflect(b);
+				if (p1.getColor() == RED_PLAYER_COLOR) {
+					PlayerManager.getRedPlayer().upScore(1); 
+					PlayerManager.getRedPlayer().gaugeUp();
+				}
+				else if (p1.getColor() == GREEN_PLAYER_COLOR) {
+					PlayerManager.getGreenPlayer().upScore(1); 
+					PlayerManager.getGreenPlayer().gaugeUp();
+				}
+				flag = true; 
+			}
+			if (p2.isHit(b)) { 
+				p2.reflect(b); 
+				if (p2.getColor() == RED_PLAYER_COLOR) {
+					PlayerManager.getRedPlayer().upScore(1); 
+					PlayerManager.getRedPlayer().gaugeUp();
+				}
+				else if (p2.getColor() == GREEN_PLAYER_COLOR) {
+					PlayerManager.getGreenPlayer().upScore(1); 
+					PlayerManager.getGreenPlayer().gaugeUp();
+				}
+				flag = true; 
+			}
 			if (flag) lb.remove(i);
 		}
 

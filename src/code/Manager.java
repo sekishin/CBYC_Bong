@@ -33,7 +33,7 @@ public abstract class Manager {
 	protected static final Color RED_PLAYER_COLOR = Color.RED;
 	protected static final Color GREEN_PLAYER_COLOR = Color.GREEN;
 	protected static final int SCORE_PL1 = 250;
-	protected static final int SCORE_PL2 = -200;
+	protected static final int SCORE_PL2 = -250;
 	protected static final int SCORE_BAR_X = 465;
 	protected static final int SCORE_BAR_Y = 60;
 	protected static final int SCORE_BAR_WIDTH = 100;
