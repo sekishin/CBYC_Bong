@@ -30,7 +30,7 @@ public class Operation {
 		g.drawString("F", x-400, y+60);
 		g.drawString("C", x-400, y+80);
 		g.drawString("緑", x-305, y+15);
-		g.drawString("T", x-300, y+40);
+		g.drawString("Y", x-300, y+40);
 		g.drawString("G", x-300, y+60);
 		g.drawString("B", x-300, y+80);
 		g.drawString("不可視", x-370, y+40);
