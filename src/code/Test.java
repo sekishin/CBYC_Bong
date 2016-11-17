@@ -18,7 +18,7 @@ public class Test extends JApplet implements Runnable , KeyListener{
 	private static final int WIDTH = 1050;
 	private static final int HEIGHT = 650;
 	private static final int OP_WIDTH = 400; // WIDTH-OP_WIDTH
-	private static final int OP_HEIGHT = 100; // HEOGHT-OP_HEIGHT
+	private static final int OP_HEIGHT = 130; // HEOGHT-OP_HEIGHT
 	public static final int FINISH_SCORE = 100;
 	public static final int SCORE_BLOCK = 1;
 	public static final int SCORE_GOAL = 20;
@@ -52,7 +52,7 @@ public class Test extends JApplet implements Runnable , KeyListener{
 		back = createImage(WIDTH, HEIGHT);
 		buffer = back.getGraphics();
 
-        ope = new Operation(WIDTH-OP_WIDTH, HEIGHT-OP_HEIGHT, 0, 0);   // 大きさの決定
+        ope = new Operation(WIDTH-OP_WIDTH, HEIGHT-OP_HEIGHT, 30, 30);   // 大きさの決定
         ss = new StartScreen(WIDTH, HEIGHT);
         ws = new WinScreen(WIDTH, HEIGHT);
 	    bgm = new GameSound("../music/bacteria.wav");
