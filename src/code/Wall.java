@@ -26,4 +26,12 @@ public class Wall extends GameObject {
         g.fill3DRect(this.x, this.y, this.width, this.height, true); // 壁の描画
     }
 
+    /*
+     * 色を取得
+     * @ return 現在の色
+     */
+    public Color getColor() {
+        return this.color;
+    }
+
 }

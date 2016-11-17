@@ -13,7 +13,7 @@ public class StartScreen implements ImageObserver {
     private int startHeight;
     private static final int START_X = 0;
     private static final int START_Y = 0;
-    public GameSound START_BGM = new GameSound("../music/zangyousenshi.wav");
+    public GameSound START_BGM = new GameSound("../music/yaranaika.wav");
 
     // コンストラクタ
     public StartScreen (int x, int y) {

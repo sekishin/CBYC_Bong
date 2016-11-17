@@ -19,8 +19,9 @@ public class Test extends JApplet implements Runnable , KeyListener{
 	private static final int HEIGHT = 650;
 	private static final int OP_WIDTH = 400; // WIDTH-OP_WIDTH
 	private static final int OP_HEIGHT = 100; // HEOGHT-OP_HEIGHT
+	private static final int FINISH_SCORE = 1;
 
-	
+
 	private Thread drawThread = null;
 	private Image back;
 	private Graphics buffer;
@@ -29,9 +30,18 @@ public class Test extends JApplet implements Runnable , KeyListener{
 	private PlayerManager pm;
 	private GameSound bgm;
 	private StartScreen ss;
+	private WinScreen ws;
 	private Operation ope;
 
-	boolean gameFlag = false;
+	private static int drawInterval = 40;
+
+    boolean gameFlag = false;
+    boolean winFlag = false;
+    boolean redWin = false;
+    boolean greenWin = false;
+
+    public String pathRed = "../image/winnerRed.jpg";
+    public String pathGreen = "../image/winnerGreen.jpg";
 
 	@Override
 	public void init() {
@@ -42,19 +52,20 @@ public class Test extends JApplet implements Runnable , KeyListener{
 
         ope = new Operation(WIDTH-OP_WIDTH, HEIGHT-OP_HEIGHT, 0, 0);   // 大きさの決定
         ss = new StartScreen(WIDTH, HEIGHT);
-	    bgm = new GameSound("../music/yaranaika.wav");
+        ws = new WinScreen(WIDTH, HEIGHT);
+	    bgm = new GameSound("../music/zangyousenshi.wav");
 
 	    setFocusable(true);
 		addKeyListener(this);
 	}
-	
+
 	public void update() {
 		om.update();
 	}
-	
+
 	public void createGame() {
 		om = new ObjectManager();
-		pm = new PlayerManager();			
+		pm = new PlayerManager();
 	}
 
 
@@ -66,7 +77,14 @@ public class Test extends JApplet implements Runnable , KeyListener{
         if ( gameFlag ) {
         	om.drawObject(buffer);
         	pm.drawPlayer(buffer);
-		    ope.draw(buffer);		    
+		    ope.draw(buffer);
+		    if ( winFlag ) {
+		        if ( redWin ) {
+		            ws.win(buffer, pathRed);
+		        } else if ( greenWin ){
+		            ws.win(buffer, pathGreen);
+		        }
+		    }
         } else {
             ss.start(buffer);
         }
@@ -81,14 +99,40 @@ public class Test extends JApplet implements Runnable , KeyListener{
 		        update();
 			}
 			try {
-				Thread.sleep(40);
+				Thread.sleep(drawInterval);
 			} catch (InterruptedException e) {
 			}
 			if ( gameFlag ) {
 			    repaint();
+			    isFinish();
 			}
 		}
 	}
+
+	public static void speedUp() {
+	    if (drawInterval <= 30) return;
+	    drawInterval--;
+	}
+
+	public static void speedReset() {
+        drawInterval = 40;
+    }
+
+	public void isFinish() {
+        if ( PlayerManager.getRedPlayer().getScore() == FINISH_SCORE ) {
+            PlayerManager.getRedPlayer().resetScore();
+            stop();
+            winFlag = true;
+            redWin = true;
+            repaint();
+        } else if ( PlayerManager.getGreenPlayer().getScore() == FINISH_SCORE ) {
+            PlayerManager.getGreenPlayer().resetScore();
+            stop();
+            winFlag = true;
+            greenWin = true;
+            repaint();
+        }
+    }
 
 
 	@Override
@@ -97,7 +141,7 @@ public class Test extends JApplet implements Runnable , KeyListener{
             drawThread = new Thread(this);
             createGame();
             drawThread.start();
-            bgm.start();
+            //bgm.start();
         }
     }
 
@@ -123,7 +167,7 @@ public class Test extends JApplet implements Runnable , KeyListener{
 	}
 
 	@Override
-	public void keyTyped(KeyEvent e) {		
+	public void keyTyped(KeyEvent e) {
 	}
 
 	@Override
@@ -146,8 +190,9 @@ public class Test extends JApplet implements Runnable , KeyListener{
 		case 'G': PlayerManager.getGreenPlayer().powerPuck(om.getPuck1(), om.getPuck2()); break;
 		case 'B': PlayerManager.getGreenPlayer().bigRacket(om.getRacket(Color.GREEN)); break;
 
-		case KeyEvent.VK_SPACE: if (! gameFlag ) { gameFlag = true; ss.START_BGM.stop(); start(); } break;
+		case KeyEvent.VK_SPACE: if (! gameFlag ) { gameFlag = true; ss.START_BGM.stop(); bgm.start(); } break;
 		case KeyEvent.VK_ESCAPE: System.exit(0); break;
+		case KeyEvent.VK_ENTER: gameFlag = false; winFlag = false; redWin = false; greenWin = false; start(); repaint(); ws.WIN_BGM.stop(); break;
 		}
 
 	}

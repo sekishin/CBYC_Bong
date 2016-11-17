@@ -4,14 +4,14 @@ import java.awt.Graphics;
 
 public class PlayerManager extends Manager {
 
-	
+
 	private static Player rp;
 	private static Player gp;
-	
+
 	public PlayerManager() {
 		createPlayer();
 	}
-	
+
 	/*
 	 * プレイヤの生成
 	 */
@@ -20,7 +20,7 @@ public class PlayerManager extends Manager {
         gp = new Player(PLAYER_X + WALL_X + WALL_LENGTH_HORIZONTALLY, GREEN_PLAYER_COLOR, GREEN_PLAYER_IMAGE, SCORE_PL2);
 
 	}
-	
+
 	/*
 	 * プレイヤ情報の描画
 	 */
@@ -29,7 +29,7 @@ public class PlayerManager extends Manager {
 		gp.draw(g);
 	    g.fillRect(SCORE_BAR_X, SCORE_BAR_Y, SCORE_BAR_WIDTH, SCORE_BAR_HEIGHT);
 	}
-	
+
 	/*
 	 * プレイヤ赤の情報の取得
 	 */
