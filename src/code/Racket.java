@@ -9,7 +9,6 @@ public class Racket extends GameObject {
 	private static final int MAX_RACKET_HEIGHT = 150;
 	private static final int MIN_RACKET_HEIGHT =50;
 	private static final int CHANGE_HEIGHT = 1;
-	private Color color;
 	private boolean isBig = false;
 	private int bigTime;
 	private boolean up = false;
@@ -25,8 +24,7 @@ public class Racket extends GameObject {
 	}
 	
 	public Racket(int x, int y, int w, int h, Color c) {
-		super(x, y, w, h);
-		this.color = c;
+		super(x, y, w, h, c);
 	}
 
 	@Override

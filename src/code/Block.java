@@ -5,11 +5,11 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 
 public class Block extends GameObject {
-	private Color color = Color.GRAY;
+	private static Color InitialColor = Color.GRAY;
 	
 	
 	public Block(int x, int y, int w, int h) {
-		super(x, y, w, h);		
+		super(x, y, w, h, InitialColor);		
 		rect = new Rectangle(this.x, this.y, this.width, this.height);
 
 	}

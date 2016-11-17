@@ -19,7 +19,7 @@ public class Test extends JApplet implements Runnable , KeyListener{
 	private static final int HEIGHT = 650;
 	private static final int OP_WIDTH = 400; // WIDTH-OP_WIDTH
 	private static final int OP_HEIGHT = 100; // HEOGHT-OP_HEIGHT
-	private static final int FINISH_SCORE = 1;
+	private static final int FINISH_SCORE = 5;
 
 
 	private Thread drawThread = null;
@@ -141,7 +141,7 @@ public class Test extends JApplet implements Runnable , KeyListener{
             drawThread = new Thread(this);
             createGame();
             drawThread.start();
-            //bgm.start();
+            bgm.start();
         }
     }
 
@@ -190,9 +190,9 @@ public class Test extends JApplet implements Runnable , KeyListener{
 		case 'G': PlayerManager.getGreenPlayer().powerPuck(om.getPuck1(), om.getPuck2()); break;
 		case 'B': PlayerManager.getGreenPlayer().bigRacket(om.getRacket(Color.GREEN)); break;
 
-		case KeyEvent.VK_SPACE: if (! gameFlag ) { gameFlag = true; ss.START_BGM.stop(); bgm.start(); } break;
+		case KeyEvent.VK_SPACE: if (! gameFlag ) { gameFlag = true; ss.START_BGM.stop(); start(); } break;
 		case KeyEvent.VK_ESCAPE: System.exit(0); break;
-		case KeyEvent.VK_ENTER: gameFlag = false; winFlag = false; redWin = false; greenWin = false; start(); repaint(); ws.WIN_BGM.stop(); break;
+		case KeyEvent.VK_ENTER: gameFlag = false; winFlag = false; redWin = false; greenWin = false; repaint(); ws.WIN_BGM.stop(); ss.START_BGM.start();;
 		}
 
 	}

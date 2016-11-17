@@ -8,7 +8,7 @@ public class Puck extends GameObject {
 	private static final int MAX_INVISIBLE_TIME = 250;
 	private static final int MAX_POWERFUL_TIME = 250;
 	private int dx, dy;
-	private Color color = Color.WHITE;  // パックの色
+	private static Color InitialColor = Color.WHITE;  // パックの色
 	private static GameSound boin = new GameSound("../music/car.wav");
 	private static GameSound crash = new GameSound("../music/crash.wav");
 	private static GameSound powerfulCrash = new GameSound("../music/powerfulCrash.wav");
@@ -22,7 +22,7 @@ public class Puck extends GameObject {
 	
 	// コンストラクタ
 	public Puck(int x, int y, int w, int h, int dx, int dy) {
-		super(x, y, w, h);
+		super(x, y, w, h, InitialColor);
 		this.dx = dx;
 		this.dy = dy;
 	}
@@ -108,8 +108,8 @@ public class Puck extends GameObject {
 			else crash.play();
 			break;
 		case Goal:
-			goal.play();
-			//boin.play();
+			if (this.color == go.getColor()) goal.play();
+			else boin.play();
 			break;
 		default:
 			boin.play();
@@ -126,15 +126,7 @@ public class Puck extends GameObject {
 	public void changeColor(Color c) {
 		this.color = c;
 	}
-	
-	/*
-	 * 色を取得
-	 * @ return 現在の色
-	 */
-	public Color getColor() {
-		return this.color;
-	}
-	
+		
 	/*
 	 * 見えなくする
 	 */

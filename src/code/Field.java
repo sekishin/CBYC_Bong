@@ -12,14 +12,14 @@ import javax.swing.ImageIcon;
 
 public class Field extends GameObject implements ImageObserver{
 	
-	private static Color color = Color.BLUE;
 	private Image image;
 	private String path = "../image/homo1.jpg";
 	private boolean flag = false; 
+	private static Color InitialColor = Color.BLUE;
 	private Random rand = new Random();
 	
 	public Field (int x, int y, int w, int h) {
-		super(x, y, w, h);
+		super(x, y, w, h, InitialColor);
 		switch (rand.nextInt(4)+1) {
 		case 1 : this.path = "../image/homo1.jpg"; break;
 		case 2 : this.path = "../image/homo2.jpg"; break;

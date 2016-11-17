@@ -4,13 +4,18 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 
-public class Operation extends GameObject {
+public class Operation {
 	
-	public Operation ( int x, int y, int w, int h ) {
-		super(x, y, w, h);	
+	private int x, y;
+	private int width, height;
+	
+	public Operation (int x, int y, int w, int h) {
+		this.x = x;
+		this.y = y;
+		this.width = w;
+		this.height = h;
 	}
 	
-	@Override
 	public void draw(Graphics g) {
 		java.awt.Font font = new Font("ＭＳ 明朝", 20, 20);
 		int a = x-150;
@@ -53,8 +58,4 @@ public class Operation extends GameObject {
 		g.drawString("B", c+5, d+70);    // 下の操作
 	}
 
-	@Override
-	public Type getType() {
-		return null;
-	}
 }

@@ -131,7 +131,7 @@ public class ObjectManager extends Manager {
 		    if ( p1.getColor() == gg.getColor() ) {
 		        p1.reflect(gg);
 		        PlayerManager.getGreenPlayer().upScore(1);
-		        createObject();
+		        initObject();
 		        Test.speedReset();
 		    } else {
 		        p1.reflect(gg);
@@ -141,8 +141,8 @@ public class ObjectManager extends Manager {
 		if (p1.isHit(rg)) {
             if ( p1.getColor() == rg.getColor() ) {
                 p1.reflect(rg);
-                PlayerManager.getGreenPlayer().upScore(1);
-                createObject();
+                PlayerManager.getRedPlayer().upScore(1);
+                initObject();
                 Test.speedReset();
             } else {
                 p1.reflect(rg);
@@ -168,7 +168,7 @@ public class ObjectManager extends Manager {
         if (p2.isHit(rg)) {
             if ( p2.getColor() == rg.getColor() ) {
                 p2.reflect(rg);
-                PlayerManager.getGreenPlayer().upScore(1);
+                PlayerManager.getRedPlayer().upScore(1);
                 createObject();
                 Test.speedReset();
             } else {
