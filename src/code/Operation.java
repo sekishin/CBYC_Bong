@@ -8,6 +8,8 @@ public class Operation {
 	
 	private int x, y;
 	private int width, height;
+	private int WIDTH = width+700;
+	private int HEIGHT = height+20;
 	
 	public Operation (int x, int y, int w, int h) {
 		this.x = x;
@@ -17,45 +19,92 @@ public class Operation {
 	}
 	
 	public void draw(Graphics g) {
-		java.awt.Font font = new Font("ＭＳ 明朝", 20, 20);
-		int a = x-150;
+		java.awt.Font font = new Font("ＭＳ 明朝", 16, 16);
+		java.awt.Font font1 = new Font("ＭＳ 明朝", 20, 20);
+		java.awt.Font font2 = new Font("ＭＳ 明朝", 30, 30);
+		int a = x-310;
 		int b = y;
-		int c = x;
+		int c = x-2;
 		int d = y;
+
+		g.setFont(font);
+		Rule(g, x-500, y+105);
 		
 		g.setColor(Color.BLACK);
-		g.setFont(font);
-		g.drawString("赤", x-405, y+15);
-		g.drawString("R", x-400, y+40);
-		g.drawString("F", x-400, y+60);
-		g.drawString("C", x-400, y+80);
-		g.drawString("緑", x-305, y+15);
-		g.drawString("Y", x-300, y+40);
-		g.drawString("G", x-300, y+60);
-		g.drawString("B", x-300, y+80);
-		g.drawString("不可視", x-370, y+40);
-		g.drawString("剛球", x-370, y+60);
-		g.drawString("巨大化", x-370, y+80);
+		g.setFont(font1);
+		drawButton_Red(g, x-200, y-10, "R");
+		drawButton_Red(g, x-200, y+30, "F");
+		drawButton_Red(g, x-200, y+70, "C");
+		drawButton_Green(g, x-100, y-10, "Y");
+		drawButton_Green(g, x-100, y+30, "G");
+		drawButton_Green(g, x-100, y+70, "B");
+		DeadlyName(g, x-170, y-10, "不可視");
+		DeadlyName(g, x-170, y+30, " 剛球");
+		DeadlyName(g, x-170, y+70, "巨大化");
 		
-		g.drawString("↑", a, b+20);
-		g.drawString("←", a-30, b+55);
-		g.drawString("→", a+30, b+55);
-		g.drawString("↓", a, b+90);
 		
-		g.drawString("A", a+5, b+40);       // 上の操作
-		g.drawString("A", a-10, b+55);  // 左の操作
-		g.drawString("A", a+20, b+55); // 右の操作
-		g.drawString("A", a+5, b+70);   // 下の操作
+		//g.drawString("R", x-190, y);
+		//g.drawString("F", x-190, y+30);
+		//g.drawString("C", x-190, y+60);
+		//g.drawString("Y", x-90, y+40);
+		//g.drawString("G", x-90, y+60);
+		//g.drawString("B", x-90, y+80);
+		//g.drawString("不可視", x-160, y+40);
+		//g.drawString("剛球", x-160, y+60);
+		//g.drawString("巨大化", x-160, y+80);
 		
-		g.drawString("↑", c, d+20);
-		g.drawString("←", c-30, d+55);
-		g.drawString("→", c+30, d+55);
-		g.drawString("↓", c, d+90);
+		g.setFont(font2);
+		drawButton_Red(g, a+5, b, "W");
+		drawButton_Red(g, a-25, b+30, "A");
+		drawButton_Red(g, a+35, b+30, "S");
+		drawButton_Red(g, a+5, b+60, "Z");
+		g.setColor(Color.RED);
+		g.fill3DRect(a+5, b+30, width, height, true);
 		
-		g.drawString("B", c+5, d+40);        // 上の操作
-		g.drawString("B", c-10, d+55);  // 左の操作
-		g.drawString("B", c+20, d+55);   // 右の操作
-		g.drawString("B", c+5, d+70);    // 下の操作
+		//g.drawString("W", a+5, b+40);       // 上の操作
+		//g.drawString("A", a-10, b+55);  // 左の操作
+		//g.drawString("S", a+20, b+55); // 右の操作
+		//g.drawString("Z", a+5, b+70);   // 下の操作
+		
+		drawButton_Green(g, c+5, d, "I");
+		drawButton_Green(g, c-25, d+30, "J");
+		drawButton_Green(g, c+35, d+30, "K");
+		drawButton_Green(g, c+5, d+60, "M");
+		g.setColor(Color.GREEN);
+		g.fill3DRect(c+5, d+30, width, height, true);
+		
+		//g.drawString("I", c+5, d+40);        // 上の操作
+		//g.drawString("J", c-10, d+55);  // 左の操作
+		//g.drawString("K", c+20, d+55);   // 右の操作
+		//g.drawString("M", c+5, d+70);    // 下の操作
+	}
+	
+	public void drawButton_Red ( Graphics g, int x, int y, String str ) {
+		g.setColor(Color.RED);
+		g.fill3DRect(x, y, width, height, true);
+		g.setColor(Color.BLACK);
+		g.drawString(str, x+8, y+24);
+	}
+	
+	public void drawButton_Green ( Graphics g, int x, int y, String str ) {
+		g.setColor(Color.GREEN);
+		g.fill3DRect(x, y, width, height, true);
+		g.setColor(Color.BLACK);
+		g.drawString(str, x+8, y+24);
+	}
+	
+	public void DeadlyName (Graphics g, int x, int y, String str) {
+		g.setColor(Color.BLACK);
+		g.fill3DRect(x, y, width+40, height, true);
+		g.setColor(Color.WHITE);
+		g.drawString(str, x+8, y+24);
+	}
+	
+	public void Rule (Graphics g, int x, int y) {
+		g.setColor(Color.BLACK);
+		g.draw3DRect(x, y, WIDTH, HEIGHT, true);
+		g.setColor(Color.BLACK);
+		g.drawString("100点先取のゲーム!!  ゴールに入れば20点, ブロックを崩せば1点加算されるぞ!", x, y+18);
 	}
 
 }
