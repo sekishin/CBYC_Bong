@@ -192,9 +192,18 @@ public class Test extends JApplet implements Runnable , KeyListener{
 
 		case KeyEvent.VK_SPACE: if (! gameFlag ) { gameFlag = true; ss.START_BGM.stop(); start(); } break;
 		case KeyEvent.VK_ESCAPE: System.exit(0); break;
-		case KeyEvent.VK_ENTER: gameFlag = false; winFlag = false; redWin = false; greenWin = false; repaint(); ws.WIN_BGM.stop(); ss.START_BGM.start();;
+		case KeyEvent.VK_ENTER: 
+			if ( gameFlag  &&  winFlag ) {
+				gameFlag = false;
+				winFlag = false;
+				redWin = false; 
+				greenWin = false; 
+				repaint(); 
+				ws.WIN_BGM.stop(); 
+				ss.START_BGM.start();
+			}
+			break;
 		}
-
 	}
 
 	@Override
