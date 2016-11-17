@@ -9,7 +9,7 @@ public class Operation {
 	private int x, y;
 	private int width, height;
 	private int WIDTH = width+700;
-	private int HEIGHT = height+20;
+	private int HEIGHT = height+71;
 	
 	public Operation (int x, int y, int w, int h) {
 		this.x = x;
@@ -23,24 +23,24 @@ public class Operation {
 		java.awt.Font font1 = new Font("ＭＳ 明朝", 20, 20);
 		java.awt.Font font2 = new Font("ＭＳ 明朝", 30, 30);
 		int a = x-310;
-		int b = y;
+		int b = y-50;
 		int c = x-2;
-		int d = y;
+		int d = y-50;
 
 		g.setFont(font);
-		Rule(g, x-500, y+105);
+		Rule(g, x-500, y+55);
 		
 		g.setColor(Color.BLACK);
 		g.setFont(font1);
-		drawButton_Red(g, x-200, y-10, "R");
-		drawButton_Red(g, x-200, y+30, "F");
-		drawButton_Red(g, x-200, y+70, "C");
-		drawButton_Green(g, x-100, y-10, "Y");
-		drawButton_Green(g, x-100, y+30, "G");
-		drawButton_Green(g, x-100, y+70, "B");
-		DeadlyName(g, x-170, y-10, "不可視");
-		DeadlyName(g, x-170, y+30, " 剛球");
-		DeadlyName(g, x-170, y+70, "巨大化");
+		drawButton_Red(g, x-200, y-60, "R");
+		drawButton_Red(g, x-200, y-20, "F");
+		drawButton_Red(g, x-200, y+20, "C");
+		drawButton_Green(g, x-100, y-60, "Y");
+		drawButton_Green(g, x-100, y-20, "G");
+		drawButton_Green(g, x-100, y+20, "B");
+		DeadlyName(g, x-170, y-60, "不可視");
+		DeadlyName(g, x-170, y-20, " 剛球");
+		DeadlyName(g, x-170, y+20, "巨大化");
 		
 		
 		//g.drawString("R", x-190, y);
@@ -104,7 +104,11 @@ public class Operation {
 		g.setColor(Color.BLACK);
 		g.draw3DRect(x, y, WIDTH, HEIGHT, true);
 		g.setColor(Color.BLACK);
-		g.drawString("100点先取のゲーム!!  ゴールに入れば20点, ブロックを崩せば1点加算されるぞ!", x, y+18);
+		g.drawString("100点先取で勝ち!!", x+290, y+18);
+		g.drawString("ゴールと同じ色のボールが入ると得点が加算されます", x+166, y+34);
+		g.drawString("ブロックを崩すと1点  ゴールすれば20点加算されます", x+162, y+50);
+		g.setColor(Color.RED);
+		g.drawString("80点を超えると、ブロックによる加算はなくなります", x+166, y+66);
 	}
 
 }
