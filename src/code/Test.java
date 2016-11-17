@@ -55,7 +55,7 @@ public class Test extends JApplet implements Runnable , KeyListener{
         ope = new Operation(WIDTH-OP_WIDTH, HEIGHT-OP_HEIGHT, 0, 0);   // 大きさの決定
         ss = new StartScreen(WIDTH, HEIGHT);
         ws = new WinScreen(WIDTH, HEIGHT);
-	    bgm = new GameSound("../music/zangyousenshi.wav");
+	    bgm = new GameSound("../music/bacteria.wav");
 
 	    setFocusable(true);
 		addKeyListener(this);
