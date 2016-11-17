@@ -14,6 +14,7 @@ public class Field extends GameObject implements ImageObserver{
 	
 	private Image image;
 	private String path = "../image/homo1.jpg";
+	private GameSound ah = new GameSound("../music/Ah.wav");
 	private boolean flag = false; 
 	private static Color InitialColor = Color.BLUE;
 	private Random rand = new Random();
@@ -33,6 +34,7 @@ public class Field extends GameObject implements ImageObserver{
 	public void showImage() {
 		if (this.flag) return;
 		this.flag = true;
+		ah.play();
 	}
 	
 	@Override

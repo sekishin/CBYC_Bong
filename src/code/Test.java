@@ -110,7 +110,7 @@ public class Test extends JApplet implements Runnable , KeyListener{
 	}
 
 	public static void speedUp() {
-	    if (drawInterval <= 25) return;
+	    if (drawInterval <= 30) return;
 	    drawInterval--;
 	}
 

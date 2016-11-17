@@ -8,7 +8,10 @@ public class Racket extends GameObject {
 	private static final int MAX_BIG_TIME = 250;
 	private static final int MAX_RACKET_HEIGHT = 150;
 	private static final int MIN_RACKET_HEIGHT =50;
-	private static final int CHANGE_HEIGHT = 1;
+	private static final int CHANGE_HEIGHT = 2;
+	private static GameSound expand = new GameSound("../music/expand.wav");
+	private static GameSound shrink = new GameSound("../music/shrink.wav");
+
 	private boolean isBig = false;
 	private int bigTime;
 	private boolean up = false;
@@ -66,7 +69,10 @@ public class Racket extends GameObject {
 	public void move() {
 		if (this.isBig) {
 			this.bigTime++;
-			if (this.bigTime >= MAX_BIG_TIME) this.isBig = false;
+			if (this.bigTime >= MAX_BIG_TIME) {
+				this.isBig = false;
+				shrink.play();
+			}
 		}
 		changeHeight();
 		if (up)  {
@@ -136,6 +142,7 @@ public class Racket extends GameObject {
 	public void bigRacket() {
 		this.isBig = true;
 		this.bigTime = 0;
+		expand.play();
 	}
 	
 	public void changeHeight() {
@@ -150,7 +157,6 @@ public class Racket extends GameObject {
 					if (! ObjectManager.racketExist(this, ObjectManager.getEnemyRacket(this.color)) || isOut(ObjectManager.getField())) {
 						beSmall(0, CHANGE_HEIGHT*2);
 					}
-
 				}
 			}
 		} else {
