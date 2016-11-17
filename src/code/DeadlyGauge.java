@@ -13,19 +13,21 @@ public class DeadlyGauge implements ImageObserver {
 	private static final int DEADLY_GAUGE_WIDTH = 100;
 	private static final int DEADLY_GAUGE_HEIGHT = 30;
 	private static final int DEADLY_IMAGE_WIDTH = 100;
-	private static final int DEADLY_IMAGE_HEIGHT = 100;
-	private static final String DEADLY_IMAGE_PATH = "../image/homo4.jpg";
-	private final Image DEADLY_IMAGE = new ImageIcon(getClass().getResource(DEADLY_IMAGE_PATH)).getImage();
-	private final int Y = 470;
+	private static final int DEADLY_IMAGE_HEIGHT = 70;
+	private String deadlyImagePath;
+	private final Image DEADLY_IMAGE;
+	private final int Y = 440;
 	
 	private int x;    // どれだけ左にずらすか
 	private int currentGauge;
 	private Color color;
 	
-	public DeadlyGauge(int x, Color c) {
+	public DeadlyGauge(int x, Color c, String p) {
 		this.x = x;
 		this.color = c;
 		this.currentGauge = 0;
+		this.deadlyImagePath = p;
+		this.DEADLY_IMAGE  = new ImageIcon(getClass().getResource(this.deadlyImagePath)).getImage();
 	}
 	
 	/*

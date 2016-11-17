@@ -6,8 +6,8 @@ import java.awt.Color;
 public class Player extends Character {
 
 	// コンストラクタ
-    public Player(int x, Color c, String p, int d) {
-        super(x, c, p, d);
+    public Player(int x, Color c, String p, String dp, int d) {
+        super(x, c, p, dp, d);
     }
 
     /*

@@ -17,8 +17,8 @@ public class PlayerManager extends Manager {
 	 * プレイヤの生成
 	 */
 	public void createPlayer() {
-		rp = new Player(PLAYER_X, RED_PLAYER_COLOR, RED_PLAYER_IMAGE, SCORE_PL1);
-        gp = new Player(PLAYER_X + WALL_X + WALL_LENGTH_HORIZONTALLY, GREEN_PLAYER_COLOR, GREEN_PLAYER_IMAGE, SCORE_PL2);
+		rp = new Player(PLAYER_X, RED_PLAYER_COLOR, RED_PLAYER_IMAGE, RED_DEADLY_IMAGE, SCORE_PL1);
+        gp = new Player(PLAYER_X + WALL_X + WALL_LENGTH_HORIZONTALLY, GREEN_PLAYER_COLOR, GREEN_PLAYER_IMAGE, GREEN_DEADLY_IMAGE, SCORE_PL2);
 
 	}
 
