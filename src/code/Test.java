@@ -110,7 +110,7 @@ public class Test extends JApplet implements Runnable , KeyListener{
 	}
 
 	public static void speedUp() {
-	    if (drawInterval <= 30) return;
+	    if (drawInterval <= 25) return;
 	    drawInterval--;
 	}
 
@@ -161,7 +161,6 @@ public class Test extends JApplet implements Runnable , KeyListener{
 			frame.setLocationRelativeTo(null);
 			frame.setVisible(true);
 			applet.init();
-			//applet.start();
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		});
 	}
