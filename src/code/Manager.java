@@ -30,6 +30,9 @@ public abstract class Manager {
 	protected static final int PLAYER_X = 50;
 	protected static final String RED_PLAYER_IMAGE = "../image/bitch.jpg";
 	protected static final String GREEN_PLAYER_IMAGE = "../image/homo.jpg";
+	protected static final String RED_DEADLY_IMAGE = "../image/reddead.jpg";
+	protected static final String GREEN_DEADLY_IMAGE = "../image/greendead.jpg";
+
 	protected static final Color RED_PLAYER_COLOR = Color.RED;
 	protected static final Color GREEN_PLAYER_COLOR = Color.GREEN;
 	protected static final int SCORE_PL1 = 250;

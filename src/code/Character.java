@@ -28,13 +28,13 @@ public abstract class Character implements ImageObserver {
     /*
      * コンストラクタ
      */
-    public Character(int x, Color c, String p, int d) {
+    public Character(int x, Color c, String p, String dp, int d) {
         this.x = x;
         this.d = d;
         this.color = c;
         this.playerImagePath = p;
         player_image = loadImage(p);
-        dg = new DeadlyGauge(x, c);
+        dg = new DeadlyGauge(x, c, dp);
     }
 
     /*
