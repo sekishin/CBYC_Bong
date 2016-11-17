@@ -16,7 +16,7 @@ public class DeadlyGauge implements ImageObserver {
 	private static final int DEADLY_IMAGE_HEIGHT = 70;
 	private String deadlyImagePath;
 	private final Image DEADLY_IMAGE;
-	private final int Y = 470;
+	private final int Y = 440;
 	
 	private int x;    // どれだけ左にずらすか
 	private int currentGauge;

@@ -16,6 +16,7 @@ public class Puck extends GameObject {
 	private static GameSound goal = new GameSound("../music/bom.wav");
 	private static GameSound power = new GameSound("../music/power.wav");
 	private static GameSound distinct = new GameSound("../music/distinct.wav");
+	private static GameSound extinct = new GameSound("../music/extinct.wav");
 	private boolean visible = true;
 	private Color invisibleColor = Color.WHITE;
 	private int invisibleTime;
@@ -59,11 +60,16 @@ public class Puck extends GameObject {
 		this.y += this.dy;
 		if (! this.visible) {
 			this.invisibleTime++;
-     		if (this.invisibleTime > MAX_INVISIBLE_TIME) this.visible = true;
+     		if (this.invisibleTime > MAX_INVISIBLE_TIME) {
+     			this.visible = true;
+     			extinct.play();
+     		}
 		}
 		if (this.powerful) {
 			this.powerfulTime++;
-     		if (this.powerfulTime > MAX_POWERFUL_TIME) this.powerful = false;
+     		if (this.powerfulTime > MAX_POWERFUL_TIME) {
+     			this.powerful = false;
+     		}
 		}
 	}
 	
