@@ -37,6 +37,11 @@ public class Test extends JApplet implements Runnable , KeyListener{
 
     boolean gameFlag = false;
     boolean winFlag = false;
+    boolean redWin = false;
+    boolean greenWin = false;
+
+    public String pathRed = "../image/winnerRed.jpg";
+    public String pathGreen = "../image/winnerGreen.jpg";
 
 	@Override
 	public void init() {
@@ -74,7 +79,11 @@ public class Test extends JApplet implements Runnable , KeyListener{
         	pm.drawPlayer(buffer);
 		    ope.draw(buffer);
 		    if ( winFlag ) {
-		        ws.win(buffer);
+		        if ( redWin ) {
+		            ws.win(buffer, pathRed);
+		        } else if ( greenWin ){
+		            ws.win(buffer, pathGreen);
+		        }
 		    }
         } else {
             ss.start(buffer);
@@ -101,7 +110,7 @@ public class Test extends JApplet implements Runnable , KeyListener{
 	}
 
 	public static void speedUp() {
-	    if (drawInterval <= 5) return;
+	    if (drawInterval <= 30) return;
 	    drawInterval--;
 	}
 
@@ -114,11 +123,13 @@ public class Test extends JApplet implements Runnable , KeyListener{
             PlayerManager.getRedPlayer().resetScore();
             stop();
             winFlag = true;
+            redWin = true;
             repaint();
         } else if ( PlayerManager.getGreenPlayer().getScore() == FINISH_SCORE ) {
             PlayerManager.getGreenPlayer().resetScore();
             stop();
             winFlag = true;
+            greenWin = true;
             repaint();
         }
     }
@@ -179,7 +190,7 @@ public class Test extends JApplet implements Runnable , KeyListener{
 
 		case KeyEvent.VK_SPACE: if (! gameFlag ) { gameFlag = true; ss.START_BGM.stop(); bgm.start(); } break;
 		case KeyEvent.VK_ESCAPE: System.exit(0); break;
-		case KeyEvent.VK_ENTER: gameFlag = false; winFlag = false; start(); repaint(); ws.WIN_BGM.stop(); break;
+		case KeyEvent.VK_ENTER: gameFlag = false; winFlag = false; redWin = false; greenWin = false; start(); repaint(); ws.WIN_BGM.stop(); break;
 		}
 
 	}
