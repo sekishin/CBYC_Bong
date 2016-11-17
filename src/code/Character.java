@@ -47,6 +47,9 @@ public abstract class Character implements ImageObserver {
         dg.draw(g);
         java.awt.Font font = new Font("ＭＳ 明朝", 100, 100);
         g.setColor(Color.BLACK);
+        if (this.score >= Test.FINISH_SCORE - Test.SCORE_GOAL) {
+        	g.setColor(color);
+        }
         g.setFont(font);
         g.drawString(String.format("%02d", this.score), this.x + d, Y + 50);
     }

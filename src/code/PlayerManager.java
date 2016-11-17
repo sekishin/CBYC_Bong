@@ -1,5 +1,6 @@
 package code;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 public class PlayerManager extends Manager {
@@ -27,6 +28,7 @@ public class PlayerManager extends Manager {
 	public void drawPlayer(Graphics g) {
 		rp.draw(g);
 		gp.draw(g);
+		g.setColor(Color.BLACK);
 	    g.fillRect(SCORE_BAR_X, SCORE_BAR_Y, SCORE_BAR_WIDTH, SCORE_BAR_HEIGHT);
 	}
 
