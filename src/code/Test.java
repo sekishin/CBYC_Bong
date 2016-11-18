@@ -25,19 +25,19 @@ public class Test extends JApplet implements Runnable , KeyListener{
 	
 	public static final int RED_UP = 'W';
 	public static final int RED_LEFT = 'A';
-	public static final int RED_RIGHT = 'S';
-	public static final int RED_DOWN = 'Z';
+	public static final int RED_RIGHT = 'D';
+	public static final int RED_DOWN = 'S';
 	public static final int RED_INVISIBLE_PUCK = 'R';
 	public static final int RED_POWER_PUCK = 'F';
 	public static final int RED_BIG_RACKET = 'C';
 
 	public static final int GREEN_UP = 'I';
 	public static final int GREEN_LEFT = 'J';
-	public static final int GREEN_RIGHT = 'K';
-	public static final int GREEN_DOWN = 'M';
+	public static final int GREEN_RIGHT = 'L';
+	public static final int GREEN_DOWN = 'K';
 	public static final int GREEN_INVISIBLE_PUCK = 'Y';
-	public static final int GREEN_POWER_PUCK = 'G';
-	public static final int GREEN_BIG_RACKET = 'B';
+	public static final int GREEN_POWER_PUCK = 'H';
+	public static final int GREEN_BIG_RACKET = 'N';
 
 
 	private Thread drawThread = null;
@@ -218,7 +218,9 @@ public class Test extends JApplet implements Runnable , KeyListener{
 				ss.START_BGM.start();
 			}
 			break;
+		default: return;
 		}
+		
 	}
 
 	@Override
@@ -234,6 +236,7 @@ public class Test extends JApplet implements Runnable , KeyListener{
 		case GREEN_DOWN: om.getRacket(Color.GREEN).flagDown(Direction.DOWN); break;
 		case GREEN_LEFT: om.getRacket(Color.GREEN).flagDown(Direction.LEFT); break;
 		case GREEN_RIGHT: om.getRacket(Color.GREEN).flagDown(Direction.RIGHT); break;
+		default : return;
 		}
 
 	}

@@ -58,7 +58,7 @@ public class ObjectManager extends Manager {
 	public void update() {
 		racketUpdate();
 		puckUpdate();
-		if (lb.size() == 0) { f.showImage(); }
+		if (lb.size() <= 0) { f.showImage(); }
 	}
 
 	/*
