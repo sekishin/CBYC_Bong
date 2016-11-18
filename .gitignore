@@ -1,2 +1,10 @@
 bin/
 .settings/
+.project
+.classpath
+
+src/image/homo1.jpg
+src/image/homo2.jpg
+src/image/homo3.jpg
+src/image/homo4.jpg
+src/music/yaranaika.wav
