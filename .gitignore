@@ -54,3 +54,20 @@ local.properties
 
 # Code Recommenders
 .recommenders/
+
+
+
+/src/image/homo1.jpg
+/src/image/homo2.jpg
+/src/image/homo3.jpg
+/src/image/homo4.jpg
+
+/bin/image/homo1.jpg
+/bin/image/homo2.jpg
+/bin/image/homo3.jpg
+/bin/image/homo4.jpg
+
+/src/music/yaranaika.wav
+/bin/music/yaranaika.wav
+
+
