@@ -89,7 +89,7 @@ public class Operation {
 		g.setColor(Color.BLACK);
 		g.drawString("100点先取で勝ち!!", x+290, y+18);
 		g.drawString("ゴールと同じ色のボールが入ると得点が加点されます", x+166, y+34);
-		g.drawString("ブロックを崩すと1点  ゴールすれば20点加加点されます", x+162, y+50);
+		g.drawString("ブロックを崩すと1点  ゴールすれば20点加点されます", x+162, y+50);
 		g.setColor(Color.RED);
 		g.drawString("80点を超えると、ブロックによる加点はなくなります", x+166, y+66);
 	}

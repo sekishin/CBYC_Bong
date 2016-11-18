@@ -12,7 +12,7 @@ public class WinScreen implements ImageObserver {
     private int startHeight;
     private static final int START_X = 0;
     private static final int START_Y = 0;
-    public GameSound WIN_BGM = new GameSound("../music/fanfare.wav");
+    public GameSound WIN_BGM = new GameSound("music/fanfare.wav");
 
     // コンストラクタ
     public WinScreen (int x, int y) {

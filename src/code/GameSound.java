@@ -1,7 +1,8 @@
 package code;
 
-import java.applet.Applet;
 import java.applet.AudioClip;
+
+import javax.swing.JApplet;
 
 public class GameSound {
 	
@@ -10,7 +11,7 @@ public class GameSound {
 	
 	public GameSound(String p) {
 		this.filePath = p;
-		this.audio = Applet.newAudioClip(getClass().getResource(filePath));	
+		this.audio = JApplet.newAudioClip(getClass().getResource(this.filePath));	
 	}
 	
 	public void play() {

@@ -9,14 +9,14 @@ public class Puck extends GameObject {
 	private static final int MAX_POWERFUL_TIME = 250;
 	private int dx, dy;
 	private static Color InitialColor = Color.WHITE;  // パックの色
-	private static GameSound boin = new GameSound("../music/car.wav");
-	private static GameSound crash = new GameSound("../music/crash.wav");
-	private static GameSound powerfulCrash = new GameSound("../music/powerfulCrash.wav");
-	private static GameSound racket = new GameSound("../music/racket.wav");
-	private static GameSound goal = new GameSound("../music/bom.wav");
-	private static GameSound power = new GameSound("../music/power.wav");
-	private static GameSound distinct = new GameSound("../music/distinct.wav");
-	private static GameSound extinct = new GameSound("../music/extinct.wav");
+	private static GameSound boin = new GameSound("music/car.wav");
+	private static GameSound crash = new GameSound("music/crash.wav");
+	private static GameSound powerfulCrash = new GameSound("music/powerfulCrash.wav");
+	private static GameSound racket = new GameSound("music/racket.wav");
+	private static GameSound goal = new GameSound("music/bom.wav");
+	private static GameSound power = new GameSound("music/power.wav");
+	private static GameSound distinct = new GameSound("music/distinct.wav");
+	private static GameSound extinct = new GameSound("music/extinct.wav");
 	private boolean visible = true;
 	private Color invisibleColor = Color.WHITE;
 	private int invisibleTime;
