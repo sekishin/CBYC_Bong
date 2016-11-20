@@ -6,8 +6,8 @@ import java.awt.Rectangle;
 import java.util.Random;
 
 public class Puck extends GameObject {
-	private static final int MAX_INVISIBLE_TIME = 250;
-	private static final int MAX_POWERFUL_TIME = 250;
+	private static final int MAX_INVISIBLE_TIME = 120;
+	private static final int MAX_POWERFUL_TIME = 200;
 	private int dx, dy;
 	private static Color InitialColor = Color.WHITE;  // パックの色
 	private static GameSound boin = new GameSound("music/car.wav");
@@ -18,6 +18,10 @@ public class Puck extends GameObject {
 	private static GameSound power = new GameSound("music/power.wav");
 	private static GameSound distinct = new GameSound("music/distinct.wav");
 	private static GameSound extinct = new GameSound("music/extinct.wav");
+	private static GameSound hit = new GameSound("music/hit.wav");
+	private static GameSound powerHit = new GameSound("music/freeze.wav");
+
+
 	private boolean visible = true;
 	private Color invisibleColor = Color.WHITE;
 	private int invisibleTime;
@@ -122,6 +126,10 @@ public class Puck extends GameObject {
 			if (this.color == go.getColor()) goal.play();
 			else boin.play();
 			break;
+		case Puck:
+			if (powerful) powerHit.play();
+			else hit.play();
+			break;
 		default:
 			boin.play();
 			break;
@@ -129,8 +137,20 @@ public class Puck extends GameObject {
 		
 		if ( this.powerful && go.getType() == Type.Block ) return;
 		
-		if (Math.abs(px-ox) < this.width) this.reflectX();
-		if (Math.abs(py-oy) < this.height) this.reflectY();
+		if (Math.abs(px-ox) < this.width) {
+			this.reflectX();
+			if (go.getType() == Type.Puck) {
+				Puck p = (Puck)go;
+				p.reflectX();
+			}
+		}
+		if (Math.abs(py-oy) < this.height) {
+			this.reflectY();
+			if (go.getType() == Type.Puck) {
+				Puck p = (Puck)go;
+				p.reflectY();
+			}
+		}
 	}
 
 	// 打った人のバーの色に変わる

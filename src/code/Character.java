@@ -47,7 +47,7 @@ public abstract class Character implements ImageObserver {
         dg.draw(g);
         java.awt.Font font = new Font("ＭＳ 明朝", 100, 100);
         g.setColor(Color.BLACK);
-        if (this.score >= Test.FINISH_SCORE - Test.SCORE_GOAL) {
+        if (this.score >= CBYC_Bong.FINISH_SCORE - CBYC_Bong.SCORE_GOAL) {
         	g.setColor(color);
         }
         g.setFont(font);
@@ -96,7 +96,7 @@ public abstract class Character implements ImageObserver {
      * 得点
      */
     public void upScore(int point) {
-    	if (this.score >= Test.FINISH_SCORE - Test.SCORE_GOAL && point == Test.SCORE_BLOCK) return;
+    	if (this.score >= CBYC_Bong.FINISH_SCORE - CBYC_Bong.SCORE_GOAL && point == CBYC_Bong.SCORE_BLOCK) return;
         this.score += point;
     }
 

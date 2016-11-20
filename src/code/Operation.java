@@ -34,28 +34,28 @@ public class Operation {
 		
 		g.setColor(Color.BLACK);
 		g.setFont(font1);
-		draw3DButton_Red(g, x-200, y-60, Test.RED_INVISIBLE_PUCK, PlayerManager.getRedPlayer().isGaugeMax());
-		draw3DButton_Red(g, x-200, y-20, Test.RED_POWER_PUCK, PlayerManager.getRedPlayer().isGaugeMax());
-		draw3DButton_Red(g, x-200, y+20, Test.RED_BIG_RACKET, PlayerManager.getRedPlayer().isGaugeMax());
-		draw3DButton_Green(g, x-100, y-60, Test.GREEN_INVISIBLE_PUCK, PlayerManager.getGreenPlayer().isGaugeMax());
-		draw3DButton_Green(g, x-100, y-20, Test.GREEN_POWER_PUCK, PlayerManager.getGreenPlayer().isGaugeMax());
-		draw3DButton_Green(g, x-100, y+20, Test.GREEN_BIG_RACKET, PlayerManager.getGreenPlayer().isGaugeMax());
+		draw3DButton_Red(g, x-200, y-60, CBYC_Bong.RED_INVISIBLE_PUCK, PlayerManager.getRedPlayer().isGaugeMax());
+		draw3DButton_Red(g, x-200, y-20, CBYC_Bong.RED_POWER_PUCK, PlayerManager.getRedPlayer().isGaugeMax());
+		draw3DButton_Red(g, x-200, y+20, CBYC_Bong.RED_BIG_RACKET, PlayerManager.getRedPlayer().isGaugeMax());
+		draw3DButton_Green(g, x-100, y-60, CBYC_Bong.GREEN_INVISIBLE_PUCK, PlayerManager.getGreenPlayer().isGaugeMax());
+		draw3DButton_Green(g, x-100, y-20, CBYC_Bong.GREEN_POWER_PUCK, PlayerManager.getGreenPlayer().isGaugeMax());
+		draw3DButton_Green(g, x-100, y+20, CBYC_Bong.GREEN_BIG_RACKET, PlayerManager.getGreenPlayer().isGaugeMax());
 		DeadlyName(g, x-170, y-60, "不可視");
 		DeadlyName(g, x-170, y-20, " 剛球");
 		DeadlyName(g, x-170, y+20, "巨大化");
 				
 		g.setFont(font2);
-		draw3DButton_Red(g, a+5, b, Test.RED_UP, ! ObjectManager.getEnemyRacket(Color.GREEN).getFlag(Direction.UP));
-		draw3DButton_Red(g, a-25, b+30, Test.RED_LEFT, ! ObjectManager.getEnemyRacket(Color.GREEN).getFlag(Direction.LEFT));
-		draw3DButton_Red(g, a+35, b+30, Test.RED_RIGHT, ! ObjectManager.getEnemyRacket(Color.GREEN).getFlag(Direction.RIGHT));
-		draw3DButton_Red(g, a+5, b+60, Test.RED_DOWN, ! ObjectManager.getEnemyRacket(Color.GREEN).getFlag(Direction.DOWN));
+		draw3DButton_Red(g, a+5, b, CBYC_Bong.RED_UP, ! ObjectManager.getEnemyRacket(Color.GREEN).getFlag(Direction.UP));
+		draw3DButton_Red(g, a-25, b+30, CBYC_Bong.RED_LEFT, ! ObjectManager.getEnemyRacket(Color.GREEN).getFlag(Direction.LEFT));
+		draw3DButton_Red(g, a+35, b+30, CBYC_Bong.RED_RIGHT, ! ObjectManager.getEnemyRacket(Color.GREEN).getFlag(Direction.RIGHT));
+		draw3DButton_Red(g, a+5, b+60, CBYC_Bong.RED_DOWN, ! ObjectManager.getEnemyRacket(Color.GREEN).getFlag(Direction.DOWN));
 		g.setColor(Color.RED);
 		g.fill3DRect(a+5, b+30, width, height, true);
 		
-		draw3DButton_Green(g, c+5, d, Test.GREEN_UP, ! ObjectManager.getEnemyRacket(Color.RED).getFlag(Direction.UP));
-		draw3DButton_Green(g, c-25, d+30, Test.GREEN_LEFT, ! ObjectManager.getEnemyRacket(Color.RED).getFlag(Direction.LEFT));
-		draw3DButton_Green(g, c+35, d+30, Test.GREEN_RIGHT, ! ObjectManager.getEnemyRacket(Color.RED).getFlag(Direction.RIGHT));
-		draw3DButton_Green(g, c+5, d+60, Test.GREEN_DOWN, ! ObjectManager.getEnemyRacket(Color.RED).getFlag(Direction.DOWN));
+		draw3DButton_Green(g, c+5, d, CBYC_Bong.GREEN_UP, ! ObjectManager.getEnemyRacket(Color.RED).getFlag(Direction.UP));
+		draw3DButton_Green(g, c-25, d+30, CBYC_Bong.GREEN_LEFT, ! ObjectManager.getEnemyRacket(Color.RED).getFlag(Direction.LEFT));
+		draw3DButton_Green(g, c+35, d+30, CBYC_Bong.GREEN_RIGHT, ! ObjectManager.getEnemyRacket(Color.RED).getFlag(Direction.RIGHT));
+		draw3DButton_Green(g, c+5, d+60, CBYC_Bong.GREEN_DOWN, ! ObjectManager.getEnemyRacket(Color.RED).getFlag(Direction.DOWN));
 		g.setColor(Color.GREEN);
 		g.fill3DRect(c+5, d+30, width, height, true);
 		

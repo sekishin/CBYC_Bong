@@ -1,7 +1,7 @@
 package code;
+
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
@@ -11,158 +11,241 @@ import javax.swing.JApplet;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
-public class CBYC_Bong extends JApplet implements Runnable, KeyListener {
-	private Thread thread = null;
-	private double x, dx, y, dy;
-	private int xSize, ySize;
-	private double paddleXL, paddleYL, paddleXR, paddleYR;
-	private double paddleSize;
-	private String message;
-	private Font font;
+import code.Racket.Direction;
 
-	private Image img;     // オフスクリーンイメージ
-	private Graphics offg; // オフスクリーン用のグラフィックス
-	private int width, height;
+public class CBYC_Bong extends JApplet implements Runnable , KeyListener{
+
+	private static final int WIDTH = 1050;
+	private static final int HEIGHT = 650;
+	private static final int OP_WIDTH = 400; // WIDTH-OP_WIDTH
+	private static final int OP_HEIGHT = 130; // HEOGHT-OP_HEIGHT
+	public static final int FINISH_SCORE = 100;
+	public static final int SCORE_BLOCK = 1;
+	public static final int SCORE_GOAL = 20;
+
+	public static final int RED_UP = 'W';
+	public static final int RED_LEFT = 'A';
+	public static final int RED_RIGHT = 'S';
+	public static final int RED_DOWN = 'Z';
+	public static final int RED_INVISIBLE_PUCK = 'E';
+	public static final int RED_POWER_PUCK = 'D';
+	public static final int RED_BIG_RACKET = 'X';
+
+	public static final int GREEN_UP = 'I';
+	public static final int GREEN_LEFT = 'J';
+	public static final int GREEN_RIGHT = 'K';
+	public static final int GREEN_DOWN = 'M';
+	public static final int GREEN_INVISIBLE_PUCK = 'U';
+	public static final int GREEN_POWER_PUCK = 'H';
+	public static final int GREEN_BIG_RACKET = 'N';
+
+
+	private Thread drawThread = null;
+	private Image back;
+	private Graphics buffer;
+	private ObjectManager om;
+	private PlayerManager pm;
+	private GameSound bgm;
+	private StartScreen ss;
+	private WinScreen ws;
+	private Operation ope;
+
+	private static int drawInterval = 50;
+
+    boolean gameFlag = false;
+    boolean winFlag = false;
+    boolean redWin = false;
+    boolean greenWin = false;
+
+    public String pathRed = "image/winnerRed.png";
+    public String pathGreen = "image/winnerGreen.png";
 
 	@Override
 	public void init() {
-		Dimension size = getSize();
-		width = size.width; height = size.height;
-		xSize = width; ySize = height - 80;
-		paddleSize = 20;
-		message = "Game started!";
-		font = new Font("Monospaced", Font.PLAIN, 12);
-		setFocusable(true);
+		setSize(WIDTH, HEIGHT);
+
+		back = createImage(WIDTH, HEIGHT);
+		buffer = back.getGraphics();
+
+        ope = new Operation(WIDTH-OP_WIDTH, HEIGHT-OP_HEIGHT, 30, 30);   // 大きさの決定
+        ss = new StartScreen(WIDTH, HEIGHT);
+        ws = new WinScreen(WIDTH, HEIGHT);
+	    bgm = new GameSound("music/bacteria.wav");
+	    createGame();
+
+	    setFocusable(true);
 		addKeyListener(this);
-
-		img  = createImage(width, height);
-		offg = img.getGraphics();
 	}
 
-	private void initialize() {
-		x = 100; y = 100;
-		dx = 3.2; dy = 2.0;
-		paddleYL = paddleYR = ySize / 2;
-		paddleXL = 30; paddleXR = xSize - 30;
+	public void update() {
+		om.update();
 	}
+
+	public void createGame() {
+		om = new ObjectManager();
+		pm = new PlayerManager();
+	}
+
 
 	@Override
 	public void paint(Graphics g) {
-		// 全体を背景色で塗りつぶす。
-		offg.clearRect(0, 0, width, height); 
+		buffer.setColor(getBackground());
+		buffer.fillRect(0, 0, WIDTH, HEIGHT);
 
-		offg.setColor(Color.BLACK);
-		offg.drawRect(0, 0, xSize - 1, ySize - 1);
-		offg.setColor(Color.MAGENTA.darker());
-		offg.fillOval((int)(x - 3), (int)(y - 3), 6, 6);
-
-		offg.setColor(Color.RED);
-		offg.fillRect((int)(paddleXL - 2), (int)(paddleYL - paddleSize / 2), 4, (int)paddleSize);
-		offg.setColor(Color.BLUE);
-		offg.fillRect((int)(paddleXR - 2), (int)(paddleYR - paddleSize / 2), 4, (int)paddleSize);
-
-		offg.setFont(font);
-		offg.setColor(Color.GREEN.darker());
-		offg.drawString(message, 5, ySize + 12);
-		offg.setColor(Color.RED.darker());
-		offg.drawString("Left:  Z(D), W(U)", 5, ySize + 24);
-		offg.setColor(Color.BLUE.darker());
-		offg.drawString("Right: M(D), I(U)", 5, ySize + 36);	
-
-		g.drawImage(img, 0, 0, this);
+        if ( gameFlag ) {
+        	om.drawObject(buffer);
+        	pm.drawPlayer(buffer);
+		    ope.draw(buffer);
+		    if ( winFlag ) {
+		        if ( redWin ) {
+		            ws.win(buffer, pathRed);
+		        } else if ( greenWin ){
+		            ws.win(buffer, pathGreen);
+		        }
+		    }
+        } else {
+            ss.start(buffer);
+            ope.draw(buffer);
+        }
+        g.drawImage(back, 0, 0, this);
 	}
 
+	@Override
 	public void run() {
-		Thread thisThread = Thread.currentThread();
-		while (thread == thisThread) {
-			initialize();
-			requestFocus();
-			while (true) {
-				x += dx;  y += dy;
-				if (dx < 0 && (x - paddleXL) * (x - dx - paddleXL) <= 0) {
-					double rY = y + dy * (paddleXL - x) / dx;
-					if ((rY - paddleYL + paddleSize / 2) * (rY - paddleYL - paddleSize / 2) <= 0) {
-						x = 2 * paddleXL - x;
-						dx *= -1;
-						message = "";
-					}
-				}
-				if (x < 0) {
-					x = -x;
-					dx *= -1;
-					message = "R won!";
-				}
-				if (dx > 0 && (x - paddleXR) * (x - dx - paddleXR) <= 0) {
-					double rY = y + dy * (paddleXR - x) / dx;
-					if ((rY - paddleYR + paddleSize / 2) * (rY - paddleYR - paddleSize / 2) <= 0) {
-						x = 2 * paddleXR - x;
-						dx *= -1;
-						message = "";
-					}
-				}
-				if (x > xSize) {
-					x = 2 * xSize - x;
-					dx *= -1;
-					message = "L won!";
-				}
-				if (y < 0) {
-					y = -y;
-					dy *= -1;
-				}
-				if (y > ySize) {
-					y = 2 * ySize - y;
-					dy *= -1;
-				}
-				repaint();
-				try {
-					Thread.sleep(50);
+		Thread currentThread = Thread.currentThread();
+		while (currentThread == drawThread) {
+			if ( gameFlag ) {
+		        update();
+		        try {
+					Thread.sleep(drawInterval);
 				} catch (InterruptedException e) {
 				}
+			    repaint();
+			    isFinish();
 			}
-		}	
-	}
-
-	@Override
-	public void start() {
-		if (thread == null) {
-			thread = new Thread(this);
-			thread.start();
 		}
 	}
 
+	public static void speedUp() {
+	    if (drawInterval <= 30) return;
+	    drawInterval--;
+	}
+
+	public static void speedReset() {
+        drawInterval = 50;
+    }
+
+	public void isFinish() {
+        if ( PlayerManager.getRedPlayer().getScore() >= FINISH_SCORE ) {
+            PlayerManager.getRedPlayer().resetScore();
+            stop();
+            winFlag = true;
+            redWin = true;
+            repaint();
+        } else if ( PlayerManager.getGreenPlayer().getScore() >= FINISH_SCORE ) {
+            PlayerManager.getGreenPlayer().resetScore();
+            stop();
+            winFlag = true;
+            greenWin = true;
+            repaint();
+        }
+    }
+
+
 	@Override
-	public void stop() {
-		thread = null;
-	}
+    public void start() {
+        if (drawThread == null) {
+            drawThread = new Thread(this);
+            createGame();
+            drawThread.start();
+            bgm.start();
+        }
+    }
 
-	public void keyPressed(KeyEvent e) {
-		int key = e.getKeyCode();
-		switch (key) {
-		case 'W':  paddleYL -= 10; break;
-		case 'Z':  paddleYL += 10; break;
-		case 'I':  paddleYR -= 10; break;
-		case 'M':  paddleYR += 10; break;
-		}
-	}
+	@Override
+    public void stop() {
+        drawThread = null;
+        bgm.stop();
+    }
 
-	public void keyReleased(KeyEvent e) {}
-	public void keyTyped(KeyEvent e) {}
-
-	public static void main(String[] args) {
+	public static void main(String[] argv) {
 		SwingUtilities.invokeLater(() -> {
-			/* タイトルバーに表示する文字列を指定できる */
-			JFrame frame = new JFrame("Bong!");       
-			/* Bong はクラスの名前にあわせる */
+			JFrame frame = new JFrame("Test");
 			JApplet applet = new CBYC_Bong();
-			/* アプレット部分のサイズを指定する */
-			applet.setPreferredSize(new Dimension(481, 400));
+			applet.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 			frame.add(applet);
 			frame.pack();
+			frame.setLocationRelativeTo(null);
 			frame.setVisible(true);
 			applet.init();
-			applet.start();
-			/* ×ボタンを押したときの動作を指定する */
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		});
 	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		int key = e.getKeyCode();
+		switch (key) {
+		case RED_UP: om.getRacket(Color.RED).flagUp(Direction.UP); break;
+		case RED_DOWN: om.getRacket(Color.RED).flagUp(Direction.DOWN); break;
+		case RED_LEFT: om.getRacket(Color.RED).flagUp(Direction.LEFT); break;
+		case RED_RIGHT: om.getRacket(Color.RED).flagUp(Direction.RIGHT); break;
+		case RED_INVISIBLE_PUCK: PlayerManager.getRedPlayer().invisible(om.getPuck1(), om.getPuck2()); break;
+		case RED_POWER_PUCK: PlayerManager.getRedPlayer().powerPuck(om.getPuck1(), om.getPuck2()); break;
+		case RED_BIG_RACKET: PlayerManager.getRedPlayer().bigRacket(om.getRacket(Color.RED)); break;
+
+		case GREEN_UP: om.getRacket(Color.GREEN).flagUp(Direction.UP); break;
+		case GREEN_DOWN: om.getRacket(Color.GREEN).flagUp(Direction.DOWN); break;
+		case GREEN_LEFT: om.getRacket(Color.GREEN).flagUp(Direction.LEFT); break;
+		case GREEN_RIGHT: om.getRacket(Color.GREEN).flagUp(Direction.RIGHT); break;
+		case GREEN_INVISIBLE_PUCK: PlayerManager.getGreenPlayer().invisible(om.getPuck1(), om.getPuck2()); break;
+		case GREEN_POWER_PUCK: PlayerManager.getGreenPlayer().powerPuck(om.getPuck1(), om.getPuck2()); break;
+		case GREEN_BIG_RACKET: PlayerManager.getGreenPlayer().bigRacket(om.getRacket(Color.GREEN)); break;
+
+		case KeyEvent.VK_SPACE:
+			if (! gameFlag ) {
+				gameFlag = true;
+				ss.START_BGM.stop();
+				start();
+			}
+			break;
+		case KeyEvent.VK_ESCAPE: System.exit(0); break;
+		case KeyEvent.VK_ENTER:
+			if ( gameFlag  &&  winFlag ) {
+				gameFlag = false;
+				winFlag = false;
+				redWin = false;
+				greenWin = false;
+				repaint();
+				ws.WIN_BGM.stop();
+				ss.START_BGM.start();
+			}
+			break;
+		default: return;
+		}
+
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		int key = e.getKeyCode();
+		switch (key) {
+		case RED_UP: om.getRacket(Color.RED).flagDown(Direction.UP); break;
+		case RED_DOWN: om.getRacket(Color.RED).flagDown(Direction.DOWN); break;
+		case RED_LEFT: om.getRacket(Color.RED).flagDown(Direction.LEFT); break;
+		case RED_RIGHT: om.getRacket(Color.RED).flagDown(Direction.RIGHT); break;
+
+		case GREEN_UP: om.getRacket(Color.GREEN).flagDown(Direction.UP); break;
+		case GREEN_DOWN: om.getRacket(Color.GREEN).flagDown(Direction.DOWN); break;
+		case GREEN_LEFT: om.getRacket(Color.GREEN).flagDown(Direction.LEFT); break;
+		case GREEN_RIGHT: om.getRacket(Color.GREEN).flagDown(Direction.RIGHT); break;
+		default : return;
+		}
+
+	}
+
 }

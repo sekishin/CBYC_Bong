@@ -14,6 +14,7 @@ public class DeadlyGauge implements ImageObserver {
 	private static final int DEADLY_GAUGE_HEIGHT = 30;
 	private static final int DEADLY_IMAGE_WIDTH = 100;
 	private static final int DEADLY_IMAGE_HEIGHT = 70;
+	private static GameSound MAX_SOUND = new GameSound("music/iai.wav");
 	private String deadlyImagePath;
 	private final Image DEADLY_IMAGE;
 	private final int Y = 440;
@@ -42,7 +43,9 @@ public class DeadlyGauge implements ImageObserver {
 	 * 必殺ゲージの増加
 	 */
     public void gaugeUp() {
+    	if (currentGauge >= MAX_DEADLY_GAUGE) return;
     	if (this.currentGauge < MAX_DEADLY_GAUGE) this.currentGauge++;
+		if (currentGauge == MAX_DEADLY_GAUGE) MAX_SOUND.play();
     }
 
     /*

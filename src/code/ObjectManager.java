@@ -60,7 +60,7 @@ public class ObjectManager extends Manager {
 	public void update() {
 		racketUpdate();
 		puckUpdate();
-		if (lb.size() <= 30) { f.showImage(); }
+		if (lb.size() <= 0) { f.showImage(); }
 	}
 
 	/*
@@ -127,17 +127,18 @@ public class ObjectManager extends Manager {
 	 * パックの反射
 	 */
 	private void puckReflect() {
-		if (p1.isHit(rr)) { p1.reflect(rr); p1.changeColor(rr.getColor()); Test.speedUp(); PlayerManager.getRedPlayer().gaugeUp(); }
-		if (p1.isHit(gr)) { p1.reflect(gr); p1.changeColor(gr.getColor()); Test.speedUp(); PlayerManager.getGreenPlayer().gaugeUp(); }
+		if (p1.isHit(p2)) { p1.reflect(p2); }
+		if (p1.isHit(rr)) { p1.reflect(rr); p1.changeColor(rr.getColor()); CBYC_Bong.speedUp(); PlayerManager.getRedPlayer().gaugeUp(); }
+		if (p1.isHit(gr)) { p1.reflect(gr); p1.changeColor(gr.getColor()); CBYC_Bong.speedUp(); PlayerManager.getGreenPlayer().gaugeUp(); }
 		if (p1.isHit(gg)) {
 		    if ( p1.getColor() == gg.getColor() ) {
 		        p1.reflect(gg);
 		        PlayerManager.getGreenPlayer().upScore(20);
 		        initObject();
-		        Test.speedReset();
+		        CBYC_Bong.speedReset();
 		    } else {
 		        p1.reflect(gg);
-		        Test.speedUp();
+		        CBYC_Bong.speedUp();
 		    }
 		}
 		if (p1.isHit(rg)) {
@@ -145,26 +146,25 @@ public class ObjectManager extends Manager {
                 p1.reflect(rg);
                 PlayerManager.getRedPlayer().upScore(20);
                 initObject();
-                Test.speedReset();
+                CBYC_Bong.speedReset();
             } else {
                 p1.reflect(rg);
-                Test.speedUp();
+                CBYC_Bong.speedUp();
             }
         }
-		if (p1.isHit(wt)) { p1.reflect(wt); Test.speedUp(); }
-		if (p1.isHit(wb)) { p1.reflect(wb); Test.speedUp(); }
-
-		if (p2.isHit(rr)) { p2.reflect(rr); p2.changeColor(rr.getColor()); Test.speedUp(); PlayerManager.getRedPlayer().gaugeUp(); }
-		if (p2.isHit(gr)) { p2.reflect(gr); p2.changeColor(gr.getColor()); Test.speedUp(); PlayerManager.getGreenPlayer().gaugeUp(); }
+		if (p1.isHit(wt)) { p1.reflect(wt); CBYC_Bong.speedUp(); }
+		if (p1.isHit(wb)) { p1.reflect(wb); CBYC_Bong.speedUp(); }
+		if (p2.isHit(rr)) { p2.reflect(rr); p2.changeColor(rr.getColor()); CBYC_Bong.speedUp(); PlayerManager.getRedPlayer().gaugeUp(); }
+		if (p2.isHit(gr)) { p2.reflect(gr); p2.changeColor(gr.getColor()); CBYC_Bong.speedUp(); PlayerManager.getGreenPlayer().gaugeUp(); }
 		if (p2.isHit(gg)) {
             if ( p2.getColor() == gg.getColor() ) {
                 p2.reflect(gg);
                 PlayerManager.getGreenPlayer().upScore(20);
                 createObject();
-                Test.speedReset();
+                CBYC_Bong.speedReset();
             } else {
                 p2.reflect(gg);
-                Test.speedUp();
+                CBYC_Bong.speedUp();
             }
         }
         if (p2.isHit(rg)) {
@@ -172,14 +172,14 @@ public class ObjectManager extends Manager {
                 p2.reflect(rg);
                 PlayerManager.getRedPlayer().upScore(20);
                 createObject();
-                Test.speedReset();
+                CBYC_Bong.speedReset();
             } else {
                 p2.reflect(rg);
-                Test.speedUp();
+                CBYC_Bong.speedUp();
             }
         }
-		if (p2.isHit(wt)) { p2.reflect(wt); Test.speedUp(); }
-		if (p2.isHit(wb)) { p2.reflect(wb); Test.speedUp(); }
+		if (p2.isHit(wt)) { p2.reflect(wt); CBYC_Bong.speedUp(); }
+		if (p2.isHit(wb)) { p2.reflect(wb); CBYC_Bong.speedUp(); }
 
 		for (int i = 0; i < lb.size(); i++) {
 			Block b = lb.get(i);
