@@ -50,7 +50,7 @@ public class Test extends JApplet implements Runnable , KeyListener{
 	private WinScreen ws;
 	private Operation ope;
 
-	private static int drawInterval = 40;
+	private static int drawInterval = 50;
 
     boolean gameFlag = false;
     boolean winFlag = false;
@@ -130,7 +130,7 @@ public class Test extends JApplet implements Runnable , KeyListener{
 	}
 
 	public static void speedReset() {
-        drawInterval = 40;
+        drawInterval = 50;
     }
 
 	public void isFinish() {

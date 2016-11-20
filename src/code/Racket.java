@@ -8,7 +8,7 @@ public class Racket extends GameObject {
 	private static final int MAX_BIG_TIME = 250;
 	private static final int MAX_RACKET_HEIGHT = 150;
 	private static final int MIN_RACKET_HEIGHT =50;
-	private static final int CHANGE_HEIGHT = 2;
+	private static final int CHANGE_HEIGHT = 1;
 	private static GameSound expand = new GameSound("music/expand.wav");
 	private static GameSound shrink = new GameSound("music/shrink.wav");
 

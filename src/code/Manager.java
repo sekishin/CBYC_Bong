@@ -4,17 +4,18 @@ import java.awt.Color;
 
 public abstract class Manager {
 	
-	protected static final int P1_STARTX = 350;
-	protected static final int P1_STARTY = 300;
-	protected static final int P2_STARTX = 650;
-	protected static final int P2_STARTY = 300;
-	protected static final int RED_RACKET_STARTX = 260;
-	protected static final int RED_RACKET_STARTY = 300;
-	protected static final int GREEN_RACKET_STARTX = 660;
-	protected static final int GREEN_RACKET_STRATY = 300;
+	protected static final int P1_STARTX = 400;
+	protected static final int P1_STARTY = 270;
+	protected static final int P2_STARTX = 600;
+	protected static final int P2_STARTY = 270;
+	protected static final int RED_RACKET_STARTX = 270;
+	protected static final int RED_RACKET_STARTY = 260;
+	protected static final int GREEN_RACKET_STARTX = 740;
+	protected static final int GREEN_RACKET_STRATY = 260;
 	protected static final int RACKET_WIDTH = 20;
 	protected static final int RACKET_HEIGHT = 50;
 	protected static final int PUCK_SIZE = 15;
+	protected static final int PUCK_SPEED = 5;
 	protected static final int BLOCK_WIDTH = 20;
 	protected static final int BLOCK_HEIGHT = 30;
 	protected static final int WALL_X = 200;

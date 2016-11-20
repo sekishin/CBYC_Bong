@@ -3,6 +3,7 @@ package code;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.util.Random;
 
 public class Puck extends GameObject {
 	private static final int MAX_INVISIBLE_TIME = 250;
@@ -22,12 +23,14 @@ public class Puck extends GameObject {
 	private int invisibleTime;
 	private boolean powerful = false;
 	private int powerfulTime;
+	private Random rand = new Random();
+
 	
 	// コンストラクタ
 	public Puck(int x, int y, int w, int h, int dx, int dy) {
 		super(x, y, w, h, InitialColor);
-		this.dx = dx;
-		this.dy = dy;
+		this.dx = (rand.nextInt(100) < 50) ? -dx : dx;
+		this.dy = (rand.nextInt(100) < 50) ? -dy : dy;
 	}
 	
 	//-- パックの描画

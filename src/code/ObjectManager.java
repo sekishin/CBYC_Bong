@@ -29,8 +29,8 @@ public class ObjectManager extends Manager {
 	private void createObject() {
 		rr = new Racket(RED_RACKET_STARTX, RED_RACKET_STARTY, RACKET_WIDTH, RACKET_HEIGHT, Color.RED);
 		gr = new Racket(GREEN_RACKET_STARTX, GREEN_RACKET_STRATY, RACKET_WIDTH, RACKET_HEIGHT, Color.GREEN);
-		p1 = new Puck(P1_STARTX, P1_STARTY, PUCK_SIZE, PUCK_SIZE, 5, 5);
-		p2 = new Puck(P2_STARTX, P2_STARTY, PUCK_SIZE, PUCK_SIZE, -5, -5);
+		p1 = new Puck(P1_STARTX, P1_STARTY, PUCK_SIZE, PUCK_SIZE, PUCK_SPEED, PUCK_SPEED);
+		p2 = new Puck(P2_STARTX, P2_STARTY, PUCK_SIZE, PUCK_SIZE, PUCK_SPEED, PUCK_SPEED);
 		gg = new Goal(WALL_X, WALL_Y + WALL_THICK, WALL_THICK, WALL_LENGTH_VERTICALLY, Color.GREEN);
 		rg = new Goal(WALL_X + WALL_LENGTH_HORIZONTALLY - WALL_THICK, WALL_Y + WALL_THICK, WALL_THICK, WALL_LENGTH_VERTICALLY, Color.RED);
 		wt = new Wall(WALL_X, WALL_Y, WALL_LENGTH_HORIZONTALLY, WALL_THICK, Color.BLACK);
@@ -60,7 +60,7 @@ public class ObjectManager extends Manager {
 	public void update() {
 		racketUpdate();
 		puckUpdate();
-		if (lb.size() <= 0) { f.showImage(); }
+		if (lb.size() <= 30) { f.showImage(); }
 	}
 
 	/*
