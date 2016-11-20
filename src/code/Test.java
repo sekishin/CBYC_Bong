@@ -43,7 +43,6 @@ public class Test extends JApplet implements Runnable , KeyListener{
 	private Thread drawThread = null;
 	private Image back;
 	private Graphics buffer;
-
 	private ObjectManager om;
 	private PlayerManager pm;
 	private GameSound bgm;
@@ -58,8 +57,8 @@ public class Test extends JApplet implements Runnable , KeyListener{
     boolean redWin = false;
     boolean greenWin = false;
 
-    public String pathRed = "../image/winnerRed.jpg";
-    public String pathGreen = "../image/winnerGreen.jpg";
+    public String pathRed = "image/winnerRed.png";
+    public String pathGreen = "image/winnerGreen.png";
 
 	@Override
 	public void init() {
@@ -71,7 +70,7 @@ public class Test extends JApplet implements Runnable , KeyListener{
         ope = new Operation(WIDTH-OP_WIDTH, HEIGHT-OP_HEIGHT, 30, 30);   // 大きさの決定
         ss = new StartScreen(WIDTH, HEIGHT);
         ws = new WinScreen(WIDTH, HEIGHT);
-	    bgm = new GameSound("../music/bacteria.wav");
+	    bgm = new GameSound("music/bacteria.wav");
 
 	    setFocusable(true);
 		addKeyListener(this);
@@ -167,7 +166,7 @@ public class Test extends JApplet implements Runnable , KeyListener{
         bgm.stop();
     }
 
-	public static void main(String[] arbgm) {
+	public static void main(String[] argv) {
 		SwingUtilities.invokeLater(() -> {
 			JFrame frame = new JFrame("Test");
 			JApplet applet = new Test();
@@ -205,7 +204,13 @@ public class Test extends JApplet implements Runnable , KeyListener{
 		case GREEN_POWER_PUCK: PlayerManager.getGreenPlayer().powerPuck(om.getPuck1(), om.getPuck2()); break;
 		case GREEN_BIG_RACKET: PlayerManager.getGreenPlayer().bigRacket(om.getRacket(Color.GREEN)); break;
 
-		case KeyEvent.VK_SPACE: if (! gameFlag ) { gameFlag = true; ss.START_BGM.stop(); start(); } break;
+		case KeyEvent.VK_SPACE: 
+			if (! gameFlag ) { 
+				gameFlag = true; 
+				ss.START_BGM.stop(); 
+				start(); 
+			} 
+			break;
 		case KeyEvent.VK_ESCAPE: System.exit(0); break;
 		case KeyEvent.VK_ENTER: 
 			if ( gameFlag  &&  winFlag ) {

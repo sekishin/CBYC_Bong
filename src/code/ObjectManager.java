@@ -37,15 +37,17 @@ public class ObjectManager extends Manager {
 		wb = new Wall(WALL_X, WALL_Y + WALL_LENGTH_VERTICALLY + WALL_THICK, WALL_LENGTH_HORIZONTALLY, WALL_THICK, Color.BLACK);
 		f = new Field(FIELD_X, FIELD_Y, FIELD_WIDTH, FIELD_HEIGHT);
 		lb = new ArrayList<Block>();
-		for (int i = 0; i < FIELD_HEIGHT/ BLOCK_HEIGHT; i++) {
-			Block b = new Block(FIELD_X, FIELD_Y + BLOCK_HEIGHT * i, BLOCK_WIDTH, BLOCK_HEIGHT);
-			lb.add(b);
-			b = new Block(FIELD_X + FIELD_WIDTH - BLOCK_WIDTH, FIELD_Y + BLOCK_HEIGHT * i, BLOCK_WIDTH, BLOCK_HEIGHT);
-			lb.add(b);
+		for (int j = 0; j < 2; j++) {
+			for (int i = 0; i < FIELD_HEIGHT/ BLOCK_HEIGHT; i++) {
+				Block b = new Block(FIELD_X + BLOCK_WIDTH*j, FIELD_Y + BLOCK_HEIGHT * i, BLOCK_WIDTH, BLOCK_HEIGHT);
+				lb.add(b);
+				b = new Block(FIELD_X + FIELD_WIDTH - BLOCK_WIDTH*(j+1), FIELD_Y + BLOCK_HEIGHT * i, BLOCK_WIDTH, BLOCK_HEIGHT);
+				lb.add(b);
+			}
 		}
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < 2; i++) {
 			for (int j = 0; j < FIELD_HEIGHT / BLOCK_HEIGHT; j++) {
-				Block b = new Block(FIELD_X + FIELD_WIDTH / 2 + BLOCK_WIDTH * (i-2), FIELD_Y + j * BLOCK_HEIGHT, BLOCK_WIDTH, BLOCK_HEIGHT);
+				Block b = new Block(FIELD_X + FIELD_WIDTH / 2 + BLOCK_WIDTH * (i-1), FIELD_Y + j * BLOCK_HEIGHT, BLOCK_WIDTH, BLOCK_HEIGHT);
 				lb.add(b);
 			}
 		}

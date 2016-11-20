@@ -28,10 +28,10 @@ public abstract class Manager {
 	protected static final int FIELD_HEIGHT = 300;
 
 	protected static final int PLAYER_X = 50;
-	protected static final String RED_PLAYER_IMAGE = "../image/bitch.jpg";
-	protected static final String GREEN_PLAYER_IMAGE = "../image/homo.jpg";
-	protected static final String RED_DEADLY_IMAGE = "../image/reddead.jpg";
-	protected static final String GREEN_DEADLY_IMAGE = "../image/greendead.jpg";
+	protected static final String RED_PLAYER_IMAGE = "image/bitch.png";
+	protected static final String GREEN_PLAYER_IMAGE = "image/homo.png";
+	protected static final String RED_DEADLY_IMAGE = "image/reddead.png";
+	protected static final String GREEN_DEADLY_IMAGE = "image/greendead.png";
 
 	protected static final Color RED_PLAYER_COLOR = Color.RED;
 	protected static final Color GREEN_PLAYER_COLOR = Color.GREEN;

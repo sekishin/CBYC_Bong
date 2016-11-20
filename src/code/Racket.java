@@ -9,8 +9,8 @@ public class Racket extends GameObject {
 	private static final int MAX_RACKET_HEIGHT = 150;
 	private static final int MIN_RACKET_HEIGHT =50;
 	private static final int CHANGE_HEIGHT = 2;
-	private static GameSound expand = new GameSound("../music/expand.wav");
-	private static GameSound shrink = new GameSound("../music/shrink.wav");
+	private static GameSound expand = new GameSound("music/expand.wav");
+	private static GameSound shrink = new GameSound("music/shrink.wav");
 
 	private boolean isBig = false;
 	private int bigTime;
@@ -161,22 +161,17 @@ public class Racket extends GameObject {
 	
 	public void changeHeight() {
 		if (this.isBig) {
-			beBig(CHANGE_HEIGHT, CHANGE_HEIGHT);
-			if (! ObjectManager.racketExist(this, ObjectManager.getEnemyRacket(this.color)) || isOut(ObjectManager.getField())) {
-				beSmall(CHANGE_HEIGHT, CHANGE_HEIGHT);
-				beBig(CHANGE_HEIGHT*2, 0);
-				if (! ObjectManager.racketExist(this, ObjectManager.getEnemyRacket(this.color)) || isOut(ObjectManager.getField())) {
-					beSmall(CHANGE_HEIGHT*2, 0);
-					beBig(0, CHANGE_HEIGHT*2);
-					if (! ObjectManager.racketExist(this, ObjectManager.getEnemyRacket(this.color)) || isOut(ObjectManager.getField())) {
-						beSmall(0, CHANGE_HEIGHT*2);
-					}
-				}
-			}
+			beBig(CHANGE_HEIGHT, CHANGE_HEIGHT*2);
+			if (ObjectManager.racketExist(this, ObjectManager.getEnemyRacket(this.color)) && ! isOut(ObjectManager.getField())) return;
+			beSmall(CHANGE_HEIGHT, CHANGE_HEIGHT*2);
+			beBig(CHANGE_HEIGHT*2, 0);
+			if (ObjectManager.racketExist(this, ObjectManager.getEnemyRacket(this.color)) && ! isOut(ObjectManager.getField())) return;
+			beSmall(CHANGE_HEIGHT*2, 0);
+			beBig(0, CHANGE_HEIGHT*2);
+			if (ObjectManager.racketExist(this, ObjectManager.getEnemyRacket(this.color)) && ! isOut(ObjectManager.getField())) return;
+			beSmall(0, CHANGE_HEIGHT*2);
 		} else {
-			if (this.height > MIN_RACKET_HEIGHT) {
-				beSmall(CHANGE_HEIGHT, CHANGE_HEIGHT);
-			}
+			beSmall(CHANGE_HEIGHT, CHANGE_HEIGHT*2);
 		}
 	}
 	
@@ -185,17 +180,17 @@ public class Racket extends GameObject {
 	 */
 	private void beBig(int dy, int dh) {
 		if (this.height >= MAX_RACKET_HEIGHT) return;
-		this.height += dh;
 		this.y -= dy;
+		this.height += dh;
 	}
 	
 	/*
 	 * 小さくする
 	 */
 	private void beSmall(int dy, int dh) {
-		if (this.height <= MIN_RACKET_HEIGHT) return;
-		this.height -= dh;
+		if (this.height <= MIN_RACKET_HEIGHT && dh != 0) return;
 		this.y += dy;
+		this.height -= dh;
 	}
 	
 	
