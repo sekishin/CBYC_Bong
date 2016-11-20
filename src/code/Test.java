@@ -22,7 +22,7 @@ public class Test extends JApplet implements Runnable , KeyListener{
 	public static final int FINISH_SCORE = 100;
 	public static final int SCORE_BLOCK = 1;
 	public static final int SCORE_GOAL = 20;
-	
+
 	public static final int RED_UP = 'W';
 	public static final int RED_LEFT = 'A';
 	public static final int RED_RIGHT = 'D';
@@ -71,6 +71,7 @@ public class Test extends JApplet implements Runnable , KeyListener{
         ss = new StartScreen(WIDTH, HEIGHT);
         ws = new WinScreen(WIDTH, HEIGHT);
 	    bgm = new GameSound("music/bacteria.wav");
+	    createGame();
 
 	    setFocusable(true);
 		addKeyListener(this);
@@ -104,6 +105,7 @@ public class Test extends JApplet implements Runnable , KeyListener{
 		    }
         } else {
             ss.start(buffer);
+            ope.draw(buffer);
         }
         g.drawImage(back, 0, 0, this);
 	}
@@ -204,28 +206,28 @@ public class Test extends JApplet implements Runnable , KeyListener{
 		case GREEN_POWER_PUCK: PlayerManager.getGreenPlayer().powerPuck(om.getPuck1(), om.getPuck2()); break;
 		case GREEN_BIG_RACKET: PlayerManager.getGreenPlayer().bigRacket(om.getRacket(Color.GREEN)); break;
 
-		case KeyEvent.VK_SPACE: 
-			if (! gameFlag ) { 
-				gameFlag = true; 
-				ss.START_BGM.stop(); 
-				start(); 
-			} 
+		case KeyEvent.VK_SPACE:
+			if (! gameFlag ) {
+				gameFlag = true;
+				ss.START_BGM.stop();
+				start();
+			}
 			break;
 		case KeyEvent.VK_ESCAPE: System.exit(0); break;
-		case KeyEvent.VK_ENTER: 
+		case KeyEvent.VK_ENTER:
 			if ( gameFlag  &&  winFlag ) {
 				gameFlag = false;
 				winFlag = false;
-				redWin = false; 
-				greenWin = false; 
-				repaint(); 
-				ws.WIN_BGM.stop(); 
+				redWin = false;
+				greenWin = false;
+				repaint();
+				ws.WIN_BGM.stop();
 				ss.START_BGM.start();
 			}
 			break;
 		default: return;
 		}
-		
+
 	}
 
 	@Override
