@@ -7,7 +7,7 @@ import java.util.Random;
 
 public class Puck extends GameObject {
 	private static final int MAX_INVISIBLE_TIME = 120;
-	private static final int MAX_POWERFUL_TIME = 200;
+	private static final int MAX_POWERFUL_TIME = 180;
 	private int dx, dy;
 	private static Color InitialColor = Color.WHITE;  // パックの色
 	private static GameSound boin = new GameSound("music/car.wav");

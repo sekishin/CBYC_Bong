@@ -170,7 +170,7 @@ public class CBYC_Bong extends JApplet implements Runnable , KeyListener{
 
 	public static void main(String[] argv) {
 		SwingUtilities.invokeLater(() -> {
-			JFrame frame = new JFrame("Test");
+			JFrame frame = new JFrame("CBYB_Bong");
 			JApplet applet = new CBYC_Bong();
 			applet.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 			frame.add(applet);
