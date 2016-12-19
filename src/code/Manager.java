@@ -29,8 +29,8 @@ public abstract class Manager {
 	protected static final int FIELD_HEIGHT = 300;
 
 	protected static final int PLAYER_X = 50;
-	protected static final String RED_PLAYER_IMAGE = "image/bitch.png";
-	protected static final String GREEN_PLAYER_IMAGE = "image/homo.png";
+	protected static final String RED_PLAYER_IMAGE = "image/girl.png";
+	protected static final String GREEN_PLAYER_IMAGE = "image/boy.png";
 	protected static final String RED_DEADLY_IMAGE = "image/reddead.png";
 	protected static final String GREEN_DEADLY_IMAGE = "image/greendead.png";
 

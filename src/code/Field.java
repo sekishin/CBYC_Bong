@@ -13,7 +13,7 @@ import javax.swing.ImageIcon;
 public class Field extends GameObject implements ImageObserver{
 
 	private Image image;
-	private String path = "image/homo1.jpg";
+	private String path;
 	private GameSound ah = new GameSound("music/Ah.wav");
 	private boolean flag = false;
 	private static Color InitialColor = Color.BLUE;
@@ -21,11 +21,10 @@ public class Field extends GameObject implements ImageObserver{
 
 	public Field (int x, int y, int w, int h) {
 		super(x, y, w, h, InitialColor);
-		switch (rand.nextInt(4)+1) {
-		case 1 : this.path = "image/homo1.jpg"; break;
-		case 2 : this.path = "image/homo2.jpg"; break;
-		case 3 : this.path = "image/homo3.jpg"; break;
-		case 4 : this.path = "image/homo4.jpg"; break;
+		switch (rand.nextInt(3)+1) {
+		case 1 : this.path = "image/darashine.jpg"; break;
+		case 2 : this.path = "image/yugami.jpg"; break;
+		case 3 : this.path = "image/sikatanai.jpg"; break;
 		}
 		loadImage(path);
 		this.rect = new Rectangle(this.x, this.y, this.width, this.height);

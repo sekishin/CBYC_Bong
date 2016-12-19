@@ -5,7 +5,7 @@ import java.awt.Graphics;
 
 public class Racket extends GameObject {
 	
-	private static final int MAX_BIG_TIME = 150;
+	private static final int MAX_BIG_TIME = 180;
 	private static final int MAX_RACKET_HEIGHT = 150;
 	private static final int MIN_RACKET_HEIGHT =50;
 	private static final int CHANGE_HEIGHT = 1;
